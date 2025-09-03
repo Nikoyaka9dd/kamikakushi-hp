@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>消えない祭り - 伝統文化イベント</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'YuGothic', 'Yu Gothic', sans-serif;
+            background: #f4f1e8;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sakura {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #d4af37, #b8860b);
+            border-radius: 50% 0;
+            transform: rotate(45deg);
+            animation: fall 12s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(-100vh) rotate(45deg);
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(100vh) rotate(405deg);
+                opacity: 0;
+            }
+        }
+
+        .red-decoration {
+            position: fixed;
+            top: 0;
+            width: 200px;
+            height: 100vh;
+            z-index: 0;
+        }
+
+        .red-decoration-left {
+            left: 0;
+            background: linear-gradient(135deg, #dc143c, #8b0000);
+            clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+            transform: translateX(-100%);
+            animation: slideInLeft 1.5s ease-out 1s forwards;
+        }
+
+        .red-decoration-right {
+            right: 0;
+            background: linear-gradient(225deg, #dc143c, #8b0000);
+            clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+            transform: translateX(100%);
+            animation: slideInRight 1.5s ease-out 1s forwards;
+        }
+
+        @keyframes slideInLeft {
+            to { transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            to { transform: translateX(0); }
+        }
+
+        .gold-ornament {
+            position: fixed;
+            top: 50%;
+            width: 150px;
+            height: 50px;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+
+        .gold-ornament-left {
+            left: 20px;
+            transform: translateY(-50%) translateX(-100%);
+            animation: ornamentSlideLeft 2s ease-out 1s forwards;
+        }
+
+        .gold-ornament-right {
+            right: 20px;
+            transform: translateY(-50%) translateX(100%);
+            animation: ornamentSlideRight 2s ease-out 1s forwards;
+        }
+
+        @keyframes ornamentSlideLeft {
+            to { transform: translateY(-50%) translateX(0); }
+        }
+
+        @keyframes ornamentSlideRight {
+            to { transform: translateY(-50%) translateX(0); }
+        }
+
+        .ornament-shape {
+            width: 100%;
+            height: 100%;
+            background: #b8860b;
+            position: relative;
+        }
+
+        .ornament-left .ornament-shape {
+            clip-path: polygon(0 40%, 70% 40%, 85% 0%, 100% 0%, 100% 20%, 85% 60%, 100% 100%, 85% 100%, 70% 60%, 0 60%);
+        }
+
+        .ornament-right .ornament-shape {
+            clip-path: polygon(0 0%, 15% 0%, 30% 40%, 100% 40%, 100% 60%, 30% 60%, 15% 100%, 0 100%, 15% 60%, 0 20%);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .main-logo {
+            color: #8b0000;
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: titleFadeIn 2s ease-out forwards;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        @keyframes titleFadeIn {
+            to { opacity: 1; }
+        }
+
+        .content-section {
+            opacity: 0;
+            animation: contentFadeIn 1.5s ease-out 3s forwards;
+        }
+
+        @keyframes contentFadeIn {
+            to { opacity: 1; }
+        }
+
+        .subtitle-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .reservation-button {
+            background: #8b0000;
+            color: white;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reservation-button:hover {
+            background: #a0001a;
+            transform: translateY(-2px);
+        }
+
+        .reservation-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .reservation-button:hover::before {
+            left: 100%;
+        }
+
+        .features-section {
+            margin: 3rem 0;
+        }
+
+        .features-title {
+            color: #8b0000;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .features-list {
+            list-style: none;
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-list li {
+            font-size: 1rem;
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            line-height: 1.6;
+        }
+
+        .features-list li::before {
+            content: '・';
+            position: absolute;
+            left: 0;
+            color: #8b0000;
+            font-weight: bold;
+        }
+
+        .event-info {
+            margin: 3rem 0;
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        .event-date {
+            color: #8b0000;
+            font-weight: bold;
+            margin: 1rem 0;
+        }
+
+        .info-section {
+            margin: 2rem 0;
+            text-align: left;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .info-title {
+            color: #8b0000;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .map-button {
+            background: #4a5568;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        .map-button:hover {
+            background: #2d3748;
+            transform: translateY(-2px);
+        }
+
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(139, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .scroll-progress {
+            height: 100%;
+            background: #8b0000;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+
+        @media (max-width: 768px) {
+            .main-logo {
+                font-size: 2.8rem;
+            }
+            
+            .container {
+                padding: 2rem 1rem;
+            }
+            
+            .gold-ornament {
+                width: 100px;
+                height: 35px;
+            }
+            
+            .gold-ornament-left {
+                left: 10px;
+            }
+            
+            .gold-ornament-right {
+                right: 10px;
+            }
+            
+            .red-decoration {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-indicator">
+        <div class="scroll-progress" id="scrollProgress"></div>
+    </div>
+
+    <div class="floating-elements" id="floatingElements"></div>
+    
+    <div class="red-decoration red-decoration-left"></div>
+    <div class="red-decoration red-decoration-right"></div>
+
+    <div class="gold-ornament gold-ornament-left ornament-left">
+        <div class="ornament-shape"></div>
+    </div>
+    <div class="gold-ornament gold-ornament-right ornament-right">
+        <div class="ornament-shape"></div>
+    </div>
+
+    <div class="container">
+        <h1 class="main-logo">消えない祭り</h1>
+        
+        <div class="content-section">
+            <p class="subtitle-text">
+                京都初の没入型演劇！学園祭の2日間限定<br>
+                サブタイトル<br>
+                サブタイトル
+            </p>
+
+            <button class="reservation-button">予約</button>
+
+            <div class="features-section">
+                <h2 class="features-title">没入型演劇の特徴</h2>
+                <ul class="features-list">
+                    <li>あなたも物語の登場人物として参加できます</li>
+                    <li>観客参加型の革新的な演劇体験</li>
+                    <li>京都の伝統文化を現代的に再解釈</li>
+                    <li>学園祭限定の特別プログラム</li>
+                </ul>
+            </div>
+
+            <button class="reservation-button">予約</button>
+
+            <div class="event-info">
+                <div class="event-date">開催日時：11月23日（日）・24日（月祝）</div>
+                <p>時間：午後2時〜午後5時</p>
+                <p>会場：京都大学 北部祭メイン会場</p>
+            </div>
+
+            <div class="info-section">
+                <h3 class="info-title">会場/アクセス</h3>
+                <button class="map-button">MAP</button>
+                
+                <div class="info-text">
+                    <strong>料金</strong><br>
+                    一般：2,500円<br>
+                    学生：1,800円<br>
+                    高校生以下：1,000円
+                </div>
+
+                <div class="info-text">
+                    <strong>お問い合わせ</strong><br>
+                    Email: info@kienai-matsuri.jp<br>
+                    TEL: 075-XXX-XXXX
+                </div>
+
+                <div class="info-text">
+                    ご予約・詳しい情報はHPから！
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 和風の金色の粒子を生成
+        function createSakura() {
+            const sakura = document.createElement('div');
+            sakura.className = 'sakura';
+            sakura.style.left = Math.random() * 100 + '%';
+            sakura.style.animationDuration = (Math.random() * 5 + 10) + 's';
+            sakura.style.animationDelay = Math.random() * 3 + 's';
+            document.getElementById('floatingElements').appendChild(sakura);
+
+            setTimeout(() => {
+                sakura.remove();
+            }, 15000);
+        }
+
+        // 定期的に粒子を生成
+        setInterval(createSakura, 800);
+
+        // スクロール進捗バー
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
+        });
+
+        // マウス追従エフェクト（和風に調整）
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.createElement('div');
+            cursor.style.position = 'fixed';
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursor.style.width = '4px';
+            cursor.style.height = '4px';
+            cursor.style.background = 'rgba(139, 0, 0, 0.4)';
+            cursor.style.borderRadius = '50%';
+            cursor.style.pointerEvents = 'none';
+            cursor.style.zIndex = '9999';
+            cursor.style.animation = 'cursorFade 1.2s ease-out forwards';
+            document.body.appendChild(cursor);
+
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes cursorFade {
+                    0% { transform: scale(0); opacity: 0.4; }
+                    100% { transform: scale(2); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+
+            setTimeout(() => {
+                cursor.remove();
+                style.remove();
+            }, 1200);
+        });
+    </script>
+</body>
+</html>
