@@ -80,7 +80,7 @@ body {
 .vertical-text-bottom-left span:nth-child(8) { animation-delay: 2.4s; }
 
 .main-gif {
-    max-width: 600px; /* ロゴサイズをさらに大きく */
+    max-width: 400px; /* ロゴサイズをさらに大きく */
     width: 100%;
     height: auto;
     opacity: 0;
@@ -179,17 +179,12 @@ body {
 
 
 /* --- SCROLL-TRIGGERED CONTENT --- */
-.content-section {
-    padding: 10vh 0; /* 左右のpaddingを削除 */
-    max-width: none; /* 最大幅を解除 */
+.scroll-content-wrapper {
     width: 100%;
-    margin: 0 auto;
-    background: rgba(253, 250, 243, 0.85);
-    backdrop-filter: blur(4px);
-    border-radius: 12px;
     position: relative;
-    z-index: 1;
+    z-index: 5; /* Raise z-index to ensure it's above decorations */      
 }
+
 
 .sub-catchcopy {
     font-size: 1.6rem;
@@ -235,9 +230,8 @@ body {
 
 .character-icon {
     position: absolute;
-    width: 20vw;
-    max-width: 280px;
-    z-index: 5;
+    width: 100vw;
+    max-width: 600px;
 }
 .character-icon img {
     width: 100%;
@@ -247,37 +241,41 @@ body {
 
 .icon-fox {
     top: 15%;
-    left: 10%;
+    left: -3%;
+    z-index: 11;
 }
 
 .icon-crow {
-    top: 55%;
-    right: 10%;
+    top: 66%;
+    right: 0%;
+    z-index: 11; 
 }
 
 .event-cloud {
     position: absolute;
-    width: 15vw;
-    max-width: 180px;
+    width: 60vw;
+    max-width: 600px;
     z-index: 4;
 }
 
 .event-cloud-1 {
-    top: 35%;
-    right: 22%;
+    top: 20%;
+    right: 3%;
+    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards;
 }
 
 .event-cloud-2 {
     top: 65%;
-    left: 22%;
+    left: 5%;
+    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards;
 }
 
 .reserve-button-main {
-    background: var(--accent-color);
+    background: black;
     color: white;
     padding: 1.2rem 3rem;
-    border: none;
-    border-radius: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
@@ -288,9 +286,88 @@ body {
     z-index: 10;
 }
 .reserve-button-main:hover {
+    background: white;
+    color: black;
     transform: translateY(-4px);
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
 }
+
+/* --- ATTRACTION SECTION --- */
+.attraction-section {
+    padding: 5rem 2rem 15rem; /* 下に余白をさらに追加 */
+    max-width: 800px;
+    margin: 5rem auto;
+    background: rgba(253, 250, 243, 0.85);
+    backdrop-filter: blur(4px);
+    border: 3px solid black;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative; /* 子要素の配置のため */
+}
+.attraction-title {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 3rem;
+    color: black;
+}
+.attraction-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    position: relative; /* z-indexを有効にするため */
+    z-index: 12; /* キャラクター(11)より手前に表示 */
+}
+.attraction-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.attraction-item.fade-in-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.attraction-number {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: black;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+.attraction-text h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    color: black;
+}
+.attraction-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #333;
+}
+
+.icon-kama {
+    top: 40%;
+    right: -30%;
+    z-index: 11; 
+}
+
+.icon-kome {
+    top: 66%;
+    right: -10%;
+    z-index: 11; 
+}
+
 
 .fade-in-element {
     opacity: 0;
@@ -340,6 +417,11 @@ body {
     .event-cloud { width: 25vw; max-width: 120px; }
     .event-cloud-1 { top: 38%; right: 10%; }
     .event-cloud-2 { top: 60%; left: 10%; }
+    .attraction-section { padding: 3rem 1.5rem 8rem; }
+    .attraction-title { font-size: 1.8rem; }
+    .attraction-item { flex-direction: column; text-align: center; }
+    .attraction-number { margin: 0 auto 1rem; }
+    .attraction-text h3 { font-size: 1.3rem; }
 }
 
 @media (max-width: 480px) {
@@ -353,11 +435,12 @@ body {
     .character-icon, .event-cloud { display: none; }
     .reserve-button-main { font-size: 1.2rem; padding: 1rem 2.5rem; }
     .date-image-container { max-width: 90%; }
+    .attraction-section { padding: 2rem 1rem 6rem; margin: 3rem auto; }
 }
 
 /* Accessibility: Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span {
+    .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span, .attraction-item {
         animation: none !important;
         transition: none !important;
         opacity: 1 !important;
