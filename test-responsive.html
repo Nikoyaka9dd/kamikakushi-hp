@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        .device-info { background: #f0f0f0; padding: 10px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+    <h1>Responsive Design Test</h1>
+    
+    <div class="test-section">
+        <h2>Device Detection</h2>
+        <div class="device-info" id="deviceInfo">Loading...</div>
+    </div>
+    
+    <div class="test-section">
+        <h2>Screen Size Tests</h2>
+        <p>Current viewport: <span id="viewport">Loading...</span></p>
+        <p>Device pixel ratio: <span id="pixelRatio">Loading...</span></p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Media Query Tests</h2>
+        <div id="mediaQueries">Loading...</div>
+    </div>
+
+    <script>
+        // Test the PerformanceManager functionality
+        const PerformanceManager = {
+            detectDeviceCapabilities: function() {
+                const capabilities = {
+                    isMobile: this.isMobileDevice(),
+                    isTablet: this.isTabletDevice(),
+                    isLowEndDevice: this.isLowEndDevice(),
+                    supportsTouch: 'ontouchstart' in window,
+                    screenSize: {
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                        ratio: window.devicePixelRatio || 1
+                    },
+                    connection: this.getConnectionInfo(),
+                    reducedMotion: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+                    reducedData: window.matchMedia && window.matchMedia('(prefers-reduced-data: reduce)').matches
+                };
+                
+                return capabilities;
+            },
+            
+            isMobileDevice: function() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                       (window.innerWidth <= 768 && 'ontouchstart' in window);
+            },
+            
+            isTabletDevice: function() {
+                return /iPad|Android/i.test(navigator.userAgent) && 
+                       window.innerWidth >= 768 && window.innerWidth <= 1024;
+            },
+            
+            isLowEndDevice: function() {
+                const cores = navigator.hardwareConcurrency || 2;
+                const memory = navigator.deviceMemory || 2;
+                const connection = navigator.connection;
+                
+                let isLowEnd = false;
+                if (cores <= 2) isLowEnd = true;
+                if (memory <= 2) isLowEnd = true;
+                if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+                    isLowEnd = true;
+                }
+                
+                return isLowEnd;
+            },
+            
+            getConnectionInfo: function() {
+                const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                if (connection) {
+                    return {
+                        effectiveType: connection.effectiveType,
+                        downlink: connection.downlink,
+                        rtt: connection.rtt,
+                        saveData: connection.saveData
+                    };
+                }
+                return null;
+            }
+        };
+
+        function runTests() {
+            // Device detection test
+            const capabilities = PerformanceManager.detectDeviceCapabilities();
+            document.getElementById('deviceInfo').innerHTML = `
+                <strong>Device Type:</strong> ${capabilities.isMobile ? 'Mobile' : capabilities.isTablet ? 'Tablet' : 'Desktop'}<br>
+                <strong>Touch Support:</strong> ${capabilities.supportsTouch ? 'Yes' : 'No'}<br>
+                <strong>Low-end Device:</strong> ${capabilities.isLowEndDevice ? 'Yes' : 'No'}<br>
+                <strong>Reduced Motion:</strong> ${capabilities.reducedMotion ? 'Yes' : 'No'}<br>
+                <strong>Connection:</strong> ${capabilities.connection ? capabilities.connection.effectiveType : 'Unknown'}
+            `;
+            
+            // Viewport test
+            document.getElementById('viewport').textContent = `${window.innerWidth} x ${window.innerHeight}`;
+            document.getElementById('pixelRatio').textContent = window.devicePixelRatio || 1;
+            
+            // Media query tests
+            const mediaQueries = [
+                { query: '(max-width: 320px)', name: 'Very Small Mobile' },
+                { query: '(max-width: 480px)', name: 'Mobile' },
+                { query: '(max-width: 768px)', name: 'Tablet' },
+                { query: '(max-width: 1024px)', name: 'Large Tablet' },
+                { query: '(orientation: landscape)', name: 'Landscape' },
+                { query: '(hover: none) and (pointer: coarse)', name: 'Touch Device' },
+                { query: '(prefers-reduced-motion: reduce)', name: 'Reduced Motion' }
+            ];
+            
+            let mqResults = '';
+            mediaQueries.forEach(mq => {
+                const matches = window.matchMedia(mq.query).matches;
+                mqResults += `<div style="color: ${matches ? 'green' : 'red'}">
+                    ${mq.name}: ${matches ? 'MATCHES' : 'No match'}
+                </div>`;
+            });
+            
+            document.getElementById('mediaQueries').innerHTML = mqResults;
+        }
+
+        // Run tests on load and resize
+        document.addEventListener('DOMContentLoaded', runTests);
+        window.addEventListener('resize', runTests);
+    </script>
+</body>
+</html>

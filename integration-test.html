@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>統合テストと動作確認 - UI Animation Enhancement</title>
+    <style>
+        body {
+            font-family: 'YuGothic', 'Yu Gothic', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5dc;
+            color: #dc143c;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 2px solid #dc143c;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .test-section h2 {
+            color: #8b0000;
+            margin-top: 0;
+            border-bottom: 2px solid #dc143c;
+            padding-bottom: 10px;
+        }
+        
+        .test-result {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .test-pass {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .test-fail {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .test-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .test-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        
+        .performance-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #8b0000;
+        }
+        
+        .metric-label {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .browser-test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .browser-card {
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+        }
+        
+        .test-controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .test-button {
+            background: #8b0000;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .test-button:hover {
+            background: #a0001a;
+        }
+        
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #dc143c, #8b0000);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .log-container {
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 15px 0;
+        }
+        
+        .animation-preview {
+            border: 2px dashed #dc143c;
+            padding: 20px;
+            margin: 15px 0;
+            text-align: center;
+            min-height: 100px;
+            position: relative;
+            background: #f9f9f9;
+        }
+        
+        .test-iframe {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 UI Animation Enhancement - 統合テストと動作確認</h1>
+        
+        <div class="test-controls">
+            <button class="test-button" onclick="runAllTests()">全テスト実行</button>
+            <button class="test-button" onclick="runAnimationTests()">アニメーションテスト</button>
+            <button class="test-button" onclick="runPerformanceTests()">パフォーマンステスト</button>
+            <button class="test-button" onclick="runCompatibilityTests()">互換性テスト</button>
+            <button class="test-button" onclick="clearResults()">結果クリア</button>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        
+        <!-- 1. 全アニメーションの同時実行テスト -->
+        <div class="test-section">
+            <h2>🎬 1. 全アニメーションの同時実行テスト</h2>
+            <div id="animationTestResults"></div>
+            
+            <div class="animation-preview" id="animationPreview">
+                <p>アニメーションプレビューエリア</p>
+                <iframe src="index.html" class="test-iframe" id="animationIframe"></iframe>
+            </div>
+            
+            <div class="test-controls">
+                <button class="test-button" onclick="testSimultaneousAnimations()">同時実行テスト</button>
+                <button class="test-button" onclick="testAnimationConflicts()">競合テスト</button>
+                <button class="test-button" onclick="testAnimationTiming()">タイミングテスト</button>
+            </div>
+        </div>
+        
+        <!-- 2. ページリロード時の動作確認テスト -->
+        <div class="test-section">
+            <h2>🔄 2. ページリロード時の動作確認テスト</h2>
+            <div id="reloadTestResults"></div>
+            
+            <div class="test-controls">
+                <button class="test-button" onclick="testPageReload()">リロードテスト</button>
+                <button class="test-button" onclick="testCacheHandling()">キャッシュテスト</button>
+                <button class="test-button" onclick="testStateReset()">状態リセットテスト</button>
+            </div>
+        </div>
+        
+        <!-- 3. 異なるブラウザでの互換性テスト -->
+        <div class="test-section">
+            <h2>🌐 3. ブラウザ互換性テスト</h2>
+            <div id="compatibilityTestResults"></div>
+            
+            <div class="browser-test-grid" id="browserTestGrid">
+                <!-- ブラウザ別テスト結果がここに表示される -->
+            </div>
+            
+            <div class="test-controls">
+                <button class="test-button" onclick="testBrowserCompatibility()">互換性テスト</button>
+                <button class="test-button" onclick="testFeatureSupport()">機能サポートテスト</button>
+                <button class="test-button" onclick="testFallbacks()">フォールバックテスト</button>
+            </div>
+        </div>
+        
+        <!-- 4. パフォーマンス測定とボトルネック特定 -->
+        <div class="test-section">
+            <h2>⚡ 4. パフォーマンス測定とボトルネック特定</h2>
+            <div id="performanceTestResults"></div>
+            
+            <div class="performance-metrics" id="performanceMetrics">
+                <!-- パフォーマンス指標がここに表示される -->
+            </div>
+            
+            <div class="test-controls">
+                <button class="test-button" onclick="measurePerformance()">パフォーマンス測定</button>
+                <button class="test-button" onclick="profileAnimations()">アニメーションプロファイル</button>
+                <button class="test-button" onclick="memoryLeakTest()">メモリリークテスト</button>
+            </div>
+        </div>
+        
+        <!-- テストログ -->
+        <div class="test-section">
+            <h2>📋 テストログ</h2>
+            <div class="log-container" id="testLog"></div>
+        </div>
+    </div>
+
+    <script>
+        // テスト管理システム
+        class IntegrationTestManager {
+            constructor() {
+                this.testResults = [];
+                this.currentTest = null;
+                this.testStartTime = null;
+                this.performanceData = {};
+                this.logContainer = document.getElementById('testLog');
+                this.progressFill = document.getElementById('progressFill');
+                this.totalTests = 0;
+                this.completedTests = 0;
+            }
+            
+            log(message, type = 'info') {
+                const timestamp = new Date().toLocaleTimeString();
+                const logEntry = document.createElement('div');
+                logEntry.innerHTML = `[${timestamp}] ${type.toUpperCase()}: ${message}`;
+                logEntry.style.color = this.getLogColor(type);
+                this.logContainer.appendChild(logEntry);
+                this.logContainer.scrollTop = this.logContainer.scrollHeight;
+                console.log(`[IntegrationTest] ${message}`);
+            }
+            
+            getLogColor(type) {
+                const colors = {
+                    'info': '#0f0',
+                    'success': '#0f0',
+                    'warning': '#ff0',
+                    'error': '#f00',
+                    'debug': '#0ff'
+                };
+                return colors[type] || '#0f0';
+            }
+            
+            updateProgress() {
+                const progress = (this.completedTests / this.totalTests) * 100;
+                this.progressFill.style.width = `${progress}%`;
+            }
+            
+            addTestResult(testName, passed, details, duration) {
+                this.testResults.push({
+                    name: testName,
+                    passed: passed,
+                    details: details,
+                    duration: duration,
+                    timestamp: new Date()
+                });
+                
+                this.completedTests++;
+                this.updateProgress();
+                
+                const resultClass = passed ? 'test-pass' : 'test-fail';
+                const resultText = passed ? 'PASS' : 'FAIL';
+                this.log(`${testName}: ${resultText} (${duration}ms) - ${details}`, passed ? 'success' : 'error');
+            }
+            
+            startTest(testName) {
+                this.currentTest = testName;
+                this.testStartTime = performance.now();
+                this.log(`テスト開始: ${testName}`, 'info');
+            }
+            
+            endTest(passed, details) {
+                if (!this.currentTest) return;
+                
+                const duration = Math.round(performance.now() - this.testStartTime);
+                this.addTestResult(this.currentTest, passed, details, duration);
+                this.currentTest = null;
+                this.testStartTime = null;
+            }
+            
+            displayResults(containerId, results) {
+                const container = document.getElementById(containerId);
+                container.innerHTML = '';
+                
+                results.forEach(result => {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = `test-result ${result.passed ? 'test-pass' : 'test-fail'}`;
+                    resultDiv.innerHTML = `
+                        <strong>${result.name}</strong> - ${result.passed ? 'PASS' : 'FAIL'}<br>
+                        <small>${result.details} (実行時間: ${result.duration}ms)</small>
+                    `;
+                    container.appendChild(resultDiv);
+                });
+            }
+            
+            clearResults() {
+                this.testResults = [];
+                this.completedTests = 0;
+                this.totalTests = 0;
+                this.updateProgress();
+                this.logContainer.innerHTML = '';
+                
+                // 各結果コンテナをクリア
+                ['animationTestResults', 'reloadTestResults', 'compatibilityTestResults', 'performanceTestResults'].forEach(id => {
+                    const container = document.getElementById(id);
+                    if (container) container.innerHTML = '';
+                });
+                
+                // パフォーマンス指標をクリア
+                const metricsContainer = document.getElementById('performanceMetrics');
+                if (metricsContainer) metricsContainer.innerHTML = '';
+                
+                this.log('テスト結果をクリアしました', 'info');
+            }
+        }
+        
+        // グローバルテストマネージャーインスタンス
+        const testManager = new IntegrationTestManager();
+        
+        // 1. 全アニメーションの同時実行テスト
+        async function testSimultaneousAnimations() {
+            testManager.startTest('全アニメーション同時実行');
+            
+            try {
+                // iframeからアニメーション状態を取得
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // アニメーション要素の存在確認
+                const animationElements = [
+                    'mainGif',
+                    'cloudLeft', 
+                    'cloudRight',
+                    'floatingElements'
+                ];
+                
+                let allElementsFound = true;
+                const missingElements = [];
+                
+                animationElements.forEach(elementId => {
+                    const element = iframeWindow.document.getElementById(elementId);
+                    if (!element) {
+                        allElementsFound = false;
+                        missingElements.push(elementId);
+                    }
+                });
+                
+                if (!allElementsFound) {
+                    testManager.endTest(false, `要素が見つかりません: ${missingElements.join(', ')}`);
+                    return;
+                }
+                
+                // アニメーション状態の確認
+                const animationStatus = iframeWindow.getAnimationStatus ? iframeWindow.getAnimationStatus() : null;
+                
+                if (animationStatus) {
+                    const hasActiveAnimations = Object.values(animationStatus.states).some(state => state === true);
+                    testManager.endTest(hasActiveAnimations, `アニメーション状態: ${JSON.stringify(animationStatus.states)}`);
+                } else {
+                    testManager.endTest(true, 'アニメーション要素が正常に配置されています');
+                }
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+            }
+            
+            testManager.displayResults('animationTestResults', testManager.testResults.filter(r => r.name.includes('アニメーション')));
+        }
+        
+        async function testAnimationConflicts() {
+            testManager.startTest('アニメーション競合テスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // 複数のアニメーションを同時に開始してみる
+                if (iframeWindow.AnimationManager) {
+                    const initialStates = { ...iframeWindow.AnimationManager.states };
+                    
+                    // 状態をリセットして再実行
+                    iframeWindow.AnimationManager.resetStates();
+                    
+                    // 複数のアニメーションを同時実行
+                    setTimeout(() => {
+                        if (iframeWindow.initMainGifAnimation) iframeWindow.initMainGifAnimation();
+                        if (iframeWindow.initCloudAnimations) iframeWindow.initCloudAnimations();
+                    }, 100);
+                    
+                    // 1秒後に状態を確認
+                    setTimeout(() => {
+                        const finalStates = iframeWindow.AnimationManager.states;
+                        const hasConflicts = Object.keys(finalStates).some(key => 
+                            finalStates[key] !== initialStates[key] && finalStates[key] === 'error'
+                        );
+                        
+                        testManager.endTest(!hasConflicts, `競合検出: ${hasConflicts ? 'あり' : 'なし'}`);
+                        testManager.displayResults('animationTestResults', testManager.testResults.filter(r => r.name.includes('アニメーション')));
+                    }, 1000);
+                } else {
+                    testManager.endTest(false, 'AnimationManagerが見つかりません');
+                    testManager.displayResults('animationTestResults', testManager.testResults.filter(r => r.name.includes('アニメーション')));
+                }
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('animationTestResults', testManager.testResults.filter(r => r.name.includes('アニメーション')));
+            }
+        }
+        
+        async function testAnimationTiming() {
+            testManager.startTest('アニメーションタイミングテスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                const startTime = performance.now();
+                
+                // GIFアニメーション開始
+                if (iframeWindow.initMainGifAnimation) {
+                    iframeWindow.initMainGifAnimation();
+                }
+                
+                // 1秒後に雲アニメーションが開始されるかチェック
+                setTimeout(() => {
+                    const cloudLeft = iframeWindow.document.getElementById('cloudLeft');
+                    const cloudRight = iframeWindow.document.getElementById('cloudRight');
+                    
+                    const cloudLeftVisible = cloudLeft && window.getComputedStyle(cloudLeft).opacity > 0;
+                    const cloudRightVisible = cloudRight && window.getComputedStyle(cloudRight).opacity > 0;
+                    
+                    const timingCorrect = cloudLeftVisible || cloudRightVisible;
+                    const elapsedTime = Math.round(performance.now() - startTime);
+                    
+                    testManager.endTest(timingCorrect, `雲アニメーション開始タイミング: ${elapsedTime}ms`);
+                    testManager.displayResults('animationTestResults', testManager.testResults.filter(r => r.name.includes('アニメーション')));
+                }, 1200); // 1.2秒後にチェック（1秒の遅延 + バッファ）
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('animationTestResults', testManager.testResults.filter(r => r.name.includes('アニメーション')));
+            }
+        }
+        
+        // 2. ページリロード時の動作確認テスト
+        async function testPageReload() {
+            testManager.startTest('ページリロードテスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const originalSrc = iframe.src;
+                
+                // iframeをリロード
+                iframe.src = '';
+                
+                setTimeout(() => {
+                    iframe.src = originalSrc;
+                    
+                    // リロード後のアニメーション確認
+                    setTimeout(() => {
+                        const iframeWindow = iframe.contentWindow;
+                        const mainGif = iframeWindow.document.getElementById('mainGif');
+                        
+                        if (mainGif) {
+                            const isAnimating = window.getComputedStyle(mainGif).animationName !== 'none';
+                            testManager.endTest(isAnimating, `リロード後アニメーション: ${isAnimating ? '正常' : '異常'}`);
+                        } else {
+                            testManager.endTest(false, 'メインGIF要素が見つかりません');
+                        }
+                        
+                        testManager.displayResults('reloadTestResults', testManager.testResults.filter(r => r.name.includes('リロード')));
+                    }, 2000);
+                }, 500);
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('reloadTestResults', testManager.testResults.filter(r => r.name.includes('リロード')));
+            }
+        }
+        
+        async function testCacheHandling() {
+            testManager.startTest('キャッシュハンドリングテスト');
+            
+            try {
+                // キャッシュ無効化でのリロードテスト
+                const iframe = document.getElementById('animationIframe');
+                const timestamp = Date.now();
+                const originalSrc = iframe.src.split('?')[0];
+                
+                iframe.src = `${originalSrc}?nocache=${timestamp}`;
+                
+                setTimeout(() => {
+                    const iframeWindow = iframe.contentWindow;
+                    const assetsLoaded = iframeWindow.document.images.length > 0;
+                    
+                    testManager.endTest(assetsLoaded, `キャッシュ無効化後の読み込み: ${assetsLoaded ? '成功' : '失敗'}`);
+                    testManager.displayResults('reloadTestResults', testManager.testResults.filter(r => r.name.includes('リロード') || r.name.includes('キャッシュ')));
+                }, 3000);
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('reloadTestResults', testManager.testResults.filter(r => r.name.includes('リロード') || r.name.includes('キャッシュ')));
+            }
+        }
+        
+        async function testStateReset() {
+            testManager.startTest('状態リセットテスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                if (iframeWindow.AnimationManager) {
+                    // 状態を変更
+                    iframeWindow.AnimationManager.updateState('mainGifLoaded', true);
+                    iframeWindow.AnimationManager.updateState('cloudsAnimated', true);
+                    
+                    // リセット実行
+                    iframeWindow.AnimationManager.resetStates();
+                    
+                    // リセット確認
+                    const allReset = Object.values(iframeWindow.AnimationManager.states).every(state => state === false);
+                    
+                    testManager.endTest(allReset, `状態リセット: ${allReset ? '成功' : '失敗'}`);
+                } else {
+                    testManager.endTest(false, 'AnimationManagerが見つかりません');
+                }
+                
+                testManager.displayResults('reloadTestResults', testManager.testResults.filter(r => r.name.includes('リロード') || r.name.includes('状態')));
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('reloadTestResults', testManager.testResults.filter(r => r.name.includes('リロード') || r.name.includes('状態')));
+            }
+        }
+        
+        // 3. ブラウザ互換性テスト
+        async function testBrowserCompatibility() {
+            testManager.startTest('ブラウザ互換性テスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // ブラウザ情報を取得
+                const browserInfo = {
+                    userAgent: navigator.userAgent,
+                    vendor: navigator.vendor,
+                    platform: navigator.platform,
+                    cookieEnabled: navigator.cookieEnabled,
+                    onLine: navigator.onLine,
+                    language: navigator.language
+                };
+                
+                // 機能サポート確認
+                const featureSupport = {
+                    intersectionObserver: 'IntersectionObserver' in window,
+                    cssAnimations: CSS.supports('animation', 'test'),
+                    cssTransitions: CSS.supports('transition', 'test'),
+                    cssTransforms: CSS.supports('transform', 'translateX(0)'),
+                    flexbox: CSS.supports('display', 'flex'),
+                    grid: CSS.supports('display', 'grid'),
+                    customProperties: CSS.supports('--test', '0'),
+                    webp: false // WebP support check would need more complex logic
+                };
+                
+                // 互換性スコア計算
+                const supportedFeatures = Object.values(featureSupport).filter(Boolean).length;
+                const totalFeatures = Object.keys(featureSupport).length;
+                const compatibilityScore = (supportedFeatures / totalFeatures) * 100;
+                
+                const isCompatible = compatibilityScore >= 80; // 80%以上で互換性ありと判定
+                
+                testManager.endTest(isCompatible, `互換性スコア: ${compatibilityScore.toFixed(1)}% (${supportedFeatures}/${totalFeatures})`);
+                
+                // ブラウザ別結果表示
+                this.displayBrowserResults(browserInfo, featureSupport, compatibilityScore);
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+            }
+            
+            testManager.displayResults('compatibilityTestResults', testManager.testResults.filter(r => r.name.includes('互換性')));
+        }
+        
+        function displayBrowserResults(browserInfo, featureSupport, score) {
+            const container = document.getElementById('browserTestGrid');
+            
+            // ブラウザ名を推定
+            let browserName = 'Unknown';
+            if (browserInfo.userAgent.includes('Chrome')) browserName = 'Chrome';
+            else if (browserInfo.userAgent.includes('Firefox')) browserName = 'Firefox';
+            else if (browserInfo.userAgent.includes('Safari')) browserName = 'Safari';
+            else if (browserInfo.userAgent.includes('Edge')) browserName = 'Edge';
+            
+            const browserCard = document.createElement('div');
+            browserCard.className = 'browser-card';
+            browserCard.innerHTML = `
+                <h3>${browserName}</h3>
+                <div class="metric-value">${score.toFixed(1)}%</div>
+                <div class="metric-label">互換性スコア</div>
+                <hr>
+                <div style="text-align: left; font-size: 0.9em;">
+                    ${Object.entries(featureSupport).map(([feature, supported]) => 
+                        `<div style="color: ${supported ? 'green' : 'red'}">
+                            ${supported ? '✓' : '✗'} ${feature}
+                        </div>`
+                    ).join('')}
+                </div>
+            `;
+            
+            container.appendChild(browserCard);
+        }
+        
+        async function testFeatureSupport() {
+            testManager.startTest('機能サポートテスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // 必要な機能のサポート状況をチェック
+                const criticalFeatures = {
+                    'CSS Animations': CSS.supports('animation', 'test'),
+                    'CSS Transitions': CSS.supports('transition', 'test'),
+                    'CSS Transforms': CSS.supports('transform', 'translateX(0)'),
+                    'Intersection Observer': 'IntersectionObserver' in window,
+                    'RequestAnimationFrame': 'requestAnimationFrame' in window,
+                    'CSS Custom Properties': CSS.supports('--test', '0')
+                };
+                
+                const unsupportedFeatures = Object.entries(criticalFeatures)
+                    .filter(([feature, supported]) => !supported)
+                    .map(([feature]) => feature);
+                
+                const allSupported = unsupportedFeatures.length === 0;
+                
+                testManager.endTest(allSupported, 
+                    allSupported ? '全機能サポート済み' : `未サポート機能: ${unsupportedFeatures.join(', ')}`
+                );
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+            }
+            
+            testManager.displayResults('compatibilityTestResults', testManager.testResults.filter(r => r.name.includes('互換性') || r.name.includes('機能')));
+        }
+        
+        async function testFallbacks() {
+            testManager.startTest('フォールバック機能テスト');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // フォールバック機能をテスト
+                if (iframeWindow.ErrorHandler) {
+                    // 意図的にエラーを発生させてフォールバックをテスト
+                    const testElement = iframeWindow.document.createElement('img');
+                    testElement.src = 'nonexistent-image.jpg';
+                    
+                    let fallbackTriggered = false;
+                    
+                    // エラーハンドラーをモック
+                    const originalHandler = iframeWindow.ErrorHandler.handleImageError;
+                    iframeWindow.ErrorHandler.handleImageError = function(element, fallback, context) {
+                        fallbackTriggered = true;
+                        originalHandler.call(this, element, fallback, context);
+                    };
+                    
+                    testElement.onerror = () => {
+                        iframeWindow.ErrorHandler.handleImageError(testElement, () => {}, 'test');
+                    };
+                    
+                    // 少し待ってからフォールバックの動作を確認
+                    setTimeout(() => {
+                        testManager.endTest(fallbackTriggered, `フォールバック動作: ${fallbackTriggered ? '正常' : '異常'}`);
+                        testManager.displayResults('compatibilityTestResults', testManager.testResults.filter(r => r.name.includes('互換性') || r.name.includes('フォールバック')));
+                    }, 1000);
+                    
+                } else {
+                    testManager.endTest(false, 'ErrorHandlerが見つかりません');
+                    testManager.displayResults('compatibilityTestResults', testManager.testResults.filter(r => r.name.includes('互換性') || r.name.includes('フォールバック')));
+                }
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('compatibilityTestResults', testManager.testResults.filter(r => r.name.includes('互換性') || r.name.includes('フォールバック')));
+            }
+        }
+        
+        // 4. パフォーマンス測定とボトルネック特定
+        async function measurePerformance() {
+            testManager.startTest('パフォーマンス測定');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // パフォーマンス測定開始
+                const startTime = performance.now();
+                let frameCount = 0;
+                let lastFrameTime = startTime;
+                
+                // FPS測定
+                function measureFPS() {
+                    const currentTime = performance.now();
+                    frameCount++;
+                    
+                    if (currentTime - lastFrameTime >= 1000) { // 1秒間隔
+                        const fps = Math.round(frameCount * 1000 / (currentTime - lastFrameTime));
+                        testManager.performanceData.fps = fps;
+                        frameCount = 0;
+                        lastFrameTime = currentTime;
+                        
+                        // FPS測定を3秒間継続
+                        if (currentTime - startTime < 3000) {
+                            requestAnimationFrame(measureFPS);
+                        } else {
+                            completePerformanceTest();
+                        }
+                    } else {
+                        requestAnimationFrame(measureFPS);
+                    }
+                }
+                
+                function completePerformanceTest() {
+                    // メモリ使用量測定
+                    const memoryInfo = performance.memory ? {
+                        used: Math.round(performance.memory.usedJSHeapSize / 1024 / 1024),
+                        total: Math.round(performance.memory.totalJSHeapSize / 1024 / 1024),
+                        limit: Math.round(performance.memory.jsHeapSizeLimit / 1024 / 1024)
+                    } : null;
+                    
+                    // DOM要素数
+                    const domElements = iframeWindow.document.querySelectorAll('*').length;
+                    
+                    // アニメーション要素数
+                    const animatedElements = iframeWindow.document.querySelectorAll('[style*="animation"], [class*="slide"], [class*="fade"]').length;
+                    
+                    // パフォーマンススコア計算
+                    let score = 100;
+                    if (testManager.performanceData.fps < 30) score -= 30;
+                    if (memoryInfo && memoryInfo.used > 50) score -= 20;
+                    if (domElements > 200) score -= 10;
+                    if (animatedElements > 20) score -= 10;
+                    
+                    testManager.performanceData = {
+                        ...testManager.performanceData,
+                        memory: memoryInfo,
+                        domElements: domElements,
+                        animatedElements: animatedElements,
+                        score: Math.max(0, score)
+                    };
+                    
+                    const isGoodPerformance = score >= 70;
+                    testManager.endTest(isGoodPerformance, `パフォーマンススコア: ${score}/100`);
+                    
+                    // パフォーマンス指標を表示
+                    displayPerformanceMetrics();
+                    testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('パフォーマンス')));
+                }
+                
+                // FPS測定開始
+                requestAnimationFrame(measureFPS);
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('パフォーマンス')));
+            }
+        }
+        
+        function displayPerformanceMetrics() {
+            const container = document.getElementById('performanceMetrics');
+            const data = testManager.performanceData;
+            
+            container.innerHTML = `
+                <div class="metric-card">
+                    <div class="metric-value">${data.fps || 'N/A'}</div>
+                    <div class="metric-label">FPS</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.memory ? data.memory.used : 'N/A'}</div>
+                    <div class="metric-label">メモリ使用量 (MB)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.domElements || 'N/A'}</div>
+                    <div class="metric-label">DOM要素数</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.animatedElements || 'N/A'}</div>
+                    <div class="metric-label">アニメーション要素数</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">${data.score || 'N/A'}</div>
+                    <div class="metric-label">総合スコア</div>
+                </div>
+            `;
+        }
+        
+        async function profileAnimations() {
+            testManager.startTest('アニメーションプロファイル');
+            
+            try {
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                // アニメーション要素のパフォーマンスをプロファイル
+                const animatedElements = iframeWindow.document.querySelectorAll('.main-gif, .cloud-image, .fade-in-element, .sakura');
+                
+                let totalAnimations = animatedElements.length;
+                let smoothAnimations = 0;
+                
+                animatedElements.forEach(element => {
+                    const computedStyle = iframeWindow.getComputedStyle(element);
+                    const hasWillChange = computedStyle.willChange !== 'auto';
+                    const hasTransform3d = computedStyle.transform !== 'none';
+                    
+                    // スムーズなアニメーションの条件をチェック
+                    if (hasWillChange || hasTransform3d) {
+                        smoothAnimations++;
+                    }
+                });
+                
+                const optimizationRatio = (smoothAnimations / totalAnimations) * 100;
+                const isOptimized = optimizationRatio >= 80;
+                
+                testManager.endTest(isOptimized, `最適化率: ${optimizationRatio.toFixed(1)}% (${smoothAnimations}/${totalAnimations})`);
+                testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('パフォーマンス') || r.name.includes('プロファイル')));
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('パフォーマンス') || r.name.includes('プロファイル')));
+            }
+        }
+        
+        async function memoryLeakTest() {
+            testManager.startTest('メモリリークテスト');
+            
+            try {
+                if (!performance.memory) {
+                    testManager.endTest(false, 'メモリ情報が利用できません（Chrome以外のブラウザ）');
+                    testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('メモリ')));
+                    return;
+                }
+                
+                const initialMemory = performance.memory.usedJSHeapSize;
+                
+                // 複数回アニメーションを実行してメモリリークをチェック
+                const iframe = document.getElementById('animationIframe');
+                const iframeWindow = iframe.contentWindow;
+                
+                for (let i = 0; i < 5; i++) {
+                    if (iframeWindow.AnimationManager) {
+                        iframeWindow.AnimationManager.resetStates();
+                        if (iframeWindow.initMainGifAnimation) iframeWindow.initMainGifAnimation();
+                        if (iframeWindow.initCloudAnimations) iframeWindow.initCloudAnimations();
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+                
+                // ガベージコレクションを促す
+                if (window.gc) {
+                    window.gc();
+                }
+                
+                setTimeout(() => {
+                    const finalMemory = performance.memory.usedJSHeapSize;
+                    const memoryIncrease = finalMemory - initialMemory;
+                    const memoryIncreaseKB = Math.round(memoryIncrease / 1024);
+                    
+                    // 1MB以上の増加でメモリリークの可能性
+                    const hasMemoryLeak = memoryIncrease > 1024 * 1024;
+                    
+                    testManager.endTest(!hasMemoryLeak, `メモリ増加: ${memoryIncreaseKB}KB ${hasMemoryLeak ? '(リークの可能性)' : '(正常)'}`);
+                    testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('メモリ')));
+                }, 1000);
+                
+            } catch (error) {
+                testManager.endTest(false, `エラー: ${error.message}`);
+                testManager.displayResults('performanceTestResults', testManager.testResults.filter(r => r.name.includes('メモリ')));
+            }
+        }
+        
+        // 統合テスト実行関数
+        async function runAllTests() {
+            testManager.clearResults();
+            testManager.totalTests = 12; // 全テスト数
+            testManager.log('統合テスト開始', 'info');
+            
+            // 順次実行
+            await testSimultaneousAnimations();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testAnimationConflicts();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testAnimationTiming();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testPageReload();
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            await testCacheHandling();
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            await testStateReset();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testBrowserCompatibility();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testFeatureSupport();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await testFallbacks();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await measurePerformance();
+            await new Promise(resolve => setTimeout(resolve, 3000));
+            
+            await profileAnimations();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            await memoryLeakTest();
+            
+            testManager.log('全テスト完了', 'success');
+        }
+        
+        async function runAnimationTests() {
+            testManager.clearResults();
+            testManager.totalTests = 3;
+            
+            await testSimultaneousAnimations();
+            await testAnimationConflicts();
+            await testAnimationTiming();
+        }
+        
+        async function runPerformanceTests() {
+            testManager.clearResults();
+            testManager.totalTests = 3;
+            
+            await measurePerformance();
+            await profileAnimations();
+            await memoryLeakTest();
+        }
+        
+        async function runCompatibilityTests() {
+            testManager.clearResults();
+            testManager.totalTests = 3;
+            
+            await testBrowserCompatibility();
+            await testFeatureSupport();
+            await testFallbacks();
+        }
+        
+        function clearResults() {
+            testManager.clearResults();
+        }
+        
+        // ページ読み込み時の初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            testManager.log('統合テストシステム初期化完了', 'info');
+            
+            // iframeの読み込み完了を待つ
+            const iframe = document.getElementById('animationIframe');
+            iframe.addEventListener('load', function() {
+                testManager.log('テスト対象ページの読み込み完了', 'info');
+            });
+        });
+    </script>
+</body>
+</html>

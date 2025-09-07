@@ -1,0 +1,1003 @@
+/* CSS Variables for color scheme and z-index layers */
+:root {
+    --background-color: #f5f5dc; /* クリーム色 */
+    --text-color: #dc143c; /* 朱色 */
+    --accent-color: #8b0000; /* 深紅色 */
+    --gold-color: #b8860b;
+    --light-gold: #d4af37;
+    
+    /* Z-index layer system for animation hierarchy */
+    --z-background-decorations: 0;
+    --z-floating-elements: 1;
+    --z-cloud-layer: 2;
+    --z-main-content: 3;
+    --z-ui-elements: 100;
+    --z-cursor-effects: 9999;
+    --z-scroll-indicator: 1000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'YuGothic', 'Yu Gothic', sans-serif;
+    background: var(--background-color);
+    overflow-x: hidden;
+    position: relative;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+.floating-elements {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-floating-elements);
+    /* Performance optimization for floating sakura particles */
+    will-change: contents;
+}
+
+.sakura {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: radial-gradient(circle, var(--light-gold), var(--gold-color));
+    border-radius: 50% 0;
+    transform: rotate(45deg);
+    animation: fall 12s linear infinite;
+    opacity: 0.6;
+    /* Performance optimization for smooth falling animation */
+    will-change: transform, opacity;
+    /* Use GPU acceleration for better performance */
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(-100vh) rotate(45deg);
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(100vh) rotate(405deg);
+        opacity: 0;
+    }
+}
+
+.red-decoration {
+    position: fixed;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    z-index: var(--z-background-decorations);
+    /* Performance optimization for background decorations */
+    will-change: transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.red-decoration-left {
+    left: 0;
+    background: linear-gradient(135deg, var(--text-color), var(--accent-color));
+    clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+    transform: translateX(-100%);
+    animation: slideInLeft 1.5s ease-out 1s forwards;
+}
+
+.red-decoration-right {
+    right: 0;
+    background: linear-gradient(225deg, var(--text-color), var(--accent-color));
+    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+    transform: translateX(100%);
+    animation: slideInRight 1.5s ease-out 1s forwards;
+}
+
+@keyframes slideInLeft {
+    to { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+    to { transform: translateX(0); }
+}
+
+
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    position: relative;
+    z-index: var(--z-main-content);
+    text-align: center;
+}
+
+.main-logo {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.main-gif {
+    max-width: 40%;
+    height: auto;
+    opacity: 0;
+    animation: gifFadeIn 4s ease-out forwards;
+    border-radius: 8px;
+    will-change: opacity, transform;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+@keyframes gifFadeIn {
+    0% { 
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    100% { 
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.content-section {
+    opacity: 0;
+    animation: contentFadeIn 1.5s ease-out 3s forwards;
+    /* Performance optimization for content section fade-in */
+    will-change: opacity;
+}
+
+@keyframes contentFadeIn {
+    to { opacity: 1; }
+}
+
+.subtitle-text {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.reservation-button {
+    background: var(--accent-color);
+    color: white;
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 2rem 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    /* Performance optimization for button hover effects */
+    will-change: transform, background-color;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.reservation-button:hover {
+    background: #a0001a;
+    transform: translateY(-2px);
+}
+
+.reservation-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.reservation-button:hover::before {
+    left: 100%;
+}
+
+.features-section {
+    margin: 3rem 0;
+}
+
+.features-title {
+    color: var(--accent-color);
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.features-list {
+    list-style: none;
+    text-align: left;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.features-list li {
+    font-size: 1rem;
+    margin: 1rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.features-list li::before {
+    content: '・';
+    position: absolute;
+    left: 0;
+    color: var(--accent-color);
+    font-weight: bold;
+}
+
+.event-info {
+    margin: 3rem 0;
+    font-size: 1rem;
+    line-height: 1.8;
+}
+
+.event-date {
+    color: var(--accent-color);
+    font-weight: bold;
+    margin: 1rem 0;
+}
+
+.info-section {
+    margin: 2rem 0;
+    text-align: left;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info-title {
+    color: var(--accent-color);
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.info-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.map-button {
+    background: #4a5568;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: block;
+    margin: 1rem auto;
+    /* Performance optimization for button hover effects */
+    will-change: transform, background-color;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+.map-button:hover {
+    background: #2d3748;
+    transform: translateY(-2px);
+}
+
+.scroll-indicator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(139, 0, 0, 0.2);
+    z-index: var(--z-scroll-indicator);
+}
+
+.scroll-progress {
+    height: 100%;
+    background: var(--accent-color);
+    width: 0%;
+    transition: width 0.1s ease;
+    /* Performance optimization for scroll progress bar */
+    will-change: width;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+/* Cloud slide-in animation styles */
+.cloud-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-cloud-layer);
+    /* Performance optimization for cloud container */
+    will-change: contents;
+}
+
+.cloud-image {
+    position: absolute;
+    max-width: 800px;
+    height: auto;
+    opacity: 0;
+    transition: all 3s ease-in-out;
+    will-change: transform, opacity;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.cloud-left {
+    top: 20%;
+    left: -800px;
+    transform: translateX(-100%) scale(0.9);
+}
+
+.cloud-right {
+    top: 15%;
+    right: -800px;
+    transform: translateX(100%) scale(0.9);
+}
+
+/* Animation classes that will be applied via JavaScript */
+.cloud-left.slide-in {
+    opacity: 0.85;
+    transform: translateX(0) scale(1);
+    left: 50px;
+}
+
+.cloud-right.slide-in {
+    opacity: 0.85;
+    transform: translateX(0) scale(1);
+    right: 50px;
+}
+
+/* Scroll-linked fade-in animation styles */
+.fade-in-element {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    will-change: opacity, transform;
+}
+
+.fade-in-element.fade-in-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Accessibility: Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    /* Disable all animations and transitions for users who prefer reduced motion */
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+        transform: none !important;
+    }
+    
+    /* Ensure fade-in elements are immediately visible */
+    .fade-in-element {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+    
+    .fade-in-element.fade-in-visible {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    
+    /* Make main GIF immediately visible */
+    .main-gif {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+    
+    /* Make cloud images immediately visible in their final positions */
+    .cloud-image {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .cloud-left {
+        opacity: 0.85 !important;
+        transform: none !important;
+        left: 50px !important;
+    }
+    
+    .cloud-right {
+        opacity: 0.85 !important;
+        transform: none !important;
+        right: 50px !important;
+    }
+    
+    /* Disable sakura falling animation */
+    .sakura {
+        animation: none !important;
+        opacity: 0.6 !important;
+        position: static !important;
+        display: none !important;
+    }
+    
+    /* Disable decorative animations */
+    .red-decoration-left,
+    .red-decoration-right {
+        transform: translateX(0) !important;
+        animation: none !important;
+    }
+    
+    .gold-ornament-left,
+    .gold-ornament-right {
+        transform: translateY(-50%) translateX(0) !important;
+        animation: none !important;
+    }
+    
+    /* Disable button hover animations */
+    .reservation-button:hover,
+    .map-button:hover {
+        transform: none !important;
+    }
+    
+    .reservation-button::before {
+        display: none !important;
+    }
+}
+
+/* Browser compatibility fallbacks */
+/* Fallback for browsers without CSS Animation support */
+.no-cssanimations .main-gif {
+    opacity: 1 !important;
+    transform: scale(1) !important;
+}
+
+.no-cssanimations .content-section {
+    opacity: 1 !important;
+}
+
+.no-cssanimations .red-decoration-left,
+.no-cssanimations .red-decoration-right {
+    transform: translateX(0) !important;
+}
+
+.no-cssanimations .gold-ornament-left,
+.no-cssanimations .gold-ornament-right {
+    transform: translateY(-50%) translateX(0) !important;
+}
+
+/* Fallback for browsers without CSS Transition support */
+.no-csstransitions .fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.no-csstransitions .cloud-image {
+    opacity: 0.85 !important;
+    transform: translateX(0) scale(1) !important;
+}
+
+.no-csstransitions .cloud-left {
+    left: 50px !important;
+}
+
+.no-csstransitions .cloud-right {
+    right: 50px !important;
+}
+
+.no-csstransitions .reservation-button:hover,
+.no-csstransitions .map-button:hover {
+    transform: none !important;
+}
+
+/* Fallback for very old browsers */
+.no-js .fade-in-element {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.no-js .main-gif {
+    opacity: 1 !important;
+}
+
+.no-js .cloud-image {
+    opacity: 0.85 !important;
+}
+
+/* Error state styles */
+.image-error {
+    display: none !important;
+}
+
+.animation-error {
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* Screen reader only content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--accent-color);
+    color: white;
+    padding: 8px;
+    text-decoration: none;
+    border-radius: 4px;
+    z-index: 10000;
+    font-weight: bold;
+}
+
+.skip-link:focus {
+    top: 6px;
+}
+
+/* Focus indicators for better keyboard navigation */
+button:focus,
+.reservation-button:focus,
+.map-button:focus {
+    outline: 3px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+/* Enhanced focus indicators for keyboard navigation */
+[data-keyboard-focused="true"]:not([data-mouse-focused="true"]) {
+    outline: 3px solid var(--accent-color) !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 1px var(--background-color), 0 0 0 4px var(--accent-color) !important;
+}
+
+/* Hide focus outline for mouse users */
+[data-mouse-focused="true"] {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Make main content focusable for skip link */
+#main-content {
+    outline: none;
+}
+
+#main-content:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 4px;
+}
+
+/* Ensure interactive elements are accessible */
+button,
+.reservation-button,
+.map-button {
+    min-height: 44px;
+    min-width: 44px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    :root {
+        --background-color: #ffffff;
+        --text-color: #000000;
+        --accent-color: #000000;
+    }
+    
+    .sakura {
+        background: #000000 !important;
+    }
+    
+    .red-decoration {
+        background: #000000 !important;
+    }
+    
+    /* Ensure focus indicators are visible in high contrast */
+    button:focus,
+    .reservation-button:focus,
+    .map-button:focus {
+        outline: 3px solid #000000;
+        background: #ffffff;
+        color: #000000;
+    }
+}
+
+/* Responsive Design and Mobile Optimization */
+
+/* Large tablets and small desktops */
+@media (max-width: 1024px) {
+    .cloud-image {
+        max-width: 180px;
+    }
+    
+    .cloud-left.slide-in {
+        left: 30px;
+    }
+    
+    .cloud-right.slide-in {
+        right: 30px;
+    }
+    
+    .main-gif {
+        max-width: 95%;
+    }
+}
+
+/* Tablets */
+@media (max-width: 768px) {
+    .main-gif {
+        max-width: 90%;
+        height: auto;
+        /* Optimize animation performance on tablets */
+        transform: translateZ(0);
+    }
+    
+    .container {
+        padding: 2rem 1rem;
+    }
+    
+
+    
+    .red-decoration {
+        width: 100px;
+    }
+    
+    /* Mobile responsive cloud images with performance optimization */
+    .cloud-image {
+        max-width: 120px;
+        /* Enable GPU acceleration for smoother animations on mobile */
+        transform: translateZ(0);
+        will-change: transform, opacity;
+    }
+    
+    .cloud-left {
+        top: 15%;
+        left: -120px;
+    }
+    
+    .cloud-right {
+        top: 10%;
+        right: -120px;
+    }
+    
+    .cloud-left.slide-in {
+        left: 10px;
+    }
+    
+    .cloud-right.slide-in {
+        right: 10px;
+    }
+    
+    /* Optimize sakura animation for mobile performance */
+    .sakura {
+        width: 6px;
+        height: 6px;
+        /* Reduce animation complexity on mobile */
+        animation-duration: 15s;
+    }
+    
+    /* Reduce floating elements count on mobile (handled by JavaScript) */
+    .floating-elements {
+        /* Optimize for mobile performance */
+        transform: translateZ(0);
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .main-gif {
+        max-width: 85%;
+        /* Further optimize for small screens */
+        border-radius: 4px;
+    }
+    
+    .container {
+        padding: 1.5rem 0.75rem;
+    }
+    
+    /* Further reduce cloud image size for small screens */
+    .cloud-image {
+        max-width: 80px;
+        /* Optimize positioning for small screens */
+        filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.1));
+    }
+    
+    .cloud-left {
+        top: 12%;
+        left: -80px;
+    }
+    
+    .cloud-right {
+        top: 8%;
+        right: -80px;
+    }
+    
+    .cloud-left.slide-in {
+        left: 5px;
+    }
+    
+    .cloud-right.slide-in {
+        right: 5px;
+    }
+    
+    /* Optimize decorative elements for small screens */
+    .gold-ornament {
+        width: 80px;
+        height: 25px;
+    }
+    
+    .gold-ornament-left {
+        left: 5px;
+    }
+    
+    .gold-ornament-right {
+        right: 5px;
+    }
+    
+    .red-decoration {
+        width: 60px;
+    }
+    
+    /* Further optimize sakura for mobile performance */
+    .sakura {
+        width: 4px;
+        height: 4px;
+        animation-duration: 18s;
+    }
+    
+    /* Optimize text and button sizes for mobile */
+    .subtitle-text {
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+    
+    .reservation-button {
+        padding: 0.8rem 2rem;
+        font-size: 1rem;
+        /* Ensure touch target is large enough */
+        min-height: 48px;
+        min-width: 120px;
+    }
+    
+    .map-button {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9rem;
+        min-height: 44px;
+    }
+    
+    .features-title {
+        font-size: 1.1rem;
+    }
+    
+    .features-list li {
+        font-size: 0.9rem;
+        margin: 0.8rem 0;
+    }
+    
+    .info-text {
+        font-size: 0.9rem;
+    }
+}
+
+/* Very small screens and older mobile devices */
+@media (max-width: 320px) {
+    .main-gif {
+        max-width: 80%;
+    }
+    
+    .container {
+        padding: 1rem 0.5rem;
+    }
+    
+    /* Minimize cloud images for very small screens */
+    .cloud-image {
+        max-width: 60px;
+    }
+    
+    .cloud-left {
+        top: 10%;
+        left: -60px;
+    }
+    
+    .cloud-right {
+        top: 6%;
+        right: -60px;
+    }
+    
+    .cloud-left.slide-in {
+        left: 2px;
+    }
+    
+    .cloud-right.slide-in {
+        right: 2px;
+    }
+    
+    /* Further minimize decorative elements */
+    .gold-ornament {
+        width: 60px;
+        height: 20px;
+    }
+    
+    .red-decoration {
+        width: 40px;
+    }
+    
+    /* Optimize text sizes for very small screens */
+    .subtitle-text {
+        font-size: 0.9rem;
+    }
+    
+    .reservation-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .features-title {
+        font-size: 1rem;
+    }
+    
+    .features-list li {
+        font-size: 0.8rem;
+    }
+    
+    .info-text {
+        font-size: 0.8rem;
+    }
+}
+
+/* Performance optimization for mobile devices */
+@media (max-width: 768px) {
+    /* Reduce animation complexity on mobile for better performance */
+    @keyframes fall {
+        0% {
+            transform: translateY(-50vh) rotate(45deg);
+            opacity: 0.4;
+        }
+        100% {
+            transform: translateY(100vh) rotate(225deg);
+            opacity: 0;
+        }
+    }
+    
+    /* Optimize GIF fade-in for mobile */
+    @keyframes gifFadeIn {
+        0% { 
+            opacity: 0;
+            transform: scale(0.98) translateZ(0);
+        }
+        100% { 
+            opacity: 1;
+            transform: scale(1) translateZ(0);
+        }
+    }
+    
+    /* Optimize cloud slide-in for mobile */
+    .cloud-image {
+        transition: all 2.5s ease-in-out;
+    }
+    
+    /* Optimize fade-in elements for mobile */
+    .fade-in-element {
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+}
+
+/* High DPI displays optimization */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .cloud-image {
+        /* Optimize image rendering on high DPI displays */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .main-gif {
+        /* Optimize GIF rendering on high DPI displays */
+        image-rendering: -webkit-optimize-contrast;
+    }
+}
+
+/* Landscape orientation optimization for mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .cloud-left {
+        top: 5%;
+    }
+    
+    .cloud-right {
+        top: 2%;
+    }
+    
+    .main-gif {
+        max-width: 70%;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    /* Reduce vertical spacing in landscape mode */
+    .subtitle-text {
+        margin-bottom: 1.5rem;
+    }
+    
+    .reservation-button {
+        margin: 1.5rem 0;
+    }
+    
+    .features-section {
+        margin: 2rem 0;
+    }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+    /* Optimize for touch devices */
+    .reservation-button,
+    .map-button {
+        /* Ensure touch targets are large enough */
+        min-height: 48px;
+        min-width: 48px;
+        /* Remove hover effects on touch devices */
+        transition: background-color 0.2s ease;
+    }
+    
+    .reservation-button:hover,
+    .map-button:hover {
+        /* Disable hover transforms on touch devices */
+        transform: none;
+    }
+    
+    .reservation-button::before {
+        /* Disable hover shine effect on touch devices */
+        display: none;
+    }
+    
+    /* Optimize animations for touch devices */
+    .sakura {
+        /* Reduce sakura count and complexity on touch devices */
+        animation-duration: 20s;
+    }
+    
+    .cloud-image {
+        /* Optimize cloud animations for touch performance */
+        transition: all 2s ease-in-out;
+    }
+}
+
+/* Reduced data/slow connection optimization */
+@media (prefers-reduced-data: reduce) {
+    /* Minimize animations for users on slow connections */
+    .sakura {
+        animation-duration: 25s;
+        opacity: 0.3;
+    }
+    
+    .cloud-image {
+        transition: all 1.5s ease-in-out;
+        filter: none; /* Remove drop-shadow to reduce rendering cost */
+    }
+    
+    .main-gif {
+        /* Faster fade-in for slow connections */
+        animation-duration: 2s;
+    }
+    
+    .fade-in-element {
+        transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+    }
+}

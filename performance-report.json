@@ -1,0 +1,120 @@
+{
+  "timestamp": "2025-09-03T06:50:51.628Z",
+  "score": 25,
+  "summary": {
+    "totalFiles": 4,
+    "totalRecommendations": 8,
+    "highPriorityIssues": 1,
+    "mediumPriorityIssues": 5,
+    "lowPriorityIssues": 2
+  },
+  "details": {
+    "fileAnalysis": {
+      "index.html": {
+        "size": 69.76,
+        "status": "✅ 良好"
+      },
+      "styles.css": {
+        "size": 22.43,
+        "status": "✅ 良好"
+      },
+      "integration-test.html": {
+        "size": 45.49,
+        "status": "✅ 良好"
+      },
+      "test-responsive.html": {
+        "size": 5.79,
+        "status": "✅ 良好"
+      }
+    },
+    "cssAnalysis": {
+      "totalLines": 1063,
+      "totalRules": 166,
+      "mediaQueries": 11,
+      "keyframes": 9,
+      "willChangeUsage": 13,
+      "transformUsage": 47,
+      "animationUsage": 12,
+      "transitionUsage": 14,
+      "complexSelectors": 186,
+      "importantUsage": 57
+    },
+    "jsAnalysis": {
+      "totalLines": 1319,
+      "eventListeners": 25,
+      "setTimeoutUsage": 13,
+      "setIntervalUsage": 1,
+      "animationFrameUsage": 0,
+      "domQueries": 23,
+      "scriptTags": 1
+    },
+    "assetAnalysis": {
+      "totalAssets": 4,
+      "totalSize": 4824.06,
+      "details": {
+        "Adobe Express - ScreenRecording_09-03-2025 11-39-02_1.gif": {
+          "size": 4771.4,
+          "type": ".gif",
+          "status": "❌ 改善必要"
+        },
+        "kumoleft.PNG": {
+          "size": 16.9,
+          "type": ".png",
+          "status": "✅ 良好"
+        },
+        "kumoleft_backup.PNG": {
+          "size": 16.9,
+          "type": ".png",
+          "status": "✅ 良好"
+        },
+        "kumoright.PNG": {
+          "size": 18.86,
+          "type": ".png",
+          "status": "✅ 良好"
+        }
+      }
+    },
+    "recommendations": [
+      {
+        "type": "CSS",
+        "priority": "medium",
+        "message": "複雑なセレクタが多数検出されました。シンプルなセレクタの使用を推奨"
+      },
+      {
+        "type": "CSS",
+        "priority": "medium",
+        "message": "!importantの使用が多数検出されました。CSS設計の見直しを推奨"
+      },
+      {
+        "type": "JavaScript",
+        "priority": "high",
+        "message": "アニメーションにはsetTimeoutではなくrequestAnimationFrameの使用を推奨"
+      },
+      {
+        "type": "JavaScript",
+        "priority": "medium",
+        "message": "setIntervalの使用が検出されました。パフォーマンスへの影響を確認してください"
+      },
+      {
+        "type": "JavaScript",
+        "priority": "medium",
+        "message": "DOM クエリが多数検出されました。要素の再利用を検討してください"
+      },
+      {
+        "type": "JavaScript",
+        "priority": "low",
+        "message": "JavaScript コードが大きいです。外部ファイルへの分離を検討してください"
+      },
+      {
+        "type": "Assets",
+        "priority": "medium",
+        "message": "Adobe Express - ScreenRecording_09-03-2025 11-39-02_1.gif のサイズが大きいです (4771.4KB)"
+      },
+      {
+        "type": "Assets",
+        "priority": "low",
+        "message": "WebP形式の画像使用を検討してください（ファイルサイズ削減）"
+      }
+    ]
+  }
+}

@@ -3,401 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>消えない祭り - 伝統文化イベント</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'YuGothic', 'Yu Gothic', sans-serif;
-            background: #f4f1e8;
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .floating-elements {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .sakura {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: radial-gradient(circle, #d4af37, #b8860b);
-            border-radius: 50% 0;
-            transform: rotate(45deg);
-            animation: fall 12s linear infinite;
-            opacity: 0.6;
-        }
-
-        @keyframes fall {
-            0% {
-                transform: translateY(-100vh) rotate(45deg);
-                opacity: 0.6;
-            }
-            100% {
-                transform: translateY(100vh) rotate(405deg);
-                opacity: 0;
-            }
-        }
-
-        .red-decoration {
-            position: fixed;
-            top: 0;
-            width: 200px;
-            height: 100vh;
-            z-index: 0;
-        }
-
-        .red-decoration-left {
-            left: 0;
-            background: linear-gradient(135deg, #dc143c, #8b0000);
-            clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
-            transform: translateX(-100%);
-            animation: slideInLeft 1.5s ease-out 1s forwards;
-        }
-
-        .red-decoration-right {
-            right: 0;
-            background: linear-gradient(225deg, #dc143c, #8b0000);
-            clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
-            transform: translateX(100%);
-            animation: slideInRight 1.5s ease-out 1s forwards;
-        }
-
-        @keyframes slideInLeft {
-            to { transform: translateX(0); }
-        }
-
-        @keyframes slideInRight {
-            to { transform: translateX(0); }
-        }
-
-        .gold-ornament {
-            position: fixed;
-            top: 50%;
-            width: 150px;
-            height: 50px;
-            z-index: 1;
-            transform: translateY(-50%);
-        }
-
-        .gold-ornament-left {
-            left: 20px;
-            transform: translateY(-50%) translateX(-100%);
-            animation: ornamentSlideLeft 2s ease-out 1s forwards;
-        }
-
-        .gold-ornament-right {
-            right: 20px;
-            transform: translateY(-50%) translateX(100%);
-            animation: ornamentSlideRight 2s ease-out 1s forwards;
-        }
-
-        @keyframes ornamentSlideLeft {
-            to { transform: translateY(-50%) translateX(0); }
-        }
-
-        @keyframes ornamentSlideRight {
-            to { transform: translateY(-50%) translateX(0); }
-        }
-
-        .ornament-shape {
-            width: 100%;
-            height: 100%;
-            background: #b8860b;
-            position: relative;
-        }
-
-        .ornament-left .ornament-shape {
-            clip-path: polygon(0 40%, 70% 40%, 85% 0%, 100% 0%, 100% 20%, 85% 60%, 100% 100%, 85% 100%, 70% 60%, 0 60%);
-        }
-
-        .ornament-right .ornament-shape {
-            clip-path: polygon(0 0%, 15% 0%, 30% 40%, 100% 40%, 100% 60%, 30% 60%, 15% 100%, 0 100%, 15% 60%, 0 20%);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-            position: relative;
-            z-index: 2;
-            text-align: center;
-        }
-
-        .main-logo {
-            color: #8b0000;
-            font-size: 4rem;
-            font-weight: bold;
-            margin-bottom: 3rem;
-            opacity: 0;
-            animation: titleFadeIn 2s ease-out forwards;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        @keyframes titleFadeIn {
-            to { opacity: 1; }
-        }
-
-        .content-section {
-            opacity: 0;
-            animation: contentFadeIn 1.5s ease-out 3s forwards;
-        }
-
-        @keyframes contentFadeIn {
-            to { opacity: 1; }
-        }
-
-        .subtitle-text {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .reservation-button {
-            background: #8b0000;
-            color: white;
-            padding: 1rem 2.5rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin: 2rem 0;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .reservation-button:hover {
-            background: #a0001a;
-            transform: translateY(-2px);
-        }
-
-        .reservation-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .reservation-button:hover::before {
-            left: 100%;
-        }
-
-        .features-section {
-            margin: 3rem 0;
-        }
-
-        .features-title {
-            color: #8b0000;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 2rem;
-        }
-
-        .features-list {
-            list-style: none;
-            text-align: left;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .features-list li {
-            font-size: 1rem;
-            margin: 1rem 0;
-            padding-left: 1.5rem;
-            position: relative;
-            line-height: 1.6;
-        }
-
-        .features-list li::before {
-            content: '・';
-            position: absolute;
-            left: 0;
-            color: #8b0000;
-            font-weight: bold;
-        }
-
-        .event-info {
-            margin: 3rem 0;
-            font-size: 1rem;
-            line-height: 1.8;
-        }
-
-        .event-date {
-            color: #8b0000;
-            font-weight: bold;
-            margin: 1rem 0;
-        }
-
-        .info-section {
-            margin: 2rem 0;
-            text-align: left;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .info-title {
-            color: #8b0000;
-            font-weight: bold;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .info-text {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .map-button {
-            background: #4a5568;
-            color: white;
-            padding: 0.8rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: block;
-            margin: 1rem auto;
-        }
-
-        .map-button:hover {
-            background: #2d3748;
-            transform: translateY(-2px);
-        }
-
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: rgba(139, 0, 0, 0.2);
-            z-index: 1000;
-        }
-
-        .scroll-progress {
-            height: 100%;
-            background: #8b0000;
-            width: 0%;
-            transition: width 0.1s ease;
-        }
-
-        @media (max-width: 768px) {
-            .main-logo {
-                font-size: 2.8rem;
-            }
-            
-            .container {
-                padding: 2rem 1rem;
-            }
-            
-            .gold-ornament {
-                width: 100px;
-                height: 35px;
-            }
-            
-            .gold-ornament-left {
-                left: 10px;
-            }
-            
-            .gold-ornament-right {
-                right: 10px;
-            }
-            
-            .red-decoration {
-                width: 100px;
-            }
-        }
-    </style>
+    <title>消えない祭りは神隠し</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="no-js">
+    <!-- Skip link for keyboard navigation -->
+    <a href="#main-content" class="skip-link">メインコンテンツにスキップ</a>
+    
+    <noscript>
+        <style>
+            /* JavaScript無効時のフォールバックスタイル */
+            .fade-in-element {
+                opacity: 1 !important;
+                transform: translateY(0) !important;
+            }
+            .main-gif {
+                opacity: 1 !important;
+                transform: scale(1) !important;
+            }
+            .cloud-image {
+                opacity: 0.85 !important;
+                transform: translateX(0) scale(1) !important;
+            }
+            .cloud-left {
+                left: 50px !important;
+            }
+            .cloud-right {
+                right: 50px !important;
+            }
+            .content-section {
+                opacity: 1 !important;
+            }
+        </style>
+    </noscript>
     <div class="scroll-indicator">
         <div class="scroll-progress" id="scrollProgress"></div>
     </div>
 
-    <div class="floating-elements" id="floatingElements"></div>
+    <div class="floating-elements" id="floatingElements" aria-label="装飾的な桜の花びらアニメーション" role="img"></div>
     
-    <div class="red-decoration red-decoration-left"></div>
-    <div class="red-decoration red-decoration-right"></div>
-
-    <div class="gold-ornament gold-ornament-left ornament-left">
-        <div class="ornament-shape"></div>
+    <div class="red-decoration red-decoration-left" aria-label="左側装飾要素" role="img"></div>
+    <div class="red-decoration red-decoration-right" aria-label="右側装飾要素" role="img"></div>
     </div>
-    <div class="gold-ornament gold-ornament-right ornament-right">
-        <div class="ornament-shape"></div>
     </div>
 
-    <div class="container">
-        <h1 class="main-logo">消えない祭り</h1>
+    <!-- Cloud images for slide-in animation -->
+    <div class="cloud-container" aria-label="雲のアニメーション要素" role="img">
+        <img src="assets/kumoleft_backup.PNG" alt="左の雲 - 装飾的なアニメーション要素" class="cloud-image cloud-left" id="cloudLeft" aria-describedby="cloud-description">
+        <img src="assets/kumoright.PNG" alt="右の雲 - 装飾的なアニメーション要素" class="cloud-image cloud-right" id="cloudRight" aria-describedby="cloud-description">
+    </div>
+    <div id="cloud-description" class="sr-only">雲の画像がページ読み込み時にスライドインアニメーションで表示されます</div>
+
+    <div class="container" id="main-content" tabindex="-1">
+        <div class="main-logo">
+            <img src="assets/title2.gif" alt="消えない祭り - メインタイトルアニメーション" class="main-gif" id="mainGif" aria-describedby="main-gif-description">
+        </div>
+        <div id="main-gif-description" class="sr-only">メインタイトルが4秒間かけてフェードインアニメーションで表示されます</div>
         
         <div class="content-section">
-            <p class="subtitle-text">
+            <p class="subtitle-text fade-in-element">
                 京都初の没入型演劇！学園祭の2日間限定<br>
                 サブタイトル<br>
                 サブタイトル
             </p>
 
-            <button class="reservation-button">予約</button>
+            <button class="reservation-button fade-in-element" aria-label="イベントの予約を行う">予約</button>
 
-            <div class="features-section">
+            <div class="features-section fade-in-element">
                 <h2 class="features-title">没入型演劇の特徴</h2>
                 <ul class="features-list">
-                    <li>あなたも物語の登場人物として参加できます</li>
-                    <li>観客参加型の革新的な演劇体験</li>
-                    <li>京都の伝統文化を現代的に再解釈</li>
-                    <li>学園祭限定の特別プログラム</li>
+                    <li class="fade-in-element">あなたも物語の登場人物として参加できます</li>
+                    <li class="fade-in-element">観客参加型の革新的な演劇体験</li>
+                    <li class="fade-in-element">京都の伝統文化を現代的に再解釈</li>
+                    <li class="fade-in-element">学園祭限定の特別プログラム</li>
                 </ul>
             </div>
 
-            <button class="reservation-button">予約</button>
+            <button class="reservation-button fade-in-element" aria-label="イベントの予約を行う">予約</button>
 
-            <div class="event-info">
+            <div class="event-info fade-in-element">
                 <div class="event-date">開催日時：11月23日（日）・24日（月祝）</div>
                 <p>時間：午後2時〜午後5時</p>
                 <p>会場：京都大学 北部祭メイン会場</p>
             </div>
 
-            <div class="info-section">
+            <div class="info-section fade-in-element">
                 <h3 class="info-title">会場/アクセス</h3>
-                <button class="map-button">MAP</button>
+                <button class="map-button" aria-label="会場の地図を表示する">MAP</button>
                 
-                <div class="info-text">
+                <div class="info-text fade-in-element">
                     <strong>料金</strong><br>
                     一般：2,500円<br>
                     学生：1,800円<br>
                     高校生以下：1,000円
                 </div>
 
-                <div class="info-text">
+                <div class="info-text fade-in-element">
                     <strong>お問い合わせ</strong><br>
                     Email: info@kienai-matsuri.jp<br>
                     TEL: 075-XXX-XXXX
                 </div>
 
-                <div class="info-text">
+                <div class="info-text fade-in-element">
                     ご予約・詳しい情報はHPから！
                 </div>
             </div>
@@ -405,60 +112,1322 @@
     </div>
 
     <script>
-        // 和風の金色の粒子を生成
-        function createSakura() {
-            const sakura = document.createElement('div');
-            sakura.className = 'sakura';
-            sakura.style.left = Math.random() * 100 + '%';
-            sakura.style.animationDuration = (Math.random() * 5 + 10) + 's';
-            sakura.style.animationDelay = Math.random() * 3 + 's';
-            document.getElementById('floatingElements').appendChild(sakura);
+        // ブラウザ互換性チェックシステム
+        const BrowserCompatibility = {
+            // 必要なAPIの対応状況をチェック
+            checkSupport: function() {
+                const support = {
+                    intersectionObserver: 'IntersectionObserver' in window,
+                    cssAnimations: this.checkCSSAnimationSupport(),
+                    cssTransitions: this.checkCSSTransitionSupport(),
+                    addEventListener: 'addEventListener' in window,
+                    querySelector: 'querySelector' in document
+                };
+                
+                console.log('ブラウザ対応状況:', support);
+                return support;
+            },
+            
+            // CSS Animation対応チェック
+            checkCSSAnimationSupport: function() {
+                const element = document.createElement('div');
+                const animationProperties = ['animation', 'webkitAnimation', 'mozAnimation', 'oAnimation'];
+                
+                for (let i = 0; i < animationProperties.length; i++) {
+                    if (element.style[animationProperties[i]] !== undefined) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            
+            // CSS Transition対応チェック
+            checkCSSTransitionSupport: function() {
+                const element = document.createElement('div');
+                const transitionProperties = ['transition', 'webkitTransition', 'mozTransition', 'oTransition'];
+                
+                for (let i = 0; i < transitionProperties.length; i++) {
+                    if (element.style[transitionProperties[i]] !== undefined) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        };
 
-            setTimeout(() => {
-                sakura.remove();
-            }, 15000);
+        // エラーハンドリングとフォールバックシステム
+        const ErrorHandler = {
+            // エラーログ記録
+            logError: function(context, error, fallbackAction) {
+                const errorInfo = {
+                    timestamp: new Date().toISOString(),
+                    context: context,
+                    error: error.toString(),
+                    fallbackAction: fallbackAction,
+                    userAgent: navigator.userAgent
+                };
+                
+                console.warn(`[${context}] エラーが発生しました:`, errorInfo);
+                
+
+            },
+            
+            // 画像読み込みエラーのフォールバック
+            handleImageError: function(imageElement, fallbackContent, context) {
+                this.logError(context, new Error('画像読み込み失敗'), 'フォールバック表示');
+                
+                if (typeof fallbackContent === 'function') {
+                    fallbackContent(imageElement);
+                } else if (typeof fallbackContent === 'string') {
+                    imageElement.outerHTML = fallbackContent;
+                }
+            },
+            
+            // アニメーション実行エラーのフォールバック
+            handleAnimationError: function(element, context, fallbackAction) {
+                this.logError(context, new Error('アニメーション実行失敗'), 'フォールバック処理');
+                
+                if (fallbackAction && typeof fallbackAction === 'function') {
+                    try {
+                        fallbackAction(element);
+                    } catch (fallbackError) {
+                        this.logError(context + '_fallback', fallbackError, '最終フォールバック');
+                    }
+                }
+            }
+        };
+
+        // アニメーション状態管理システム（拡張版）
+        const AnimationManager = {
+            states: {
+                mainGifLoaded: false,
+                mainGifError: false,
+                cloudsAnimated: false,
+                cloudLeftError: false,
+                cloudRightError: false,
+                scrollSystemInitialized: false,
+                animationLocked: false
+            },
+            
+            // アニメーション実行中のロック機能
+            lockAnimations: function() {
+                this.states.animationLocked = true;
+                setTimeout(() => {
+                    this.states.animationLocked = false;
+                }, 100); // 100ms後にロック解除
+            },
+            
+            // アニメーション競合防止のための状態チェック（拡張版）
+            canStartAnimation: function(animationType) {
+                // 全体的なロック状態をチェック
+                if (this.states.animationLocked) {
+                    console.log(`アニメーション ${animationType} はロック中のため実行できません`);
+                    return false;
+                }
+                
+                switch(animationType) {
+                    case 'clouds':
+                        return (this.states.mainGifLoaded || this.states.mainGifError) && !this.states.cloudsAnimated;
+                    case 'scroll':
+                        return !this.states.scrollSystemInitialized;
+                    case 'mainGif':
+                        return !this.states.mainGifLoaded && !this.states.mainGifError;
+                    default:
+                        return true;
+                }
+            },
+            
+            // 状態更新（拡張版）
+            updateState: function(animationType, value) {
+                if (this.states.hasOwnProperty(animationType)) {
+                    const oldValue = this.states[animationType];
+                    this.states[animationType] = value;
+                    
+                    // 状態変更をログに記録
+                    console.log(`状態更新: ${animationType} ${oldValue} -> ${value}`);
+                    
+                    // 状態変更に応じた処理を実行
+                    this.onStateChange(animationType, value, oldValue);
+                }
+            },
+            
+            // 状態変更時のコールバック処理
+            onStateChange: function(animationType, newValue, oldValue) {
+                // メインGIFの読み込み完了またはエラー時に雲のアニメーションを開始
+                if ((animationType === 'mainGifLoaded' || animationType === 'mainGifError') && newValue === true) {
+                    setTimeout(() => {
+                        if (this.canStartAnimation('clouds')) {
+                            initCloudAnimations();
+                        }
+                    }, 1000);
+                }
+            },
+            
+            // 現在の状態を取得
+            getState: function(animationType) {
+                return this.states[animationType] || false;
+            },
+            
+            // 全状態をリセット（デバッグ用）
+            resetStates: function() {
+                Object.keys(this.states).forEach(key => {
+                    this.states[key] = false;
+                });
+                console.log('全アニメーション状態をリセットしました');
+            },
+            
+            // 現在の状態を詳細レポート（デバッグ用）
+            getStatusReport: function() {
+                const report = {
+                    timestamp: new Date().toISOString(),
+                    states: { ...this.states },
+                    browserSupport: BrowserCompatibility.checkSupport(),
+                    elementsStatus: {
+                        mainGif: !!document.getElementById('mainGif'),
+                        cloudLeft: !!document.getElementById('cloudLeft'),
+                        cloudRight: !!document.getElementById('cloudRight'),
+                        fadeElements: document.querySelectorAll('.fade-in-element').length
+                    }
+                };
+                
+                console.log('アニメーション状態レポート:', report);
+                return report;
+            }
+        };
+        
+        // デバッグ用のグローバル関数（開発時のみ使用）
+        window.getAnimationStatus = function() {
+            return AnimationManager.getStatusReport();
+        };
+
+        // アクセシビリティ管理システム
+        const AccessibilityManager = {
+            // ユーザーのモーション設定を検出
+            prefersReducedMotion: function() {
+                return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            },
+            
+            // アニメーション実行前にモーション設定をチェック
+            shouldRunAnimation: function() {
+                const reducedMotion = this.prefersReducedMotion();
+                if (reducedMotion) {
+                    console.log('ユーザーがアニメーション軽減を設定しているため、アニメーションをスキップします');
+                    this.applyReducedMotionFallbacks();
+                    return false;
+                }
+                return true;
+            },
+            
+            // アニメーション軽減時のフォールバック処理
+            applyReducedMotionFallbacks: function() {
+                try {
+                    // メインGIFを即座に表示
+                    const mainGif = document.getElementById('mainGif');
+                    if (mainGif) {
+                        mainGif.style.opacity = '1';
+                        mainGif.style.transform = 'none';
+                        mainGif.style.animation = 'none';
+                    }
+                    
+                    // 雲画像を最終位置に即座に配置
+                    const cloudLeft = document.getElementById('cloudLeft');
+                    const cloudRight = document.getElementById('cloudRight');
+                    
+                    if (cloudLeft) {
+                        cloudLeft.style.opacity = '0.85';
+                        cloudLeft.style.transform = 'none';
+                        cloudLeft.style.left = '50px';
+                        cloudLeft.style.transition = 'none';
+                    }
+                    
+                    if (cloudRight) {
+                        cloudRight.style.opacity = '0.85';
+                        cloudRight.style.transform = 'none';
+                        cloudRight.style.right = '50px';
+                        cloudRight.style.transition = 'none';
+                    }
+                    
+                    // フェードイン要素を即座に表示
+                    const fadeElements = document.querySelectorAll('.fade-in-element');
+                    fadeElements.forEach(element => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'none';
+                        element.style.transition = 'none';
+                    });
+                    
+                    // コンテンツセクションを即座に表示
+                    const contentSection = document.querySelector('.content-section');
+                    if (contentSection) {
+                        contentSection.style.opacity = '1';
+                        contentSection.style.animation = 'none';
+                    }
+                    
+                    console.log('アニメーション軽減フォールバックを適用しました');
+                } catch (error) {
+                    ErrorHandler.logError('AccessibilityManager_reducedMotion', error, '部分的フォールバック');
+                }
+            },
+            
+            // キーボードナビゲーション強化
+            enhanceKeyboardNavigation: function() {
+                try {
+                    // フォーカス可能な要素を取得
+                    const focusableElements = document.querySelectorAll(
+                        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+                    );
+                    
+                    // 各フォーカス可能要素にアクセシビリティ強化を適用
+                    focusableElements.forEach(element => {
+                        // フォーカス時のアウトライン強化
+                        element.addEventListener('focus', function() {
+                            this.setAttribute('data-keyboard-focused', 'true');
+                        });
+                        
+                        element.addEventListener('blur', function() {
+                            this.removeAttribute('data-keyboard-focused');
+                        });
+                        
+                        // マウスクリック時はフォーカスアウトライン無効化
+                        element.addEventListener('mousedown', function() {
+                            this.setAttribute('data-mouse-focused', 'true');
+                        });
+                        
+                        element.addEventListener('keydown', function() {
+                            this.removeAttribute('data-mouse-focused');
+                        });
+                    });
+                    
+                    // Escキーでフォーカスをメインコンテンツに戻す
+                    document.addEventListener('keydown', function(e) {
+                        if (e.key === 'Escape') {
+                            const mainContent = document.getElementById('main-content');
+                            if (mainContent) {
+                                mainContent.focus();
+                                mainContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }
+                    });
+                    
+                    console.log('キーボードナビゲーション強化を適用しました');
+                } catch (error) {
+                    ErrorHandler.logError('AccessibilityManager_keyboard', error, 'キーボードナビゲーション部分適用');
+                }
+            },
+            
+            // スクリーンリーダー向けのライブリージョン管理
+            announceAnimationStatus: function(message) {
+                try {
+                    // 既存のライブリージョンを探すか作成
+                    let liveRegion = document.getElementById('animation-announcements');
+                    if (!liveRegion) {
+                        liveRegion = document.createElement('div');
+                        liveRegion.id = 'animation-announcements';
+                        liveRegion.setAttribute('aria-live', 'polite');
+                        liveRegion.setAttribute('aria-atomic', 'true');
+                        liveRegion.className = 'sr-only';
+                        document.body.appendChild(liveRegion);
+                    }
+                    
+                    // メッセージを設定（スクリーンリーダーが読み上げる）
+                    liveRegion.textContent = message;
+                    
+                    // 3秒後にメッセージをクリア
+                    setTimeout(() => {
+                        liveRegion.textContent = '';
+                    }, 3000);
+                } catch (error) {
+                    ErrorHandler.logError('AccessibilityManager_announce', error, 'アナウンス失敗');
+                }
+            },
+            
+            // 初期化処理
+            init: function() {
+                try {
+                    // キーボードナビゲーション強化を適用
+                    this.enhanceKeyboardNavigation();
+                    
+                    // モーション設定の変更を監視
+                    if (window.matchMedia) {
+                        const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+                        mediaQuery.addListener((e) => {
+                            if (e.matches) {
+                                console.log('ユーザーがアニメーション軽減を有効にしました');
+                                this.applyReducedMotionFallbacks();
+                            }
+                        });
+                    }
+                    
+                    console.log('アクセシビリティ管理システムを初期化しました');
+                } catch (error) {
+                    ErrorHandler.logError('AccessibilityManager_init', error, '部分的初期化');
+                }
+            }
+        };
+
+        // メインGIFアニメーション制御（エラーハンドリング強化版）
+        function initMainGifAnimation() {
+            const mainGif = document.getElementById('mainGif');
+            
+            if (!mainGif) {
+                ErrorHandler.logError('initMainGifAnimation', new Error('メインGIF要素が見つかりません'), 'スキップ');
+                return;
+            }
+            
+            // アクセシビリティ: アニメーション軽減設定をチェック
+            if (!AccessibilityManager.shouldRunAnimation()) {
+                AnimationManager.updateState('mainGifLoaded', true);
+                AccessibilityManager.announceAnimationStatus('メインタイトルが表示されました');
+                return;
+            }
+            
+            // アニメーション実行権限をチェック
+            if (!AnimationManager.canStartAnimation('mainGif')) {
+                console.log('メインGIFアニメーションは既に実行済みまたは実行中です');
+                return;
+            }
+            
+            // アニメーションロックを設定
+            AnimationManager.lockAnimations();
+            
+            // 読み込みタイムアウト設定（10秒）
+            const loadTimeout = setTimeout(() => {
+                if (!AnimationManager.getState('mainGifLoaded') && !AnimationManager.getState('mainGifError')) {
+                    ErrorHandler.handleImageError(mainGif, function(element) {
+                        const logoContainer = element.parentElement;
+                        logoContainer.innerHTML = '<h1 style="color: var(--accent-color); font-size: 4rem; font-weight: bold; opacity: 0; animation: gifFadeIn 4s ease-out forwards; will-change: opacity;">消えない祭り</h1>';
+                        AnimationManager.updateState('mainGifError', true);
+                    }, 'mainGif_timeout');
+                }
+            }, 10000);
+            
+            // GIF読み込み完了時の処理
+            mainGif.addEventListener('load', function() {
+                clearTimeout(loadTimeout);
+                
+                try {
+                    // アニメーションを開始（CSSで定義済み）
+                    this.style.animationPlayState = 'running';
+                    
+                    // 状態を更新
+                    AnimationManager.updateState('mainGifLoaded', true);
+                    
+                    console.log('メインGIFアニメーションが正常に開始されました');
+                    
+                } catch (error) {
+                    ErrorHandler.handleAnimationError(this, 'mainGif_load', function(element) {
+                        // フォールバック: CSSアニメーションが失敗した場合は直接表示
+                        element.style.opacity = '1';
+                        element.style.transform = 'scale(1)';
+                        AnimationManager.updateState('mainGifLoaded', true);
+                    });
+                }
+            });
+            
+            // エラーハンドリング - GIF読み込み失敗時のフォールバック
+            mainGif.addEventListener('error', function() {
+                clearTimeout(loadTimeout);
+                
+                ErrorHandler.handleImageError(this, function(element) {
+                    const logoContainer = element.parentElement;
+                    
+                    // ブラウザのCSS Animation対応状況をチェック
+                    const browserSupport = BrowserCompatibility.checkSupport();
+                    
+                    if (browserSupport.cssAnimations) {
+                        logoContainer.innerHTML = '<h1 style="color: var(--accent-color); font-size: 4rem; font-weight: bold; opacity: 0; animation: gifFadeIn 4s ease-out forwards; will-change: opacity;">消えない祭り</h1>';
+                    } else {
+                        // CSS Animationが対応していない場合のフォールバック
+                        logoContainer.innerHTML = '<h1 style="color: var(--accent-color); font-size: 4rem; font-weight: bold; opacity: 1;">消えない祭り</h1>';
+                    }
+                    
+                    AnimationManager.updateState('mainGifError', true);
+                }, 'mainGif_error');
+            });
+            
+            // ページリロード時のアニメーション再実行を保証
+            try {
+                mainGif.style.animation = 'none';
+                mainGif.offsetHeight; // リフローを強制
+                mainGif.style.animation = 'gifFadeIn 4s ease-out forwards';
+            } catch (error) {
+                ErrorHandler.handleAnimationError(mainGif, 'mainGif_restart', function(element) {
+                    // CSS操作が失敗した場合は要素を直接表示
+                    element.style.opacity = '1';
+                    AnimationManager.updateState('mainGifLoaded', true);
+                });
+            }
+        }
+        
+        // 雲画像スライドインアニメーション制御（エラーハンドリング強化版）
+        function initCloudAnimations() {
+            // 既にアニメーション済みの場合は実行しない
+            if (AnimationManager.states.cloudsAnimated) {
+                console.log('雲のアニメーションは既に実行済みです');
+                return;
+            }
+            
+            // アクセシビリティ: アニメーション軽減設定をチェック
+            if (!AccessibilityManager.shouldRunAnimation()) {
+                AnimationManager.updateState('cloudsAnimated', true);
+                AccessibilityManager.announceAnimationStatus('雲の画像が表示されました');
+                return;
+            }
+            
+            // アニメーション実行権限をチェック
+            if (!AnimationManager.canStartAnimation('clouds')) {
+                console.log('雲のアニメーションを開始する条件が満たされていません');
+                return;
+            }
+            
+            const cloudLeft = document.getElementById('cloudLeft');
+            const cloudRight = document.getElementById('cloudRight');
+            
+            // ブラウザのCSS Transition対応状況をチェック
+            const browserSupport = BrowserCompatibility.checkSupport();
+            
+            // 左側雲のスライドインアニメーション
+            if (cloudLeft) {
+                // 読み込みタイムアウト設定（8秒）
+                const leftTimeout = setTimeout(() => {
+                    if (!AnimationManager.getState('cloudLeftError')) {
+                        ErrorHandler.handleImageError(cloudLeft, function(element) {
+                            // 画像が読み込めない場合は非表示にする
+                            element.style.display = 'none';
+                            AnimationManager.updateState('cloudLeftError', true);
+                        }, 'cloudLeft_timeout');
+                    }
+                }, 8000);
+                
+                cloudLeft.addEventListener('load', function() {
+                    clearTimeout(leftTimeout);
+                    
+                    try {
+                        if (browserSupport.cssTransitions) {
+                            this.classList.add('slide-in');
+                        } else {
+                            // CSS Transitionが対応していない場合のフォールバック
+                            this.style.opacity = '0.85';
+                            this.style.transform = 'translateX(0) scale(1)';
+                            this.style.left = '50px';
+                        }
+                        console.log('左側雲画像のアニメーションが開始されました');
+                    } catch (error) {
+                        ErrorHandler.handleAnimationError(this, 'cloudLeft_animation', function(element) {
+                            // アニメーション失敗時は直接表示
+                            element.style.opacity = '0.85';
+                            element.style.left = '50px';
+                        });
+                    }
+                });
+                
+                // 画像が既に読み込まれている場合の処理
+                if (cloudLeft.complete && cloudLeft.naturalWidth > 0) {
+                    clearTimeout(leftTimeout);
+                    try {
+                        if (browserSupport.cssTransitions) {
+                            cloudLeft.classList.add('slide-in');
+                        } else {
+                            cloudLeft.style.opacity = '0.85';
+                            cloudLeft.style.transform = 'translateX(0) scale(1)';
+                            cloudLeft.style.left = '50px';
+                        }
+                    } catch (error) {
+                        ErrorHandler.handleAnimationError(cloudLeft, 'cloudLeft_preloaded', function(element) {
+                            element.style.opacity = '0.85';
+                            element.style.left = '50px';
+                        });
+                    }
+                }
+                
+                // エラーハンドリング
+                cloudLeft.addEventListener('error', function() {
+                    clearTimeout(leftTimeout);
+                    ErrorHandler.handleImageError(this, function(element) {
+                        element.style.display = 'none';
+                        AnimationManager.updateState('cloudLeftError', true);
+                    }, 'cloudLeft_error');
+                });
+            } else {
+                ErrorHandler.logError('initCloudAnimations', new Error('左側雲要素が見つかりません'), 'スキップ');
+            }
+            
+            // 右側雲のスライドインアニメーション
+            if (cloudRight) {
+                // 読み込みタイムアウト設定（8秒）
+                const rightTimeout = setTimeout(() => {
+                    if (!AnimationManager.getState('cloudRightError')) {
+                        ErrorHandler.handleImageError(cloudRight, function(element) {
+                            // 画像が読み込めない場合は非表示にする
+                            element.style.display = 'none';
+                            AnimationManager.updateState('cloudRightError', true);
+                        }, 'cloudRight_timeout');
+                    }
+                }, 8000);
+                
+                cloudRight.addEventListener('load', function() {
+                    clearTimeout(rightTimeout);
+                    
+                    try {
+                        if (browserSupport.cssTransitions) {
+                            this.classList.add('slide-in');
+                        } else {
+                            // CSS Transitionが対応していない場合のフォールバック
+                            this.style.opacity = '0.85';
+                            this.style.transform = 'translateX(0) scale(1)';
+                            this.style.right = '50px';
+                        }
+                        console.log('右側雲画像のアニメーションが開始されました');
+                    } catch (error) {
+                        ErrorHandler.handleAnimationError(this, 'cloudRight_animation', function(element) {
+                            // アニメーション失敗時は直接表示
+                            element.style.opacity = '0.85';
+                            element.style.right = '50px';
+                        });
+                    }
+                });
+                
+                // 画像が既に読み込まれている場合の処理
+                if (cloudRight.complete && cloudRight.naturalWidth > 0) {
+                    clearTimeout(rightTimeout);
+                    try {
+                        if (browserSupport.cssTransitions) {
+                            cloudRight.classList.add('slide-in');
+                        } else {
+                            cloudRight.style.opacity = '0.85';
+                            cloudRight.style.transform = 'translateX(0) scale(1)';
+                            cloudRight.style.right = '50px';
+                        }
+                    } catch (error) {
+                        ErrorHandler.handleAnimationError(cloudRight, 'cloudRight_preloaded', function(element) {
+                            element.style.opacity = '0.85';
+                            element.style.right = '50px';
+                        });
+                    }
+                }
+                
+                // エラーハンドリング
+                cloudRight.addEventListener('error', function() {
+                    clearTimeout(rightTimeout);
+                    ErrorHandler.handleImageError(this, function(element) {
+                        element.style.display = 'none';
+                        AnimationManager.updateState('cloudRightError', true);
+                    }, 'cloudRight_error');
+                });
+            } else {
+                ErrorHandler.logError('initCloudAnimations', new Error('右側雲要素が見つかりません'), 'スキップ');
+            }
+            
+            // 雲のアニメーション状態を更新
+            AnimationManager.updateState('cloudsAnimated', true);
+        }
+        
+        // スクロール連動フェードインシステム（エラーハンドリング強化版）
+        function initScrollFadeInSystem() {
+            // 既に初期化済みの場合は実行しない
+            if (!AnimationManager.canStartAnimation('scroll')) {
+                console.log('スクロールシステムは既に初期化済みです');
+                return;
+            }
+            
+            try {
+                // ブラウザ対応状況をチェック
+                const browserSupport = BrowserCompatibility.checkSupport();
+                const fadeInElements = document.querySelectorAll('.fade-in-element');
+                
+                if (fadeInElements.length === 0) {
+                    ErrorHandler.logError('initScrollFadeInSystem', new Error('フェードイン対象要素が見つかりません'), 'スキップ');
+                    AnimationManager.updateState('scrollSystemInitialized', true);
+                    return;
+                }
+                
+                // アクセシビリティ: アニメーション軽減設定をチェック
+                if (!AccessibilityManager.shouldRunAnimation()) {
+                    // アニメーション軽減時は全要素を即座に表示
+                    fadeInElements.forEach(element => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'none';
+                        element.style.transition = 'none';
+                    });
+                    AnimationManager.updateState('scrollSystemInitialized', true);
+                    AccessibilityManager.announceAnimationStatus('ページコンテンツが表示されました');
+                    return;
+                }
+                
+                // Intersection Observer APIが利用可能な場合
+                if (browserSupport.intersectionObserver) {
+                    try {
+                        // Intersection Observer のオプション設定
+                        const observerOptions = {
+                            root: null, // ビューポートをルートとして使用
+                            rootMargin: '0px 0px -10% 0px', // ビューポートの下端から10%の位置で発火
+                            threshold: 0.1 // 要素の10%が見えたら発火
+                        };
+                        
+                        // Intersection Observer のコールバック関数
+                        const observerCallback = (entries, observer) => {
+                            entries.forEach(entry => {
+                                try {
+                                    if (entry.isIntersecting) {
+                                        // 要素がビューポートに入った時の処理
+                                        if (browserSupport.cssTransitions) {
+                                            entry.target.classList.add('fade-in-visible');
+                                        } else {
+                                            // CSS Transitionが対応していない場合のフォールバック
+                                            entry.target.style.opacity = '1';
+                                            entry.target.style.transform = 'translateY(0)';
+                                        }
+                                        
+                                        // 一度アニメーションが実行されたら監視を停止（パフォーマンス最適化）
+                                        observer.unobserve(entry.target);
+                                    }
+                                } catch (error) {
+                                    ErrorHandler.handleAnimationError(entry.target, 'scroll_fade_callback', function(element) {
+                                        // フォールバック: 直接表示
+                                        element.style.opacity = '1';
+                                        element.style.transform = 'translateY(0)';
+                                        observer.unobserve(element);
+                                    });
+                                }
+                            });
+                        };
+                        
+                        // Intersection Observer を作成
+                        const fadeInObserver = new IntersectionObserver(observerCallback, observerOptions);
+                        
+                        // fade-in-element クラスを持つ全ての要素を監視対象に追加
+                        fadeInElements.forEach((element, index) => {
+                            try {
+                                // 各要素に少しずつ異なる遅延を追加して、より自然な演出にする
+                                const delay = index * 0.1; // 順番に0.1秒ずつ遅延
+                                if (browserSupport.cssTransitions) {
+                                    element.style.transitionDelay = `${delay}s`;
+                                }
+                                
+                                // 要素を監視対象に追加
+                                fadeInObserver.observe(element);
+                            } catch (error) {
+                                ErrorHandler.handleAnimationError(element, 'scroll_fade_setup', function(el) {
+                                    // 監視に失敗した要素は直接表示
+                                    el.style.opacity = '1';
+                                    el.style.transform = 'translateY(0)';
+                                });
+                            }
+                        });
+                        
+                        // 初期状態で既にビューポート内にある要素をチェック
+                        // （ページの高さが短い場合やリロード時の対応）
+                        setTimeout(() => {
+                            fadeInElements.forEach(element => {
+                                try {
+                                    const rect = element.getBoundingClientRect();
+                                    const windowHeight = window.innerHeight;
+                                    
+                                    // 要素がビューポート内にある場合は即座に表示
+                                    if (rect.top < windowHeight * 0.9 && rect.bottom > 0) {
+                                        if (browserSupport.cssTransitions) {
+                                            element.classList.add('fade-in-visible');
+                                        } else {
+                                            element.style.opacity = '1';
+                                            element.style.transform = 'translateY(0)';
+                                        }
+                                        fadeInObserver.unobserve(element);
+                                    }
+                                } catch (error) {
+                                    ErrorHandler.handleAnimationError(element, 'scroll_fade_initial_check', function(el) {
+                                        el.style.opacity = '1';
+                                        el.style.transform = 'translateY(0)';
+                                    });
+                                }
+                            });
+                        }, 100);
+                        
+                        console.log('Intersection Observer を使用したスクロールフェードインシステムを初期化しました');
+                        
+                    } catch (observerError) {
+                        ErrorHandler.logError('initScrollFadeInSystem_observer', observerError, 'スクロールフォールバック');
+                        // Intersection Observer の作成に失敗した場合はフォールバック処理
+                        this.initScrollFallback(fadeInElements, browserSupport);
+                    }
+                } else {
+                    // Intersection Observer APIが利用できない場合のフォールバック
+                    console.warn('Intersection Observer API がサポートされていません。スクロールフォールバック処理を実行します。');
+                    this.initScrollFallback(fadeInElements, browserSupport);
+                }
+                
+                // スクロールシステムの初期化状態を更新
+                AnimationManager.updateState('scrollSystemInitialized', true);
+                
+            } catch (error) {
+                ErrorHandler.logError('initScrollFadeInSystem', error, '全要素即座表示');
+                
+                // 最終フォールバック: 全ての要素を即座に表示
+                try {
+                    const allFadeElements = document.querySelectorAll('.fade-in-element');
+                    allFadeElements.forEach(element => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    });
+                } catch (finalError) {
+                    ErrorHandler.logError('initScrollFadeInSystem_final_fallback', finalError, '処理終了');
+                }
+                
+                AnimationManager.updateState('scrollSystemInitialized', true);
+            }
+        }
+        
+        // スクロールフォールバック処理（Intersection Observer が使えない場合）
+        initScrollFadeInSystem.initScrollFallback = function(fadeInElements, browserSupport) {
+            try {
+                // 従来のスクロールイベントを使用したフォールバック
+                let scrollTimeout;
+                
+                const handleScroll = () => {
+                    // スクロールイベントの頻度を制限（パフォーマンス最適化）
+                    if (scrollTimeout) {
+                        clearTimeout(scrollTimeout);
+                    }
+                    
+                    scrollTimeout = setTimeout(() => {
+                        fadeInElements.forEach(element => {
+                            try {
+                                if (element.style.opacity !== '1') { // まだ表示されていない要素のみチェック
+                                    const rect = element.getBoundingClientRect();
+                                    const windowHeight = window.innerHeight;
+                                    
+                                    // 要素がビューポート内にある場合は表示
+                                    if (rect.top < windowHeight * 0.9 && rect.bottom > 0) {
+                                        if (browserSupport.cssTransitions) {
+                                            element.classList.add('fade-in-visible');
+                                        } else {
+                                            element.style.opacity = '1';
+                                            element.style.transform = 'translateY(0)';
+                                        }
+                                    }
+                                }
+                            } catch (error) {
+                                ErrorHandler.handleAnimationError(element, 'scroll_fallback_check', function(el) {
+                                    el.style.opacity = '1';
+                                    el.style.transform = 'translateY(0)';
+                                });
+                            }
+                        });
+                    }, 100); // 100ms の遅延でスクロール処理を実行
+                };
+                
+                // スクロールイベントリスナーを追加
+                if (browserSupport.addEventListener) {
+                    window.addEventListener('scroll', handleScroll, { passive: true });
+                    
+                    // 初期チェックも実行
+                    handleScroll();
+                    
+                    console.log('スクロールイベントベースのフォールバックシステムを初期化しました');
+                } else {
+                    // addEventListener が利用できない場合の最終フォールバック
+                    fadeInElements.forEach(element => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'translateY(0)';
+                    });
+                    console.log('全要素を即座に表示しました（最終フォールバック）');
+                }
+                
+            } catch (error) {
+                ErrorHandler.logError('initScrollFallback', error, '全要素即座表示');
+                
+                // 最終的なフォールバック
+                fadeInElements.forEach(element => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                });
+            }
+        };
+        
+        // ブラウザ互換性に基づいてCSSクラスを適用
+        function applyBrowserCompatibilityClasses() {
+            const html = document.documentElement;
+            const support = BrowserCompatibility.checkSupport();
+            
+            // CSS Animation対応状況に応じてクラスを追加
+            if (!support.cssAnimations) {
+                html.classList.add('no-cssanimations');
+                console.log('CSS Animationsが非対応のため、フォールバッククラスを適用しました');
+            }
+            
+            // CSS Transition対応状況に応じてクラスを追加
+            if (!support.cssTransitions) {
+                html.classList.add('no-csstransitions');
+                console.log('CSS Transitionsが非対応のため、フォールバッククラスを適用しました');
+            }
+            
+            // JavaScript無効時のフォールバック（noscriptタグで処理される）
+            html.classList.remove('no-js');
+        }
+        
+        // グローバルエラーハンドラー
+        window.addEventListener('error', function(event) {
+            ErrorHandler.logError('global_error', event.error || new Error(event.message), 'ログ記録のみ');
+        });
+        
+        // 未処理のPromise拒否をキャッチ
+        window.addEventListener('unhandledrejection', function(event) {
+            ErrorHandler.logError('unhandled_promise_rejection', new Error(event.reason), 'ログ記録のみ');
+        });
+        
+        // ページロード時の初期化処理（モバイル最適化版）
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                console.log('ページ初期化を開始します...');
+                
+                // デバイス性能検出とパフォーマンス設定
+                const deviceCapabilities = PerformanceManager.detectDeviceCapabilities();
+                console.log('デバイス性能検出完了:', deviceCapabilities);
+                
+                // アクセシビリティ管理システムを初期化
+                AccessibilityManager.init();
+                
+                // ブラウザ互換性クラスを適用
+                applyBrowserCompatibilityClasses();
+                
+                // メインアニメーションを初期化
+                initMainGifAnimation();
+                
+                // スクロールシステムを初期化
+                initScrollFadeInSystem();
+                
+                // 桜システムを初期化（モバイル最適化対応）
+                initSakuraSystem();
+                
+                // カーソルエフェクトを初期化（モバイル最適化対応）
+                initCursorEffect();
+                
+                // モバイル固有の最適化を適用
+                if (deviceCapabilities.isMobile) {
+                    applyMobileOptimizations(deviceCapabilities);
+                }
+                
+                console.log('全ての初期化処理が完了しました');
+                
+            } catch (error) {
+                ErrorHandler.logError('DOMContentLoaded', error, '部分的な初期化継続');
+                
+                // エラーが発生しても基本的な表示は確保
+                try {
+                    const allElements = document.querySelectorAll('.fade-in-element, .main-gif');
+                    allElements.forEach(element => {
+                        element.style.opacity = '1';
+                        element.style.transform = 'none';
+                    });
+                } catch (fallbackError) {
+                    console.error('最終フォールバック処理も失敗しました:', fallbackError);
+                }
+            }
+        });
+
+        // モバイル固有の最適化を適用
+        function applyMobileOptimizations(deviceCapabilities) {
+            try {
+                console.log('モバイル最適化を適用中...');
+                
+                // ビューポートの動的調整
+                if (deviceCapabilities.isMobile) {
+                    // モバイルブラウザのアドレスバー対応
+                    const setViewportHeight = () => {
+                        const vh = window.innerHeight * 0.01;
+                        document.documentElement.style.setProperty('--vh', `${vh}px`);
+                    };
+                    
+                    setViewportHeight();
+                    window.addEventListener('resize', setViewportHeight, { passive: true });
+                    window.addEventListener('orientationchange', () => {
+                        setTimeout(setViewportHeight, 100);
+                    }, { passive: true });
+                }
+                
+                // タッチイベントの最適化
+                if (deviceCapabilities.supportsTouch) {
+                    // タッチ遅延を削除
+                    document.addEventListener('touchstart', function() {}, { passive: true });
+                    
+                    // スクロール性能の最適化
+                    document.addEventListener('touchmove', function(e) {
+                        // 必要に応じてスクロールを制御
+                    }, { passive: true });
+                }
+                
+                // 低性能デバイス向けの追加最適化
+                if (deviceCapabilities.isLowEndDevice) {
+                    // アニメーション品質をさらに下げる
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .sakura {
+                            animation-duration: 25s !important;
+                            opacity: 0.3 !important;
+                        }
+                        .cloud-image {
+                            transition-duration: 2s !important;
+                        }
+                        .fade-in-element {
+                            transition-duration: 0.3s !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                    
+                    console.log('低性能デバイス向け最適化を適用しました');
+                }
+                
+                // 接続速度に応じた最適化
+                const connection = deviceCapabilities.connection;
+                if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+                    // 遅い接続の場合はアニメーションを最小限に
+                    const slowConnectionStyle = document.createElement('style');
+                    slowConnectionStyle.textContent = `
+                        .main-gif {
+                            animation-duration: 1s !important;
+                        }
+                        .cloud-image {
+                            transition-duration: 1s !important;
+                        }
+                        .sakura {
+                            display: none !important;
+                        }
+                    `;
+                    document.head.appendChild(slowConnectionStyle);
+                    
+                    console.log('低速接続向け最適化を適用しました');
+                }
+                
+                console.log('モバイル最適化の適用が完了しました');
+                
+            } catch (error) {
+                ErrorHandler.logError('applyMobileOptimizations', error, 'モバイル最適化部分適用');
+            }
         }
 
-        // 定期的に粒子を生成
-        setInterval(createSakura, 800);
-
-        // スクロール進捗バー
-        window.addEventListener('scroll', () => {
-            const scrollTop = window.pageYOffset;
-            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollPercent = (scrollTop / docHeight) * 100;
-            document.getElementById('scrollProgress').style.width = scrollPercent + '%';
-        });
-
-        // マウス追従エフェクト（和風に調整）
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.createElement('div');
-            cursor.style.position = 'fixed';
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-            cursor.style.width = '4px';
-            cursor.style.height = '4px';
-            cursor.style.background = 'rgba(139, 0, 0, 0.4)';
-            cursor.style.borderRadius = '50%';
-            cursor.style.pointerEvents = 'none';
-            cursor.style.zIndex = '9999';
-            cursor.style.animation = 'cursorFade 1.2s ease-out forwards';
-            document.body.appendChild(cursor);
-
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes cursorFade {
-                    0% { transform: scale(0); opacity: 0.4; }
-                    100% { transform: scale(2); opacity: 0; }
+        // Mobile and Performance Detection System
+        const PerformanceManager = {
+            // デバイス種別とパフォーマンス特性を検出
+            detectDeviceCapabilities: function() {
+                const capabilities = {
+                    isMobile: this.isMobileDevice(),
+                    isTablet: this.isTabletDevice(),
+                    isLowEndDevice: this.isLowEndDevice(),
+                    supportsTouch: 'ontouchstart' in window,
+                    screenSize: {
+                        width: window.innerWidth,
+                        height: window.innerHeight,
+                        ratio: window.devicePixelRatio || 1
+                    },
+                    connection: this.getConnectionInfo(),
+                    reducedMotion: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+                    reducedData: window.matchMedia && window.matchMedia('(prefers-reduced-data: reduce)').matches
+                };
+                
+                console.log('デバイス性能検出結果:', capabilities);
+                return capabilities;
+            },
+            
+            // モバイルデバイス検出
+            isMobileDevice: function() {
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+                       (window.innerWidth <= 768 && 'ontouchstart' in window);
+            },
+            
+            // タブレットデバイス検出
+            isTabletDevice: function() {
+                return /iPad|Android/i.test(navigator.userAgent) && 
+                       window.innerWidth >= 768 && window.innerWidth <= 1024;
+            },
+            
+            // 低性能デバイス検出
+            isLowEndDevice: function() {
+                // CPU コア数、メモリ、接続速度などから判定
+                const cores = navigator.hardwareConcurrency || 2;
+                const memory = navigator.deviceMemory || 2;
+                const connection = navigator.connection;
+                
+                let isLowEnd = false;
+                
+                // CPU コア数が少ない
+                if (cores <= 2) isLowEnd = true;
+                
+                // メモリが少ない
+                if (memory <= 2) isLowEnd = true;
+                
+                // 接続速度が遅い
+                if (connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g')) {
+                    isLowEnd = true;
                 }
-            `;
-            document.head.appendChild(style);
+                
+                return isLowEnd;
+            },
+            
+            // 接続情報を取得
+            getConnectionInfo: function() {
+                const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+                if (connection) {
+                    return {
+                        effectiveType: connection.effectiveType,
+                        downlink: connection.downlink,
+                        rtt: connection.rtt,
+                        saveData: connection.saveData
+                    };
+                }
+                return null;
+            },
+            
+            // パフォーマンス設定を決定
+            getOptimalSettings: function() {
+                const capabilities = this.detectDeviceCapabilities();
+                
+                let settings = {
+                    sakuraCount: 1, // デフォルト: 通常の生成間隔
+                    sakuraInterval: 800,
+                    enableCursorEffect: true,
+                    animationQuality: 'high',
+                    enableGPUAcceleration: true
+                };
+                
+                // モバイルデバイスの場合
+                if (capabilities.isMobile) {
+                    settings.sakuraCount = 0.5; // 生成頻度を半分に
+                    settings.sakuraInterval = 1600;
+                    settings.animationQuality = 'medium';
+                    
+                    // 小画面の場合はさらに軽量化
+                    if (capabilities.screenSize.width <= 480) {
+                        settings.sakuraCount = 0.3;
+                        settings.sakuraInterval = 2400;
+                        settings.enableCursorEffect = false; // タッチデバイスでは無効
+                        settings.animationQuality = 'low';
+                    }
+                }
+                
+                // 低性能デバイスの場合
+                if (capabilities.isLowEndDevice) {
+                    settings.sakuraCount = 0.2;
+                    settings.sakuraInterval = 3000;
+                    settings.enableCursorEffect = false;
+                    settings.animationQuality = 'low';
+                    settings.enableGPUAcceleration = false;
+                }
+                
+                // データ節約モードの場合
+                if (capabilities.reducedData) {
+                    settings.sakuraCount = 0.1;
+                    settings.sakuraInterval = 5000;
+                    settings.enableCursorEffect = false;
+                    settings.animationQuality = 'minimal';
+                }
+                
+                // アニメーション軽減設定の場合
+                if (capabilities.reducedMotion) {
+                    settings.sakuraCount = 0;
+                    settings.enableCursorEffect = false;
+                    settings.animationQuality = 'none';
+                }
+                
+                console.log('最適化設定:', settings);
+                return settings;
+            }
+        };
 
-            setTimeout(() => {
-                cursor.remove();
-                style.remove();
-            }, 1200);
-        });
+        // 和風の金色の粒子を生成（モバイル最適化版）
+        function createSakura() {
+            const settings = PerformanceManager.getOptimalSettings();
+            
+            // アニメーション軽減設定の場合は生成しない
+            if (settings.sakuraCount === 0) {
+                return;
+            }
+            
+            // 確率的に生成（パフォーマンス調整）
+            if (Math.random() > settings.sakuraCount) {
+                return;
+            }
+            
+            try {
+                const floatingElements = document.getElementById('floatingElements');
+                if (!floatingElements) return;
+                
+                // 既存の桜の数をチェック（メモリリーク防止）
+                const existingSakura = floatingElements.querySelectorAll('.sakura');
+                const maxSakura = settings.animationQuality === 'low' ? 10 : 
+                                 settings.animationQuality === 'medium' ? 20 : 30;
+                
+                if (existingSakura.length >= maxSakura) {
+                    return; // 上限に達している場合は生成しない
+                }
+                
+                const sakura = document.createElement('div');
+                sakura.className = 'sakura';
+                sakura.style.left = Math.random() * 100 + '%';
+                
+                // アニメーション品質に応じて設定を調整
+                let duration, delay, removeTimeout;
+                
+                switch (settings.animationQuality) {
+                    case 'low':
+                        duration = Math.random() * 3 + 15; // 15-18秒（長め）
+                        delay = Math.random() * 2;
+                        removeTimeout = 20000;
+                        break;
+                    case 'medium':
+                        duration = Math.random() * 4 + 12; // 12-16秒
+                        delay = Math.random() * 2.5;
+                        removeTimeout = 18000;
+                        break;
+                    case 'high':
+                    default:
+                        duration = Math.random() * 5 + 10; // 10-15秒
+                        delay = Math.random() * 3;
+                        removeTimeout = 15000;
+                        break;
+                }
+                
+                sakura.style.animationDuration = duration + 's';
+                sakura.style.animationDelay = delay + 's';
+                
+                // GPU加速の設定
+                if (settings.enableGPUAcceleration) {
+                    sakura.style.willChange = 'transform, opacity';
+                    sakura.style.transform = 'translateZ(0)';
+                }
+                
+                floatingElements.appendChild(sakura);
+                
+                // メモリリーク防止のため、確実に削除
+                setTimeout(() => {
+                    try {
+                        if (sakura && sakura.parentNode) {
+                            sakura.remove();
+                        }
+                    } catch (error) {
+                        console.warn('桜要素の削除に失敗:', error);
+                    }
+                }, removeTimeout);
+                
+            } catch (error) {
+                ErrorHandler.logError('createSakura', error, '桜生成スキップ');
+            }
+        }
+
+        // 定期的に粒子を生成（パフォーマンス最適化版）
+        function initSakuraSystem() {
+            const settings = PerformanceManager.getOptimalSettings();
+            
+            if (settings.sakuraCount > 0) {
+                // 初期遅延を追加してページロード時の負荷を軽減
+                setTimeout(() => {
+                    setInterval(createSakura, settings.sakuraInterval);
+                    console.log(`桜システムを初期化しました（間隔: ${settings.sakuraInterval}ms）`);
+                }, 2000);
+            } else {
+                console.log('桜システムは無効化されました（パフォーマンス最適化）');
+            }
+        }
+
+        // スクロール進捗バー（パフォーマンス最適化版）
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            // スクロールイベントの頻度を制限（パフォーマンス最適化）
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            
+            scrollTimeout = setTimeout(() => {
+                try {
+                    const scrollTop = window.pageYOffset;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / docHeight) * 100;
+                    const progressElement = document.getElementById('scrollProgress');
+                    
+                    if (progressElement) {
+                        progressElement.style.width = scrollPercent + '%';
+                    }
+                } catch (error) {
+                    ErrorHandler.logError('scroll_progress', error, 'スクロール進捗更新失敗');
+                }
+            }, 16); // 約60FPSに制限
+        }, { passive: true });
+
+        // マウス追従エフェクト（モバイル最適化版）
+        function initCursorEffect() {
+            const settings = PerformanceManager.getOptimalSettings();
+            
+            // タッチデバイスまたは低性能デバイスでは無効化
+            if (!settings.enableCursorEffect) {
+                console.log('カーソルエフェクトは無効化されました（パフォーマンス最適化）');
+                return;
+            }
+            
+            let cursorStyleAdded = false;
+            let cursorCount = 0;
+            const maxCursors = settings.animationQuality === 'low' ? 5 : 
+                              settings.animationQuality === 'medium' ? 10 : 15;
+            
+            document.addEventListener('mousemove', (e) => {
+                // カーソル要素の数を制限
+                if (cursorCount >= maxCursors) {
+                    return;
+                }
+                
+                try {
+                    cursorCount++;
+                    
+                    const cursor = document.createElement('div');
+                    cursor.style.position = 'fixed';
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                    cursor.style.width = '4px';
+                    cursor.style.height = '4px';
+                    cursor.style.background = 'rgba(139, 0, 0, 0.4)';
+                    cursor.style.borderRadius = '50%';
+                    cursor.style.pointerEvents = 'none';
+                    cursor.style.zIndex = '9999';
+                    cursor.style.animation = 'cursorFade 1.2s ease-out forwards';
+                    
+                    // GPU加速の設定
+                    if (settings.enableGPUAcceleration) {
+                        cursor.style.willChange = 'transform, opacity';
+                        cursor.style.transformStyle = 'preserve-3d';
+                        cursor.style.backfaceVisibility = 'hidden';
+                    }
+                    
+                    document.body.appendChild(cursor);
+
+                    // スタイルは一度だけ追加してパフォーマンスを向上
+                    if (!cursorStyleAdded) {
+                        const style = document.createElement('style');
+                        style.textContent = `
+                            @keyframes cursorFade {
+                                0% { transform: scale(0); opacity: 0.4; }
+                                100% { transform: scale(2); opacity: 0; }
+                            }
+                        `;
+                        document.head.appendChild(style);
+                        cursorStyleAdded = true;
+                    }
+
+                    setTimeout(() => {
+                        try {
+                            if (cursor && cursor.parentNode) {
+                                cursor.remove();
+                            }
+                            cursorCount--;
+                        } catch (error) {
+                            console.warn('カーソル要素の削除に失敗:', error);
+                            cursorCount = Math.max(0, cursorCount - 1);
+                        }
+                    }, 1200);
+                    
+                } catch (error) {
+                    ErrorHandler.logError('cursor_effect', error, 'カーソルエフェクト生成失敗');
+                    cursorCount = Math.max(0, cursorCount - 1);
+                }
+            }, { passive: true });
+            
+            console.log('カーソルエフェクトを初期化しました');
+        }
     </script>
 </body>
 </html>
