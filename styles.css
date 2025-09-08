@@ -25,7 +25,7 @@
 
 body {
     font-family: 'Yu Mincho', 'Hiragino Mincho ProN', 'YuGothic', 'Yu Gothic', serif;
-    background-image: url('assets/back.jpg');
+    background-image: url('assets/back.PNG');
     background-size: cover;
     background-position: center;
     background-color: var(--background-color); /* 画像が読み込めない場合の予備の背景色 */
@@ -638,7 +638,174 @@ body {
 }
 
 
-/* --- レスポンシブデザイン --- */
+
+.cloud-path-section-2 {
+    height: 100vh; /* 高さを調整 */
+    margin-top: 0;
+    z-index: 6; /* 世界観セクションより手前に */
+}
+
+
+.cloud-path-section-2 .cloud-path-item:nth-of-type(1) { top: 10%; left: -15%; }
+.cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 30%; right: -10%; }
+.cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 55%; left: -5%; }
+
+
+/* --- 公演詳細セクション --- */
+.performance-details-section {
+    position: relative;
+    padding: 8rem 5%;
+    max-width: 900px;
+    margin: 0 auto;
+    z-index: 5;
+}
+
+.details-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    color: var(--text-color);
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    color: black;
+    line-height: 1.8;
+}
+
+.detail-item h3 {
+    font-size: 1.8rem;
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.detail-item p {
+    font-size: 1.1rem;
+}
+
+.detail-item span {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.map-container {
+    margin-top: 4rem;
+    position: relative;
+    padding-bottom: 56.25%; 
+    height: 0;
+    overflow: hidden;
+    border: 4px solid black;
+    border-radius: 15px;
+}
+
+.map-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.details-character {
+    position: absolute;
+    z-index: -1; 
+    width: 300px;
+}
+.details-character img {
+    width: 100%;
+    height: auto;
+}
+
+.details-character-left {
+    top: 0;
+    left: -5%;
+}
+.details-character-right {
+    top: 5%;
+    right: -5%;
+}
+/* 【ここから追加】よくある質問セクションのスタイル */
+.faq-section {
+    padding: 8rem 5%;
+    max-width: 800px;
+    margin: 0 auto;
+    z-index: 5;
+}
+
+.faq-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text-color);
+}
+
+.faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.faq-item {
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+}
+
+/* 質問部分のボタンとしてのスタイル */
+.faq-question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 1.5rem 0;
+    text-align: left;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+}
+
+.faq-question span {
+    flex-grow: 1;
+}
+
+/* 質問の右側にある矢印アイコンのスタイル */
+.faq-arrow {
+    width: 24px;
+    height: 24px;
+    stroke: black;
+    transition: transform 0.3s ease-in-out;
+    flex-shrink: 0;
+}
+
+/* JavaScriptでopenクラスが付与されたら矢印を回転させる */
+.faq-item.open .faq-arrow {
+    transform: rotate(180deg);
+}
+
+/* 回答部分のスタイル。最初は高さを0にして隠しておく */
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out; /* 高さが滑らかに変化するアニメーション */
+}
+
+.faq-answer p {
+    padding: 0 0 1.5rem 1rem;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: black;
+}
+
+/* FAQセクションの下にある予約ボタンのスタイル */
+.faq-section .reserve-button-main {
+    display: block;
+    margin: 4rem auto 0;
+}
+
+
 @media (max-width: 1200px) {
     .vertical-text { font-size: 2.5rem; }
     .vertical-text-top-right { right: 10vw; }
@@ -677,18 +844,18 @@ body {
         gap: 2rem;
     }
     .worldview-title {
-        writing-mode: horizontal-tb; /* スマホでは横書きに */
+        writing-mode: horizontal-tb; 
         margin-bottom: 1rem;
-        font-size: 2.5rem; /* スマホ用に調整 */
+        font-size: 2.5rem; 
     }
     .worldview-text { 
-        writing-mode: horizontal-tb; /* スマホでは横書きに */
+        writing-mode: horizontal-tb; 
         max-height: none;
         font-size: 1rem; 
-        text-align: left; /* 横書き用に調整 */
+        text-align: left; 
     }
     .worldview-section .reserve-button-main {
-        position: static; /* 通常の配置に戻す */
+        position: static; 
         transform: none;
         margin-top: 2rem;
     }
@@ -710,7 +877,60 @@ body {
         width: 25px;
         height: 25px;
     }
+    .details-character {
+        width: 150px;
+    }
+    .details-character-left {
+        left: -10%;
+    }
+    .details-character-right {
+        right: -10%;
+    }
+    .faq-question {
+        font-size: 1.2rem;
+    }
+    .faq-answer p {
+        font-size: 1rem;
+    }
 }
+
+.cloud-path-section-3 {
+    height: 100vh;
+    margin-top: 0;
+    z-index: 4;
+}
+
+.cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 15%; left: -10%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 40%; right: -15%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 65%; left: -5%; }
+
+.footer-section {
+    position: relative;
+    padding: 5rem 5% 3rem;
+    text-align: center;
+    z-index: 3;
+}
+
+.footer-characters {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.footer-character {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-info {
+    color: black;
+    line-height: 1.8;
+}
+
 
 @media (max-width: 480px) {
     body { font-size: 14px; }
@@ -724,9 +944,12 @@ body {
     .reserve-button-main { font-size: 1.2rem; padding: 1rem 2.5rem; }
     .date-image-container { max-width: 90%; }
     .attraction-section { padding: 2rem 1rem 6rem; margin: 3rem auto; }
+    .details-character { display: none; } 
+    .faq-section {
+        padding: 4rem 2%;
+    }
 }
 
-/* ユーザーの端末設定でアニメーションを減らす設定がされている場合のスタイル */
 @media (prefers-reduced-motion: reduce) {
     .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span, .attraction-item, .cloud-path-item, .worldview-paragraph-group {
         animation: none !important;
@@ -735,4 +958,3 @@ body {
         transform: none !important;
     }
 }
-
