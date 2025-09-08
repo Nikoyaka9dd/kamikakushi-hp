@@ -25,7 +25,7 @@
 
 body {
     font-family: 'Yu Mincho', 'Hiragino Mincho ProN', 'YuGothic', 'Yu Gothic', serif;
-    background-image: url('assets/back.jpg'); /* 背景画像を指定 */
+    background-image: url('assets/back.jpg');
     background-size: cover;
     background-position: center;
     background-color: var(--background-color); /* 画像が読み込めない場合の予備の背景色 */
@@ -35,14 +35,14 @@ body {
     color: var(--text-color);
 }
 
-/* --- 【追加】全体のラッパー。内部の要素がはみ出してもレイアウトが崩れるのを防ぎます --- */
+
 .container {
     position: relative;
     width: 100%;
     overflow-x: hidden;
 }
 
-/* --- ページ冒頭のアニメーション要素 --- */
+
 
 .vertical-text {
     position: absolute;
@@ -94,7 +94,7 @@ body {
     height: auto;
     opacity: 0; /* 最初は非表示 */
     transform: scale(0.95);
-    animation: fadeInScaleUp 2s ease-out 2.8s forwards; /* 文字の後にフェードイン&拡大するアニメーション */
+    animation: fadeInScaleUp 2s ease-out 2.8s forwards; 
     will-change: opacity, transform;
 }
 
@@ -162,7 +162,7 @@ body {
     clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%); /* 斜めに切り抜く */
 }
 
-/* --- アニメーションの定義 --- */
+
 
 @keyframes charFadeIn {
     to {
@@ -186,7 +186,7 @@ body {
 }
 
 
-/* --- スクロール後に表示されるコンテンツ --- */
+
 .scroll-content-wrapper {
     width: 100%;
     position: relative;
@@ -578,17 +578,13 @@ body {
 /* --- トップへ戻るボタン --- */
 .back-to-top-container {
     position: fixed;
-    bottom: 30px;
-    right: 50px;
+    bottom: -10px;
+    right: -115px;
     z-index: var(--z-ui-elements);
-    display: flex;
-    align-items: flex-end;
-    gap: 15px;
-    
-    opacity: 0;
     visibility: hidden;
     transform: translateY(50px);
-    transition: opacity 0.5s ease-out, visibility 0.5s, transform 0.5s ease-out;
+    transition: opacity 1.2s ease-in-out, visibility 1.2s, transform 1.2s ease-in-out;
+    pointer-events: none;
 }
 
 .back-to-top-container.is-visible {
@@ -599,24 +595,25 @@ body {
 
 
 .back-to-top-button {
+    position: absolute;
+    top: -10px;
+    left: 50px;
     text-decoration: none;
-    order: 1; /* ボタンを左に */
+    pointer-events: auto;
 }
 
 .btt-character {
-    height: 180px; 
-    width: auto;
-    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
-    order: 2; /* キャラクターを右に */
-    pointer-events: none; /* キャラクターはクリックできないように */
+    height: 350px; 
+    width: 350px;
+    right: -100px;
 }
 
 .btt-icon-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70px; 
-    height: 70px; 
+    width: 80px; 
+    height: 80px; 
     background: transparent;
     border-radius: 50%;
     cursor: pointer;
@@ -625,8 +622,8 @@ body {
 }
 
 .btt-arrow {
-    width: 35px; 
-    height: 35px; 
+    width: 40px; 
+    height: 40px; 
     stroke: black;
     transition: stroke 0.3s ease;
 }
@@ -696,11 +693,14 @@ body {
         margin-top: 2rem;
     }
     .back-to-top-container {
-        bottom: 15px;
         right: 15px;
     }
     .btt-character {
         height: 120px;
+    }
+    .back-to-top-button {
+        top: -10px;
+        left: -60px;
     }
     .btt-icon-wrapper {
         width: 50px;

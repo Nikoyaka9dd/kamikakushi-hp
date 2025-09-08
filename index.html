@@ -128,8 +128,9 @@
         </div>
     </div>
     
-    <!-- 【変更】ボタンとキャラクターを別々の要素として配置 -->
+    <!-- 【変更】ボタンとキャラクターを内包するコンテナを配置 -->
     <div class="back-to-top-container">
+        <img src="assets/heru.PNG" alt="ヘルメース" class="btt-character">
         <a href="#" class="back-to-top-button">
             <div class="btt-icon-wrapper">
                 <svg class="btt-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -137,7 +138,6 @@
                 </svg>
             </div>
         </a>
-        <img src="assets/heru.PNG" alt="ヘルメース" class="btt-character">
     </div>
 
 
@@ -261,13 +261,13 @@
                 }
             }, { passive: true });
 
-            buttonContainer.addEventListener('click', (e) => {
-                 const targetLink = e.target.closest('a');
-                 if(targetLink){
+            const buttonLink = buttonContainer.querySelector('a');
+            if(buttonLink){
+                 buttonLink.addEventListener('click', (e) => {
                     e.preventDefault();
                     window.scrollTo({ top: 0, behavior: 'smooth' });
-                 }
-            });
+                 });
+            }
         }
 
         // パフォーマンスのためのスロットリング関数
