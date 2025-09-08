@@ -345,18 +345,18 @@ body {
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.attraction-section.fade-in-visible .attraction-item {
+.attraction-section.is-visible .attraction-item {
     opacity: 1;
     transform: translateX(0);
 }
 
-.attraction-section.fade-in-visible .attraction-item:nth-child(1) {
+.attraction-section.is-visible .attraction-item:nth-child(1) {
     transition-delay: 0.2s;
 }
-.attraction-section.fade-in-visible .attraction-item:nth-child(2) {
+.attraction-section.is-visible .attraction-item:nth-child(2) {
     transition-delay: 0.4s;
 }
-.attraction-section.fade-in-visible .attraction-item:nth-child(3) {
+.attraction-section.is-visible .attraction-item:nth-child(3) {
     transition-delay: 0.6s;
 }
 
@@ -398,22 +398,21 @@ body {
     z-index: 11; 
 }
 
-/* --- 【追加】雲の中へ進むセクション --- */
+/* --- 雲の中へ進むセクション --- */
 .cloud-path-section {
     position: relative;
     width: 100%;
-    height: 150vh; /* スクロール距離を確保するための高さ */
-    margin-top: -10rem; /* 前のセクションと少し重ねる */
+    height: 200vh;
+    margin-top: -10rem;
     z-index: 8;
 }
 
 .cloud-path-item {
     position: absolute;
-    width: 80vw;
-    max-width: 900px;
+    width: 95vw;
+    max-width: 1100px;
     opacity: 0;
-    transform: translateX(-150%) scale(0.7); /* 初期位置を左画面外に */
-    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    transition: opacity 2s ease-out, transform 2s ease-out; 
 }
 .cloud-path-item img {
     width: 100%;
@@ -421,24 +420,88 @@ body {
     filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.15));
 }
 
-.cloud-path-item.is-visible {
+.cloud-path-section.is-visible .cloud-path-item {
     opacity: 1;
-    transform: translateX(0) scale(1); /* 画面内にスライドイン */
+    transform: translateX(0) scale(1) !important;
+}
+.cloud-path-section.is-visible .cloud-path-item:nth-of-type(1) { transition-delay: 0s; }
+.cloud-path-section.is-visible .cloud-path-item:nth-of-type(2) { transition-delay: 0.3s; }
+.cloud-path-section.is-visible .cloud-path-item:nth-of-type(3) { transition-delay: 0.6s; }
+.cloud-path-section.is-visible .cloud-path-item:nth-of-type(4) { transition-delay: 0.9s; }
+.cloud-path-section.is-visible .cloud-path-item:nth-of-type(5) { transition-delay: 1.2s; }
+
+
+.cloud-path-item.from-left {
+    transform: translateX(-150%) scale(0.7);
+}
+.cloud-path-item.from-right {
+    transform: translateX(150%) scale(0.7);
 }
 
-/* 雲の配置 */
-.cloud-path-item:nth-child(1) {
-    top: 10%;
-    left: -20%;
+
+.cloud-path-item:nth-of-type(1) { top: 5%; left: -10%; }
+.cloud-path-item:nth-of-type(2) { top: 20%; right: -10%; }
+.cloud-path-item:nth-of-type(3) { top: 35%; left: -5%; }
+.cloud-path-item:nth-of-type(4) { top: 50%; right: -15%; }
+.cloud-path-item:nth-of-type(5) { top: 65%; left: -10%; }
+
+
+/* --- 世界観セクション --- */
+.worldview-section {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* 縦方向に要素を並べる */
+    justify-content: center;
+    align-items: center; /* 中央揃え */
+    min-height: 100vh;
+    padding: 10vh 5%; 
+    gap: 4rem; 
+    z-index: 7;
 }
-.cloud-path-item:nth-child(2) {
-    top: 40%;
-    right: -20%;
-    transform: translateX(150%) scale(0.7); /* 2つ目は右から */
+
+.worldview-title {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    font-size: 3.5rem; /* サイズを大きく */
+    color: var(--text-color);
+    margin-bottom: 2rem; /* タイトルと本文の間のスペース */
 }
-.cloud-path-item:nth-child(3) {
-    top: 70%;
-    left: -15%;
+
+.worldview-text {
+    display: flex;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    gap: 3rem; 
+    font-size: 1.3rem; /* フォントサイズを調整 */
+    line-height: 2.4; /* 行間を調整 */
+    color: var(--text-color);
+    max-height: 60vh; /* 高さを調整 */
+}
+
+/* 各段落グループのスタイル */
+.worldview-paragraph-group {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+/* 親要素(.worldview-section)が画面内に入ったらアニメーションを開始 */
+.worldview-section.is-visible .worldview-paragraph-group {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 各段落グループのアニメーション開始を遅らせる */
+.worldview-section.is-visible .worldview-paragraph-group:nth-child(1) {
+    transition-delay: 0.3s;
+}
+.worldview-section.is-visible .worldview-paragraph-group:nth-child(2) {
+    transition-delay: 0.6s;
+}
+
+/* 予約ボタンをセクション下部に配置 */
+.worldview-section .reserve-button-main {
+   margin-top: 3rem; /* 上の要素との間にスペースを確保 */
 }
 
 
@@ -449,7 +512,7 @@ body {
     will-change: opacity, transform;
 }
 
-.fade-in-element.fade-in-visible {
+.fade-in-element.is-visible {
     opacity: 1; 
     transform: translateY(0);
 }
@@ -464,17 +527,22 @@ body {
 .skip-link:focus { top: 6px; }
 
 /* --- インタラクティブエフェクトのスタイル --- */
-/* 【追加】マウス追尾パーティクルのスタイル */
-.mouse-particle {
+#interactive-effects-container {
     position: fixed;
-    left: 0;
     top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: var(--z-interactive-effects);
+}
+
+.mouse-particle {
+    position: absolute; /* fixedから変更 */
     width: 10px;
     height: 10px;
     background: var(--light-gold);
     border-radius: 50%;
-    pointer-events: none;
-    z-index: var(--z-interactive-effects);
     opacity: 1;
     transform: translate(-50%, -50%);
     animation: particle-fade 1s forwards;
@@ -487,14 +555,8 @@ body {
     }
 }
 
-.confetti-container {
-    position: fixed;
-    pointer-events: none;
-    z-index: var(--z-interactive-effects);
-}
-
 .confetti-piece {
-    position: absolute;
+    position: absolute; /* fixedから変更 */
     width: 8px;
     height: 16px;
     opacity: 0;
@@ -511,6 +573,76 @@ body {
         transform: translate(var(--end-x), calc(var(--end-y) + 100px)) rotate(var(--rotation));
         opacity: 0;
     }
+}
+
+/* --- トップへ戻るボタン --- */
+.back-to-top-button {
+    position: fixed;
+    bottom: 30px; 
+    right: 50px; 
+    z-index: var(--z-ui-elements);
+    display: flex;
+    /* 【変更】ボタンとキャラクターの並び順を変更 */
+    flex-direction: row; 
+    align-items: flex-end;
+    gap: 15px; 
+    cursor: pointer;
+    text-decoration: none;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease-out, visibility 0.5s, transform 0.5s ease-out;
+}
+
+.back-to-top-button.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.btt-character {
+    height: 180px; 
+    width: auto;
+    filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
+    /* 【追加】並び順を変更するためにorderプロパティを使用 */
+    order: 2;
+}
+
+.btt-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px; 
+    height: 70px; 
+    background: transparent;
+    border-radius: 50%;
+    
+    border-style: solid;
+    border-width: 6px;
+    /* 【変更】SVG内のrectをcircleに変更して、枠線を円形にします */
+    border-image-source: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ccircle cx='50' cy='50' r='48' style='stroke:%23000; stroke-width:4; fill:none; filter:url(%23f);'/%3E%3Cdefs%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.15' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='6'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E");
+    border-image-slice: 40;
+    border-image-repeat: stretch;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    /* 【追加】並び順を変更するためにorderプロパティを使用 */
+    order: 1;
+}
+
+.btt-arrow {
+    width: 35px; 
+    height: 35px; 
+    stroke: black;
+    transition: stroke 0.3s ease;
+}
+
+.back-to-top-button:hover .btt-icon-wrapper {
+    transform: translateY(-5px);
+    background-color: black;
+}
+
+.back-to-top-button:hover .btt-arrow {
+    stroke: white;
 }
 
 
@@ -546,6 +678,44 @@ body {
     .attraction-item { flex-direction: column; text-align: center; }
     .attraction-number { margin: 0 auto 1rem; }
     .attraction-text h3 { font-size: 1.3rem; }
+    .worldview-section { 
+        padding: 5rem 1rem; 
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+    }
+    .worldview-title {
+        writing-mode: horizontal-tb; /* スマホでは横書きに */
+        margin-bottom: 1rem;
+        font-size: 2.5rem; /* スマホ用に調整 */
+    }
+    .worldview-text { 
+        writing-mode: horizontal-tb; /* スマホでは横書きに */
+        max-height: none;
+        font-size: 1rem; 
+        text-align: left; /* 横書き用に調整 */
+    }
+    .worldview-section .reserve-button-main {
+        position: static; /* 通常の配置に戻す */
+        transform: none;
+        margin-top: 2rem;
+    }
+    .back-to-top-button {
+        bottom: 15px;
+        right: 15px; /* スマホでは右端に */
+        flex-direction: row; /* スマホではキャラクターを左に */
+    }
+    .btt-character {
+        height: 120px;
+    }
+    .btt-icon-wrapper {
+        width: 50px;
+        height: 50px;
+    }
+    .btt-arrow {
+        width: 25px;
+        height: 25px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -564,7 +734,7 @@ body {
 
 /* ユーザーの端末設定でアニメーションを減らす設定がされている場合のスタイル */
 @media (prefers-reduced-motion: reduce) {
-    .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span, .attraction-item {
+    .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span, .attraction-item, .cloud-path-item, .worldview-paragraph-group {
         animation: none !important;
         transition: none !important;
         opacity: 1 !important;
