@@ -25,15 +25,16 @@
 
 body {
     font-family: 'Yu Mincho', 'Hiragino Mincho ProN', 'YuGothic', 'Yu Gothic', serif;
-    background-image: url('assets/back.PNG');
-    background-size: cover;
-    background-position: center;
-    background-color: var(--background-color); /* 画像が読み込めない場合の予備の背景色 */
+    background-image: url('assets/back.jpeg');
+    background-repeat: repeat; 
+    background-size: auto;     
+    background-color: var(--background-color);
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
     color: var(--text-color);
 }
+
 
 
 .container {
@@ -806,6 +807,72 @@ body {
 }
 
 
+.cloud-path-section-3 {
+    height: 100vh;
+    margin-top: -5rem;
+    z-index: 4;
+}
+
+.cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 15%; left: -10%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 40%; right: -15%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 65%; left: -5%; }
+
+.footer-section {
+    position: relative;
+    padding: 5rem 5% 3rem;
+    text-align: center;
+    z-index: 3;
+    overflow: hidden;
+}
+
+.footer-logo-container {
+    margin-bottom: 2rem;
+}
+
+.footer-logo {
+    max-width: 300px;
+    width: 100%;
+}
+
+.footer-characters {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 10px;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+}
+
+.footer-character {
+    height: 120px;
+    width: auto;
+    object-fit: contain;
+}
+
+.footer-info {
+    color: black;
+    line-height: 1.8;
+}
+
+.footer-section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--text-color),
+        var(--text-color) 40px,
+        transparent 40px, 
+        transparent 80px
+    );
+    z-index: -1;
+}
+
+
+
 @media (max-width: 1200px) {
     .vertical-text { font-size: 2.5rem; }
     .vertical-text-top-right { right: 10vw; }
@@ -892,43 +959,6 @@ body {
     .faq-answer p {
         font-size: 1rem;
     }
-}
-
-.cloud-path-section-3 {
-    height: 100vh;
-    margin-top: 0;
-    z-index: 4;
-}
-
-.cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 15%; left: -10%; }
-.cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 40%; right: -15%; }
-.cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 65%; left: -5%; }
-
-.footer-section {
-    position: relative;
-    padding: 5rem 5% 3rem;
-    text-align: center;
-    z-index: 3;
-}
-
-.footer-characters {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
-    gap: 10px;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-}
-
-.footer-character {
-    height: 120px;
-    width: auto;
-    object-fit: contain;
-}
-
-.footer-info {
-    color: black;
-    line-height: 1.8;
 }
 
 
