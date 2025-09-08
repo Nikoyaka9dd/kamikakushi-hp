@@ -1,18 +1,20 @@
 /* CSS Variables for color scheme and z-index layers */
 :root {
+    /* 色の管理をしやすくするための変数定義 */
     --background-color: #fdfaf3; /* ワイヤーフレームに合わせたクリーム色 */
-    --text-color: #c53932; /* ワイヤーフレームに合わせた赤色 */
+    --text-color: #c53332; /* ワイヤーフレームに合わせた赤色 */
     --accent-color: #9c2720; /* 深い赤色 */
     --gold-color: #b8860b;
     --light-gold: #d4af37;
     
-    /* Z-index layer system for animation hierarchy */
-    --z-background-decorations: 0;
-    --z-floating-elements: 1;
-    --z-cloud-layer: 2;
-    --z-main-content: 3;
+    /* 要素の重なり順を管理しやすくするための変数定義 */
+    --z-background-decorations: 1; /* 背景(0)より手前 */
+    --z-floating-elements: 2;
+    --z-cloud-layer: 3;
+    --z-main-content: 4; /* 装飾(1)より手前 */
     --z-ui-elements: 100;
-    --z-scroll-indicator: 1000;
+    --z-interactive-effects: 9999; /* 全ての要素より手前 */
+    --z-scroll-indicator: 10000;  /* エフェクトよりもさらに手前 */
 }
 
 * {
@@ -26,20 +28,27 @@ body {
     background-image: url('assets/back.jpg'); /* 背景画像を指定 */
     background-size: cover;
     background-position: center;
-    background-color: var(--background-color); /* 画像が読み込めない場合の背景色 */
+    background-color: var(--background-color); /* 画像が読み込めない場合の予備の背景色 */
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
     color: var(--text-color);
 }
 
-/* --- ANIMATION SEQUENCE ELEMENTS --- */
+/* --- 【追加】全体のラッパー。内部の要素がはみ出してもレイアウトが崩れるのを防ぎます --- */
+.container {
+    position: relative;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* --- ページ冒頭のアニメーション要素 --- */
 
 .vertical-text {
     position: absolute;
-    writing-mode: vertical-rl;
+    writing-mode: vertical-rl; /* 文字を縦書きにする */
     text-orientation: upright;
-    font-size: 3rem; /* 文字をさらに大きく */
+    font-size: 3rem; 
     font-weight: 600;
     color: var(--text-color);
     z-index: var(--z-main-content);
@@ -48,28 +57,28 @@ body {
 
 .vertical-text-top-right {
     top: 20vh;
-    right: 12vw; /* 右へ配置 */
+    right: 12vw; /* 右上に配置 */
 }
 
 .vertical-text-bottom-left {
     top: 35vh;
-    left: 12vw; /* 左へ配置 */
+    left: 12vw; /* 左下に配置 */
 }
 
 .vertical-text span {
     display: inline-block;
-    opacity: 0;
+    opacity: 0; /* 最初は非表示 */
     transform: translateY(-20px);
-    animation: charFadeIn 0.5s ease-out forwards;
+    animation: charFadeIn 0.5s ease-out forwards; /* 1文字ずつフェードインさせるアニメーション */
 }
 
-/* Animation delays for "あなたも" */
+/* 「あなたも」の各文字のアニメーション開始を遅らせる */
 .vertical-text-top-right span:nth-child(1) { animation-delay: 0.2s; }
 .vertical-text-top-right span:nth-child(2) { animation-delay: 0.4s; }
 .vertical-text-top-right span:nth-child(3) { animation-delay: 0.6s; }
 .vertical-text-top-right span:nth-child(4) { animation-delay: 0.8s; }
 
-/* Animation delays for "物語の登場人物に" */
+/* 「物語の登場人物に」の各文字のアニメーション開始を遅らせる */
 .vertical-text-bottom-left span:nth-child(1) { animation-delay: 1.0s; }
 .vertical-text-bottom-left span:nth-child(2) { animation-delay: 1.2s; }
 .vertical-text-bottom-left span:nth-child(3) { animation-delay: 1.4s; }
@@ -80,21 +89,21 @@ body {
 .vertical-text-bottom-left span:nth-child(8) { animation-delay: 2.4s; }
 
 .main-gif {
-    max-width: 400px; /* ロゴサイズをさらに大きく */
+    max-width: 400px; 
     width: 100%;
     height: auto;
-    opacity: 0;
+    opacity: 0; /* 最初は非表示 */
     transform: scale(0.95);
-    animation: fadeInScaleUp 2s ease-out 2.8s forwards;
+    animation: fadeInScaleUp 2s ease-out 2.8s forwards; /* 文字の後にフェードイン&拡大するアニメーション */
     will-change: opacity, transform;
 }
 
 .cloud-image {
     position: absolute;
-    width: 45vw; /* 雲を大きく */
-    max-width: 650px; /* 最大サイズも大きく */
+    width: 45vw; /* 雲のサイズを画面幅に応じて調整 */
+    max-width: 650px; 
     height: auto;
-    opacity: 0;
+    opacity: 0; /* 最初は非表示 */
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
     will-change: transform, opacity;
     z-index: var(--z-cloud-layer);
@@ -102,38 +111,37 @@ body {
 
 .cloud-left {
     top: 10vh;
-    left: 3vw; /* 左端に寄せる */
+    left: 3vw; 
     transform: translateX(-100%) scale(0.8);
-    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards;
+    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards; /* 左からスライドインするアニメーション */
 }
 
 .cloud-right {
     top: auto;
     bottom: 10vh;
-    right: 3vw; /* 右端に寄せる */
+    right: 3vw; 
     transform: translateX(100%) scale(0.8);
-    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards;
+    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards; /* 右からスライドインするアニメーション */
 }
 
-/* --- GENERAL LAYOUT & DECORATIONS --- */
-
+/* --- 全体のレイアウトと装飾 --- */
 
 .main-logo {
-    min-height: 100vh;
+    min-height: 100vh; /* 画面の高さいっぱいに表示 */
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
     width: 100%;
-    padding: 0 25vw; /* 中央の余白を調整 */
+    padding: 0 25vw; /* 左右に余白を作り、コンテンツを中央に寄せる */
 }
 
 .red-decoration {
-    position: absolute; 
+    position: absolute;
     top: 0;
+    bottom: 0; 
     width: 18vw; 
     max-width: 220px; 
-    height: 100%; 
     z-index: var(--z-background-decorations);
     background: repeating-linear-gradient(
         -45deg,
@@ -146,15 +154,15 @@ body {
 
 .red-decoration-left {
     left: 0;
-    clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%);
+    clip-path: polygon(0 0, 60% 0, 40% 100%, 0% 100%); /* 斜めに切り抜く */
 }
 
 .red-decoration-right {
     right: 0;
-    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%);
+    clip-path: polygon(40% 0, 100% 0, 100% 100%, 60% 100%); /* 斜めに切り抜く */
 }
 
-/* --- KEYFRAMES FOR ANIMATIONS --- */
+/* --- アニメーションの定義 --- */
 
 @keyframes charFadeIn {
     to {
@@ -178,11 +186,11 @@ body {
 }
 
 
-/* --- SCROLL-TRIGGERED CONTENT --- */
+/* --- スクロール後に表示されるコンテンツ --- */
 .scroll-content-wrapper {
     width: 100%;
     position: relative;
-    z-index: 5; /* Raise z-index to ensure it's above decorations */      
+    z-index: 5;       
 }
 
 
@@ -197,12 +205,13 @@ body {
     z-index: 10;
 }
 
-/* --- NEW EVENT DETAILS SECTION --- */
+/* --- イベント詳細セクション --- */
 .event-details-section {
     position: relative;
     padding: 3rem 0;
-    min-height: 90vh; /* 高さを確保 */
+    min-height: 90vh; 
     text-align: center;
+    z-index: 10; 
 }
 .event-header {
     text-align: center;
@@ -242,7 +251,7 @@ body {
 .icon-fox {
     top: 15%;
     left: -3%;
-    z-index: 11;
+    z-index: 11; 
 }
 
 .icon-crow {
@@ -255,7 +264,7 @@ body {
     position: absolute;
     width: 60vw;
     max-width: 600px;
-    z-index: 4;
+    z-index: 4; 
 }
 
 .event-cloud-1 {
@@ -271,38 +280,48 @@ body {
 }
 
 .reserve-button-main {
-    background: black;
-    color: white;
+    background: transparent;
+    color: black;
     padding: 1.2rem 3rem;
-    border: 2px solid black;
-    border-radius: 10px;
     font-size: 1.5rem;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.4s ease, color 0.4s ease;
     box-shadow: 0 5px 20px rgba(0,0,0,0.25);
     margin: 3rem 0;
     position: relative;
     z-index: 10;
-}
-.reserve-button-main:hover {
-    background: white;
-    color: black;
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    -webkit-tap-highlight-color: transparent;
+    border-style: solid;
+    border-width: 8px;
+    border-image-source: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' style='stroke:%23000; stroke-width:4; fill:none; filter:url(%23f);'/%3E%3Cdefs%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.15' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='6'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E");
+    border-image-slice: 40;
+    border-image-repeat: stretch;
 }
 
-/* --- ATTRACTION SECTION --- */
+.reserve-button-main:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    background: black;
+    color: white;
+}
+
+
+/* --- 「公演の魅力」セクション --- */
 .attraction-section {
-    padding: 5rem 2rem 15rem; /* 下に余白をさらに追加 */
+    padding: 5rem 2rem 15rem; 
     max-width: 800px;
     margin: 5rem auto;
-    background: rgba(253, 250, 243, 0.85);
+    background: rgba(253, 250, 243, 0.85); 
     backdrop-filter: blur(4px);
-    border: 3px solid black;
-    border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    position: relative; /* 子要素の配置のため */
+    position: relative; 
+    z-index: 9; 
+    border-style: solid;
+    border-width: 12px;
+    border-image-source: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' style='stroke:%23000; stroke-width:4; fill:none; filter:url(%23f);'/%3E%3Cdefs%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.15' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='6'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E");
+    border-image-slice: 40;
+    border-image-repeat: stretch;
 }
 .attraction-title {
     text-align: center;
@@ -314,22 +333,33 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2.5rem;
-    position: relative; /* z-indexを有効にするため */
-    z-index: 12; /* キャラクター(11)より手前に表示 */
+    position: relative; 
+    z-index: 12; 
 }
 .attraction-item {
     display: flex;
     align-items: flex-start;
     gap: 1.5rem;
-    opacity: 0;
+    opacity: 0; 
     transform: translateX(-30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-.attraction-item.fade-in-visible {
+.attraction-section.fade-in-visible .attraction-item {
     opacity: 1;
     transform: translateX(0);
 }
+
+.attraction-section.fade-in-visible .attraction-item:nth-child(1) {
+    transition-delay: 0.2s;
+}
+.attraction-section.fade-in-visible .attraction-item:nth-child(2) {
+    transition-delay: 0.4s;
+}
+.attraction-section.fade-in-visible .attraction-item:nth-child(3) {
+    transition-delay: 0.6s;
+}
+
 
 .attraction-number {
     flex-shrink: 0;
@@ -353,7 +383,7 @@ body {
 .attraction-text p {
     font-size: 1rem;
     line-height: 1.8;
-    color: #333;
+    color: black; 
 }
 
 .icon-kama {
@@ -368,20 +398,63 @@ body {
     z-index: 11; 
 }
 
+/* --- 【追加】雲の中へ進むセクション --- */
+.cloud-path-section {
+    position: relative;
+    width: 100%;
+    height: 150vh; /* スクロール距離を確保するための高さ */
+    margin-top: -10rem; /* 前のセクションと少し重ねる */
+    z-index: 8;
+}
+
+.cloud-path-item {
+    position: absolute;
+    width: 80vw;
+    max-width: 900px;
+    opacity: 0;
+    transform: translateX(-150%) scale(0.7); /* 初期位置を左画面外に */
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+.cloud-path-item img {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.15));
+}
+
+.cloud-path-item.is-visible {
+    opacity: 1;
+    transform: translateX(0) scale(1); /* 画面内にスライドイン */
+}
+
+/* 雲の配置 */
+.cloud-path-item:nth-child(1) {
+    top: 10%;
+    left: -20%;
+}
+.cloud-path-item:nth-child(2) {
+    top: 40%;
+    right: -20%;
+    transform: translateX(150%) scale(0.7); /* 2つ目は右から */
+}
+.cloud-path-item:nth-child(3) {
+    top: 70%;
+    left: -15%;
+}
+
 
 .fade-in-element {
-    opacity: 0;
+    opacity: 0; 
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
     will-change: opacity, transform;
 }
 
 .fade-in-element.fade-in-visible {
-    opacity: 1;
+    opacity: 1; 
     transform: translateY(0);
 }
 
-/* --- OTHER UI ELEMENTS --- */
+/* --- その他のUI要素 --- */
 
 .scroll-indicator { position: fixed; top: 0; left: 0; width: 100%; height: 3px; background: rgba(139, 0, 0, 0.2); z-index: var(--z-scroll-indicator); }
 .scroll-progress { height: 100%; background: var(--accent-color); width: 0%; transition: width 0.1s linear; }
@@ -390,7 +463,58 @@ body {
 .skip-link { position: absolute; top: -40px; left: 6px; background: var(--accent-color); color: white; padding: 8px; text-decoration: none; border-radius: 4px; z-index: 10000; font-weight: bold; }
 .skip-link:focus { top: 6px; }
 
-/* --- RESPONSIVE DESIGN --- */
+/* --- インタラクティブエフェクトのスタイル --- */
+/* 【追加】マウス追尾パーティクルのスタイル */
+.mouse-particle {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--light-gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: var(--z-interactive-effects);
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    animation: particle-fade 1s forwards;
+}
+
+@keyframes particle-fade {
+    to {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2);
+    }
+}
+
+.confetti-container {
+    position: fixed;
+    pointer-events: none;
+    z-index: var(--z-interactive-effects);
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 16px;
+    opacity: 0;
+    transform-origin: center center;
+    animation: confetti-burst 1.2s ease-out forwards;
+}
+
+@keyframes confetti-burst {
+    0% {
+        transform: translate(0, 0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--end-x), calc(var(--end-y) + 100px)) rotate(var(--rotation));
+        opacity: 0;
+    }
+}
+
+
+/* --- レスポンシブデザイン --- */
 @media (max-width: 1200px) {
     .vertical-text { font-size: 2.5rem; }
     .vertical-text-top-right { right: 10vw; }
@@ -438,7 +562,7 @@ body {
     .attraction-section { padding: 2rem 1rem 6rem; margin: 3rem auto; }
 }
 
-/* Accessibility: Reduced motion */
+/* ユーザーの端末設定でアニメーションを減らす設定がされている場合のスタイル */
 @media (prefers-reduced-motion: reduce) {
     .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span, .attraction-item {
         animation: none !important;

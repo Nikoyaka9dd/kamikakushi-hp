@@ -14,10 +14,10 @@
         <div class="scroll-progress" id="scrollProgress"></div>
     </div>
     
-    <div class="red-decoration red-decoration-left" aria-hidden="true"></div>
-    <div class="red-decoration red-decoration-right" aria-hidden="true"></div>
-    
     <div class="container" id="main-content" tabindex="-1">
+        <div class="red-decoration red-decoration-left" aria-hidden="true"></div>
+        <div class="red-decoration red-decoration-right" aria-hidden="true"></div>
+
         <div class="main-logo">
             <h1 class="vertical-text vertical-text-top-right">
                 <span>あ</span><span>な</span><span>た</span><span>も</span>
@@ -92,30 +92,72 @@
                 <img src="assets/kome.png" alt="こめ">
            </div>
             </div>
+            
+            <div class="cloud-path-section fade-in-element">
+                <div class="cloud-path-item from-left">
+                    <img src="assets/kumoright.PNG" alt="">
+                </div>
+                <div class="cloud-path-item from-right">
+                    <img src="assets/kumoleft.PNG" alt="">
+                </div>
+                <div class="cloud-path-item from-left">
+                    <img src="assets/kumoleft.PNG" alt="">
+                </div>
+                <div class="cloud-path-item from-right">
+                    <img src="assets/kumoright.PNG" alt="">
+                </div>
+                <div class="cloud-path-item from-left">
+                    <img src="assets/kumoleft.PNG" alt="">
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Scroll-linked fade-in
+            // スクロール連動フェードイン
             const fadeInElements = document.querySelectorAll('.fade-in-element');
             if ("IntersectionObserver" in window) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('fade-in-visible');
-                            observer.unobserve(entry.target);
+
+                            // 雲のセクションに入ったら、中の雲を順番に表示
+                            if (entry.target.classList.contains('cloud-path-section')) {
+                                const cloudItems = entry.target.querySelectorAll('.cloud-path-item');
+                                cloudItems.forEach((item, index) => {
+                                    setTimeout(() => {
+                                        item.classList.add('is-visible');
+                                    }, index * 400); // 0.4秒ずつ遅らせて表示
+                                });
+                            }
+                            
+                            // 「公演の魅力」セクションに入ったら中のアイテムを順番に表示
+                            if (entry.target.classList.contains('attraction-section')) {
+                                 const attractionItems = entry.target.querySelectorAll('.attraction-item');
+                                 attractionItems.forEach((item, index) => {
+                                     item.style.transitionDelay = `${index * 0.2}s`;
+                                 });
+                            }
+
+                            // 一度表示されたら監視を停止（ただし、アニメーションを繰り返したい要素は除く）
+                             if (!entry.target.classList.contains('cloud-path-section')) {
+                                observer.unobserve(entry.target);
+                            }
                         }
                     });
-                }, { threshold: 0.1 });
-
+                }, { threshold: 0.2 }); // 少し見えたらアニメーション開始
                 fadeInElements.forEach(el => observer.observe(el));
             } else {
-                // Fallback for older browsers
+                // IntersectionObserverが使えないブラウザ用のフォールバック
                 fadeInElements.forEach(el => el.classList.add('fade-in-visible'));
+                 const cloudItems = document.querySelectorAll('.cloud-path-item');
+                 cloudItems.forEach(item => item.classList.add('is-visible'));
             }
 
-            // Scroll progress bar
+            // スクロールプログレスバー
             const scrollProgress = document.getElementById('scrollProgress');
             window.addEventListener('scroll', () => {
                 const scrollTop = window.pageYOffset;
@@ -126,38 +168,91 @@
                 }
             }, { passive: true });
             
-            // GIF to static image replacement
+            // GIFから静止画への置換
             initGifReplacement();
+            
+            // ページ全体のエフェクトを初期化
+            initInteractiveEffects();
         });
 
         function initGifReplacement() {
             const mainGif = document.getElementById('mainGif');
-            if (!mainGif) {
-                console.error('GIF replacement: mainGif element not found.');
-                return;
-            }
-
-            // The GIF's fade-in animation starts after a 2.8s delay (from CSS).
-            // We'll swap the image 4 seconds after the animation begins.
-            const animationStartDelay = 2800; // Corresponds to animation-delay in CSS
-            const timeAfterDisplay = 4000;   // 4 seconds after display starts
+            if (!mainGif) return;
+            const animationStartDelay = 2800;
+            const timeAfterDisplay = 4000;
             const swapDelay = animationStartDelay + timeAfterDisplay; 
-
             setTimeout(() => {
                 const staticImageUrl = 'title_static.png'; 
                 const staticImage = new Image();
-
-                staticImage.onload = () => {
-                    mainGif.src = staticImageUrl;
-                };
-                
-                staticImage.onerror = () => {
-                    console.error('Failed to load the static image for GIF replacement. Check if the file "' + staticImageUrl + '" is uploaded and the path is correct.');
-                };
-
+                staticImage.onload = () => { mainGif.src = staticImageUrl; };
+                staticImage.onerror = () => { console.error('静止画像の読み込みに失敗しました: ' + staticImageUrl); };
                 staticImage.src = staticImageUrl;
-
             }, swapDelay);
+        }
+
+        function initInteractiveEffects() {
+            const isTouchDevice = 'ontouchstart' in window;
+
+            // PCのみ: マウス追尾エフェクト
+            if (!isTouchDevice) {
+                document.body.addEventListener('mousemove', function(e) {
+                    createParticle(e.clientX, e.clientY);
+                });
+            }
+
+            // PCとスマホ共通: クリック/タップ時の金色の紙吹雪
+            document.body.addEventListener('click', function(e) {
+                // ボタンやリンクのクリック時はエフェクトを出さない
+                if (e.target.closest('a, button')) {
+                    return;
+                }
+                createConfetti(e.clientX, e.clientY);
+            });
+
+            function createParticle(x, y) {
+                const particle = document.createElement('div');
+                particle.classList.add('mouse-particle');
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, 1000);
+            }
+
+            function createConfetti(x, y) {
+                const confettiCount = 20;
+                const container = document.createElement('div');
+                container.classList.add('confetti-container');
+                container.style.left = `${x}px`;
+                container.style.top = `${y}px`;
+                document.body.appendChild(container);
+
+                for (let i = 0; i < confettiCount; i++) {
+                    const piece = document.createElement('div');
+                    piece.classList.add('confetti-piece');
+                    
+                    const angle = Math.random() * Math.PI * 2;
+                    const velocity = Math.random() * 50 + 20; 
+                    const endX = Math.cos(angle) * velocity;
+                    const endY = Math.sin(angle) * velocity;
+                    
+                    piece.style.setProperty('--end-x', `${endX}px`);
+                    piece.style.setProperty('--end-y', `${endY}px`);
+                    piece.style.setProperty('--rotation', `${Math.random() * 720}deg`);
+                    piece.style.animationDelay = `${Math.random() * 0.1}s`;
+                    
+                    const colors = ['#ffd700', '#f0e68c', '#daa520', '#d4af37'];
+                    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    
+                    container.appendChild(piece);
+                }
+                
+                setTimeout(() => {
+                    container.remove();
+                }, 1500);
+            }
         }
     </script>
 </body>
