@@ -101,28 +101,33 @@ body {
 
 .cloud-image {
     position: absolute;
-    width: 45vw; /* 雲のサイズを画面幅に応じて調整 */
+    width: 50vw; 
     max-width: 650px; 
     height: auto;
-    opacity: 0; /* 最初は非表示 */
+    opacity: 0; 
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
     will-change: transform, opacity;
     z-index: var(--z-cloud-layer);
+    animation: none;
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
 
 .cloud-left {
-    top: 10vh;
-    left: 3vw; 
-    transform: translateX(-100%) scale(0.8);
-    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards; /* 左からスライドインするアニメーション */
+    top: 70vh;
+    left:-10vw; 
+    transform: translateX(-100%);
 }
 
 .cloud-right {
-    top: auto;
-    bottom: 10vh;
-    right: 3vw; 
-    transform: translateX(100%) scale(0.8);
-    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards; /* 右からスライドインするアニメーション */
+    /* 【変更】ワイヤーフレームに合わせて再配置 */
+    top: 80vh;
+    right: -5vw; 
+    transform: translateX(100%);
+}
+/* 【追加】スクロールで表示されたときのスタイル */
+.cloud-image.is-visible {
+    opacity: 1;
+    transform: translateX(0);
 }
 
 /* --- 全体のレイアウトと装飾 --- */

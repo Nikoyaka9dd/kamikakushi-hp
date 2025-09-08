@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>消えない祭りは神隠し</title>
+    <!-- 【追加】Google FontsからYuji Bokuを読み込み -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Boku&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -28,8 +32,9 @@
             <h2 class="vertical-text vertical-text-bottom-left">
                 <span>物</span><span>語</span><span>の</span><span>登</span><span>場</span><span>人</span><span>物</span><span>に</span>
             </h2>
-            <img src="assets/kumoleft.PNG" alt="" class="cloud-image cloud-left">
-            <img src="assets/kumoright.PNG" alt="" class="cloud-image cloud-right">
+            <!-- 【変更】スクロールで表示される雲を追加 -->
+            <img src="assets/kumoleft.PNG" alt="" class="cloud-image cloud-left scroll-triggered-cloud">
+            <img src="assets/kumoright.PNG" alt="" class="cloud-image cloud-right scroll-triggered-cloud">
         </div>
         
         <div class="scroll-content-wrapper">
@@ -167,7 +172,6 @@
                 </div>
             </div>
 
-            <!-- 【追加】よくある質問セクション -->
             <div class="faq-section fade-in-element">
                 <h2 class="faq-title">よくある質問(FAQ)</h2>
                 <div class="faq-list">
@@ -225,16 +229,16 @@
 
             <footer class="footer-section">
                 <div class="footer-logo-container">
-                    <img src="title2.PNG" alt="フッターロゴ" class="footer-logo">
+                    <img src="assets/title2.png" alt="フッターロゴ" class="footer-logo">
                 </div>
                 <div class="footer-characters">
-                    <img src="assets/kitune.PNG" alt="狐" class="footer-character">
-                    <img src="assets/binbou.PNG" alt="貧乏" class="footer-character">
-                    <img src="assets/kama.PNG" alt="かま" class="footer-character">
-                    <img src="assets/heru.PNG" alt="ヘルメース" class="footer-character">
-                    <img src="assets/kome.PNG" alt="こめ" class="footer-character">
-                    <img src="assets/huku.PNG" alt="福" class="footer-character">
-                    <img src="assets/karasu.PNG" alt="カラス" class="footer-character">
+                    <img src="" alt="キャラクター1" class="footer-character">
+                    <img src="" alt="キャラクター2" class="footer-character">
+                    <img src="" alt="キャラクター3" class="footer-character">
+                    <img src="" alt="キャラクター4" class="footer-character">
+                    <img src="" alt="キャラクター5" class="footer-character">
+                    <img src="" alt="キャラクター6" class="footer-character">
+                    <img src="" alt="キャラクター7" class="footer-character">
                 </div>
                 <div class="footer-info">
                     <p>お問い合わせ: hokubu.immersive@gmail.com</p>
@@ -261,24 +265,29 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const animatedElements = document.querySelectorAll('.fade-in-element, .attraction-section, .cloud-path-section, .worldview-section');
+            // 【変更】監視対象の要素リストを更新
+            const animatedElements = document.querySelectorAll('.fade-in-element, .attraction-section, .cloud-path-section, .worldview-section, .performance-details-section, .faq-section, .footer-section, .scroll-triggered-cloud');
+            
             if ("IntersectionObserver" in window) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('is-visible');
-                            if(!entry.target.classList.contains('cloud-path-section')){
-                                observer.unobserve(entry.target);
-                            }
+                            // 【重要】一度表示された要素は監視を解除し、再アニメーションを防ぐ
+                            observer.unobserve(entry.target); 
                         }
                     });
-                }, { threshold: 0.2 });
+                }, { 
+                    threshold: 0.2 // 要素が20%見えたらアニメーション開始
+                });
 
                 animatedElements.forEach(el => observer.observe(el));
             } else {
+                // IntersectionObserver未対応ブラウザ向けのフォールバック
                 animatedElements.forEach(el => el.classList.add('is-visible'));
             }
 
+            // スクロールバーの処理
             const scrollProgress = document.getElementById('scrollProgress');
             window.addEventListener('scroll', () => {
                 const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -289,12 +298,14 @@
                 }
             }, { passive: true });
             
+            // 各機能の初期化
             initGifReplacement();
             initInteractiveEffects();
             initBackToTopButton();
-            initFaqAccordion(); // 【追加】FAQのアコーディオン機能を初期化
+            initFaq();
         });
 
+        // GIFを静止画に差し替える処理
         function initGifReplacement() {
             const mainGif = document.getElementById('mainGif');
             if (!mainGif) return;
@@ -303,7 +314,7 @@
             const swapDelay = animationStartDelay + timeAfterDisplay; 
 
             setTimeout(() => {
-                const staticImageUrl = 'assets/title_static.png'; 
+                const staticImageUrl = 'assets/title2.png'; 
                 const staticImage = new Image();
                 staticImage.onload = () => { mainGif.src = staticImageUrl; };
                 staticImage.onerror = () => { console.error('Failed to load the static image for GIF replacement: ' + staticImageUrl); };
@@ -311,6 +322,7 @@
             }, swapDelay);
         }
 
+        // マウス追従・クリックエフェクトの処理
         function initInteractiveEffects() {
             const container = document.getElementById('interactive-effects-container');
             if (!container) return;
@@ -375,20 +387,18 @@
             }
         }
 
-        // 【追加】FAQのアコーディオン機能
-        function initFaqAccordion() {
+        function initFaq() {
             const faqItems = document.querySelectorAll('.faq-item');
             faqItems.forEach(item => {
                 const question = item.querySelector('.faq-question');
                 const answer = item.querySelector('.faq-answer');
 
                 question.addEventListener('click', () => {
-                    const isOpened = item.classList.toggle('open');
-                    
-                    if(isOpened) {
+                    const isOpen = item.classList.toggle('open');
+                    if (isOpen) {
                         answer.style.maxHeight = answer.scrollHeight + 'px';
                     } else {
-                        answer.style.maxHeight = '0px';
+                        answer.style.maxHeight = '0';
                     }
                 });
             });
