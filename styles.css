@@ -576,37 +576,39 @@ body {
 }
 
 /* --- トップへ戻るボタン --- */
-.back-to-top-button {
+.back-to-top-container {
     position: fixed;
-    bottom: 30px; 
-    right: 50px; 
+    bottom: 30px;
+    right: 50px;
     z-index: var(--z-ui-elements);
     display: flex;
-    /* 【変更】ボタンとキャラクターの並び順を変更 */
-    flex-direction: row; 
     align-items: flex-end;
-    gap: 15px; 
-    cursor: pointer;
-    text-decoration: none;
-
+    gap: 15px;
+    
     opacity: 0;
     visibility: hidden;
     transform: translateY(50px);
     transition: opacity 0.5s ease-out, visibility 0.5s, transform 0.5s ease-out;
 }
 
-.back-to-top-button.is-visible {
+.back-to-top-container.is-visible {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+}
+
+
+.back-to-top-button {
+    text-decoration: none;
+    order: 1; /* ボタンを左に */
 }
 
 .btt-character {
     height: 180px; 
     width: auto;
     filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
-    /* 【追加】並び順を変更するためにorderプロパティを使用 */
-    order: 2;
+    order: 2; /* キャラクターを右に */
+    pointer-events: none; /* キャラクターはクリックできないように */
 }
 
 .btt-icon-wrapper {
@@ -617,12 +619,9 @@ body {
     height: 70px; 
     background: transparent;
     border-radius: 50%;
-    
-    /* 【変更】SVGを使った特殊な枠線をやめて、シンプルな丸線に変更します */
+    cursor: pointer;
     border: 4px solid black;
     transition: transform 0.3s ease, background-color 0.3s ease;
-    /* 【追加】並び順を変更するためにorderプロパティを使用 */
-    order: 1;
 }
 
 .btt-arrow {
@@ -696,10 +695,9 @@ body {
         transform: none;
         margin-top: 2rem;
     }
-    .back-to-top-button {
+    .back-to-top-container {
         bottom: 15px;
-        right: 15px; /* スマホでは右端に */
-        flex-direction: row; /* スマホではキャラクターを左に */
+        right: 15px;
     }
     .btt-character {
         height: 120px;
@@ -737,5 +735,4 @@ body {
         transform: none !important;
     }
 }
-
 
