@@ -57,19 +57,19 @@ body {
 }
 
 .vertical-text-top-right {
-    top: 20vh;
-    right: 12vw; /* 右上に配置 */
+    top: 10vh;
+    right: 25vw !important;; /* 右上に配置 */
 }
 
 .vertical-text-bottom-left {
-    top: 35vh;
-    left: 12vw; /* 左下に配置 */
+    top: 45vh;
+    left: 25vw !important;; /* 左下に配置 */
 }
 
 .vertical-text span {
     display: inline-block;
     opacity: 0; /* 最初は非表示 */
-    transform: translateY(-20px);
+    transform: translateY(-5px);
     animation: charFadeIn 0.5s ease-out forwards; /* 1文字ずつフェードインさせるアニメーション */
 }
 
@@ -112,22 +112,97 @@ body {
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
 
-.cloud-left {
-    top: 70vh;
-    left:-10vw; 
-    transform: translateX(-100%);
+/* 【ここから変更】タイトルアニメーションのスタイル */
+
+.title-opening-cloud {
+    /* 【変更】最初から表示されるようにopacity:0を削除 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition: none;
 }
 
-.cloud-right {
-    /* 【変更】ワイヤーフレームに合わせて再配置 */
-    top: 80vh;
-    right: -5vw; 
-    transform: translateX(100%);
+/* 各雲に個別のアニメーションを適用 */
+.cloud-1 { animation: cloud-1-anim 7.0s cubic-bezier(0.6, 0, 0.4, 1) 0.3s forwards; }
+.cloud-2 { animation: cloud-2-anim 7.0s cubic-bezier(0.6, 0, 0.4, 1) 0.2s forwards; }
+.cloud-3 { animation: cloud-3-anim 7.0s cubic-bezier(0.6, 0, 0.4, 1) 0.1s forwards; }
+.cloud-4 { animation: cloud-4-anim 7.0s cubic-bezier(0.6, 0, 0.4, 1) 0.4s forwards; }
+.cloud-5 { animation: cloud-5-anim 7.0s cubic-bezier(0.6, 0, 0.4, 1) 0.2s forwards; }
+
+/* --- 左へスライドする雲のアニメーション --- */
+
+/* 左スライド1 (kumoright) */
+@keyframes cloud-1-anim {
+    from {
+        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+        width: 90vw; max-width: 950px;
+        transform: translate(-60%, -80%);
+        opacity: 1;
+    }
+    to {
+        width: 90vw; max-width: 950px;
+        transform: translate(-150vw, -80%);
+        opacity: 0;
+    }
 }
-/* 【追加】スクロールで表示されたときのスタイル */
-.cloud-image.is-visible {
-    opacity: 1;
-    transform: translateX(0);
+/* 左スライド2 (kumoleft) */
+@keyframes cloud-2-anim {
+    from {
+        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+        width: 80vw; max-width: 850px;
+        transform: translate(-80%, -40%);
+        opacity: 1;
+    }
+    to {
+        width: 80vw; max-width: 850px;
+        transform: translate(-160vw, -40%);
+        opacity: 0;
+    }
+}
+/* 左スライド3 (kumoleft) */
+@keyframes cloud-3-anim {
+    from {
+        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+        width: 85vw; max-width: 900px; 
+        transform: translate(-50%, -10%);
+        opacity: 1;
+    }
+    to {
+        width: 85vw; max-width: 900px;
+        transform: translate(-140vw, -10%);
+        opacity: 0;
+    }
+}
+
+/* --- 右へスライドする雲のアニメーション --- */
+
+/* 右スライド1 (kumoright) */
+@keyframes cloud-4-anim {
+    from {
+        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+        width: 90vw; max-width: 950px; 
+        transform: translate(-30%, -60%);
+        opacity: 1;
+    }
+    to {
+        width: 90vw; max-width: 950px; 
+        transform: translate(130vw, -60%);
+        opacity: 0;
+    }
+}
+/* 右スライド2 (kumoleft) */
+@keyframes cloud-5-anim {
+    from {
+        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+        width: 85vw; max-width: 900px; 
+        transform: translate(-20%, -25%);
+        opacity: 1;
+    }
+    to {
+        width: 85vw; max-width: 900px; 
+        transform: translate(150vw, -25%);
+        opacity: 0;
+    }
 }
 
 /* --- 全体のレイアウトと装飾 --- */
