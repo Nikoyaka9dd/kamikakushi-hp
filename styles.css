@@ -375,7 +375,7 @@ body {
 
 
 .reserve-button-main {
-    background: transparent;
+    background: rgba(253, 250, 243, 0.85);
     color: black;
     padding: 1.2rem 3rem;
     font-size: 1.5rem;
@@ -420,9 +420,9 @@ body {
 }
 .attraction-title {
     text-align: center;
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 3rem;
-    color: black;
+    color: var(--accent-color);
 }
 .attraction-content {
     display: flex;
@@ -470,26 +470,26 @@ body {
     font-weight: bold;
 }
 .attraction-text h3 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     margin-bottom: 0.5rem;
     line-height: 1.4;
     color: black;
 }
 .attraction-text p {
-    font-size: 1rem;
+    font-size: 1.3rem;
     line-height: 1.8;
     color: black; 
 }
 
 .icon-kama {
-    top: 40%;
-    right: -30%;
+    top: 60%;
+    right: -45%;
     z-index: 11; 
 }
 
 .icon-kome {
-    top: 66%;
-    right: -10%;
+    top: 70%;
+    right: -27%;
     z-index: 11; 
 }
 
