@@ -42,23 +42,23 @@
         
         <div class="scroll-content-wrapper">
             <h1 class="sub-catchcopy fade-in-element">京大初の没入型演劇<br>学園祭の2日間限定でお届けします</h1>
-            <div class="event-details-section fade-in-element">
-                <div class="event-header">
+            <div class="event-details-section">
+                <div class="event-header  fade-in-element">
                     <h1>京都大学</h1>
                     <h2>学園祭</h2>
                 </div>
 
-                <div class="date-image-container">
+                <div class="date-image-container  fade-in-element">
                     <img src="assets/date.PNG" alt="開催日時: 11月23日、24日">
                 </div>
                 
-                <div class="character-icon icon-fox">
+                <div class="character-icon icon-fox  fade-in-element">
                     <img src="assets/kitune.png" alt="狐のキャラクターイラスト">
                 </div>
 
                 <button class="reserve-button-main fade-in-element">予約はこちら</button>
 
-                <div class="character-icon icon-crow">
+                <div class="character-icon icon-crow  fade-in-element">
                      <img src="assets/karasu.png" alt="鴉のキャラクターイラスト">
                 </div>
 
@@ -268,20 +268,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // 【変更】監視対象の要素リストを更新
-            const animatedElements = document.querySelectorAll('.fade-in-element, .attraction-section, .cloud-path-section, .worldview-section, .performance-details-section, .faq-section, .footer-section, .scroll-triggered-cloud');
+            const animatedElements = document.querySelectorAll('.fade-in-element, .event-details-section, .attraction-section, .cloud-path-section, .worldview-section, .performance-details-section, .faq-section, .footer-section, .scroll-triggered-cloud');
             
             if ("IntersectionObserver" in window) {
                 const observer = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('is-visible');
-                            // 【重要】一度表示された要素は監視を解除し、再アニメーションを防ぐ
                             observer.unobserve(entry.target); 
                         }
                     });
                 }, { 
-                    threshold: 0.2 // 要素が20%見えたらアニメーション開始
+                    threshold: 0.25 // 要素が25%見えたらアニメーション開始
                 });
 
                 animatedElements.forEach(el => observer.observe(el));

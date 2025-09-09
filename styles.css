@@ -112,10 +112,8 @@ body {
     transition: opacity 1.5s ease-out, transform 1.5s ease-out;
 }
 
-/* 【ここから変更】タイトルアニメーションのスタイル */
 
 .title-opening-cloud {
-    /* 【変更】最初から表示されるようにopacity:0を削除 */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -134,7 +132,7 @@ body {
 /* 左スライド1 (kumoright) */
 @keyframes cloud-1-anim {
     from {
-        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+
         width: 100vw; max-width: 980px;
         transform: translate(-60%, -80%);
         opacity: 1;
@@ -148,7 +146,7 @@ body {
 /* 左スライド2 (kumoleft) */
 @keyframes cloud-2-anim {
     from {
-        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+
         width: 90vw; max-width: 900px;
         transform: translate(-80%, -40%);
         opacity: 1;
@@ -162,7 +160,7 @@ body {
 /* 左スライド3 (kumoleft) */
 @keyframes cloud-3-anim {
     from {
-        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+
         width: 80vw; max-width: 900px; 
         transform: translate(-50%, -10%);
         opacity: 1;
@@ -179,7 +177,7 @@ body {
 /* 右スライド1 (kumoright) */
 @keyframes cloud-4-anim {
     from {
-        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+
         width: 90vw; max-width: 950px; 
         transform: translate(-30%, -60%);
         opacity: 1;
@@ -193,7 +191,7 @@ body {
 /* 右スライド2 (kumoleft) */
 @keyframes cloud-5-anim {
     from {
-        /* 【変更】サイズを大きく、位置を中央寄りに調整 */
+
         width: 85vw; max-width: 900px; 
         transform: translate(-20%, -25%);
         opacity: 1;
@@ -286,30 +284,30 @@ body {
     z-index: 10;
 }
 
-/* --- イベント詳細セクション --- */
+/* --- イベント概要セクション --- */
 .event-details-section {
     position: relative;
     padding: 3rem 0;
-    min-height: 90vh; 
+    min-height: 100vh; 
     text-align: center;
     z-index: 10; 
 }
 .event-header {
     text-align: center;
-    margin-bottom: 1rem;
     position: relative;
     z-index: 10;
 }
-.event-header p {
-    font-size: 1.2rem;
+.event-header h1 {
+    font-size: 3rem;
 }
 .event-header h2 {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: bold;
 }
 .date-image-container {
-    max-width: 400px;
+    max-width: 500px;
     margin: 1rem auto;
+    top: -100px;
     position: relative;
     z-index: 10;
 }
@@ -330,35 +328,51 @@ body {
 }
 
 .icon-fox {
-    top: 15%;
-    left: -3%;
+    top: 10%;
+    left: -10%;
     z-index: 11; 
 }
 
 .icon-crow {
-    top: 66%;
-    right: 0%;
+    top: 60%;
+    right: -10%;
     z-index: 11; 
 }
 
+
 .event-cloud {
     position: absolute;
-    width: 60vw;
-    max-width: 600px;
-    z-index: 4; 
+    width: 50vw;
+    max-width: 500px;
+    z-index: 4;
+    opacity: 0;
+    transition: opacity 3s ease-out, transform 3s ease-out;
+    will-change: opacity, transform;
 }
 
+/* 右側の雲の初期位置 */
 .event-cloud-1 {
     top: 20%;
-    right: 3%;
-    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards;
+    right: 14%;
+    left: auto;
+    transform: translateX(100%);
 }
 
+/* 左側の雲の初期位置 */
 .event-cloud-2 {
-    top: 65%;
-    left: 5%;
-    animation: simpleFloatIn 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 4.5s forwards;
+    top: 40%;
+    left: -9%;
+    right: auto;
+    transform: translateX(-100%);
 }
+
+.event-details-section.is-visible .event-cloud {
+    /* 最終状態: 不透明にする */
+    opacity: 1;
+    /* 最終状態: 元の位置に移動させる */
+    transform: translateX(0);
+}
+
 
 .reserve-button-main {
     background: transparent;
