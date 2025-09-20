@@ -55,13 +55,13 @@
                 </div>
                 
                 <div class="character-icon icon-fox  fade-in-element">
-                    <img src="assets/kitune.png" alt="狐のキャラクターイラスト">
+                    <img src="assets/kitune.PNG" alt="狐のキャラクターイラスト">
                 </div>
 
                 <button class="reserve-button-main fade-in-element">予約はこちら</button>
 
                 <div class="character-icon icon-crow  fade-in-element">
-                     <img src="assets/karasu.png" alt="鴉のキャラクターイラスト">
+                     <img src="assets/karasu.PNG" alt="鴉のキャラクターイラスト">
                 </div>
 
                 <div class="event-cloud event-cloud-1">
@@ -80,6 +80,8 @@
                         <div class="attraction-text">
                             <h3>あなたが物語に参加する<br>完全没入体験</h3>
                             <p>ただ観るだけの演劇ではありません。<br>役者と関わり、あなたの選択で物語が変わる<br>登場人物として行動する特別な体験です。</p>
+                             <!-- 【追加】写真のプレースホルダー -->
+                            <div class="attraction-image-placeholder">画像</div>
                         </div>
                     </div>
                     <div class="attraction-item">
@@ -87,6 +89,8 @@
                         <div class="attraction-text">
                             <h3>小学生から大人まで<br>誰でも楽しめる</h3>
                             <p>特別な知識や経験は要りません。子どもから大人まで<br>誰もが安心して楽しめ、日常を飛び出すワクワクを味わえます。</p>
+                             <!-- 【追加】写真のプレースホルダー -->
+                            <div class="attraction-image-placeholder">画像</div>
                         </div>
                     </div>
                     <div class="attraction-item">
@@ -94,32 +98,34 @@
                         <div class="attraction-text">
                             <h3>キャンパス全体に<br>広がる世界観</h3>
                             <p>私たちが手がけるのは会場内だけではありません。<br>京大北部キャンパス全体が物語の舞台となり、歩くだけでワクワクが高まる特別な体験が広がります。</p>
+                             <!-- 【追加】写真のプレースホルダー -->
+                            <div class="attraction-image-placeholder">画像</div>
                         </div>
                     </div>
                 </div>
                 <div class="character-icon icon-kama">
-                    <img src="assets/kama.png" alt="かま">
+                    <img src="assets/kama.PNG" alt="かま">
                </div>
                <div class="character-icon icon-kome">
-                <img src="assets/kome.png" alt="こめ">
+                <img src="assets/kome.PNG" alt="こめ">
                </div>
             </div>
 
             <div class="cloud-path-section">
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoright.png" alt="">
+                    <img src="assets/kumoright.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-right">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-right">
-                    <img src="assets/kumoright.png" alt="">
+                    <img src="assets/kumoright.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
             </div>
 
@@ -137,13 +143,13 @@
             </div>
             <div class="cloud-path-section cloud-path-section-2">
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoright.png" alt="">
+                    <img src="assets/kumoright.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-right">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
             </div>
 
@@ -222,19 +228,19 @@
 
             <div class="cloud-path-section cloud-path-section-3">
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoright.png" alt="">
+                    <img src="assets/kumoright.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-right">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-right">
-                    <img src="assets/kumoright.png" alt="">
+                    <img src="assets/kumoright.PNG" alt="">
                 </div>
                 <div class="cloud-path-item from-left">
-                    <img src="assets/kumoleft.png" alt="">
+                    <img src="assets/kumoleft.PNG" alt="">
                 </div>
             </div>
 
@@ -323,7 +329,7 @@
             const swapDelay = animationStartDelay + timeAfterDisplay; 
 
             setTimeout(() => {
-                const staticImageUrl = 'assets/title2.png'; 
+                const staticImageUrl = 'assets/title2.PNG'; 
                 const staticImage = new Image();
                 staticImage.onload = () => { mainGif.src = staticImageUrl; };
                 staticImage.onerror = () => { console.error('Failed to load the static image for GIF replacement: ' + staticImageUrl); };
