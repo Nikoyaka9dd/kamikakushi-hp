@@ -335,7 +335,7 @@ body {
 
 .icon-crow {
     top: 60%;
-    right: -10%;
+    right: 0%;
     z-index: 11; 
 }
 
@@ -507,7 +507,7 @@ body {
     width: 95vw;
     max-width: 1100px;
     opacity: 0;
-    transition: opacity 2s ease-out, transform 2s ease-out; 
+    transition: opacity 2.2s ease-out, transform 2.2s ease-out; 
 }
 .cloud-path-item img {
     width: 100%;
@@ -534,11 +534,11 @@ body {
 }
 
 
-.cloud-path-item:nth-of-type(1) { top: 5%; left: -10%; }
-.cloud-path-item:nth-of-type(2) { top: 20%; right: -10%; }
-.cloud-path-item:nth-of-type(3) { top: 35%; left: -5%; }
+.cloud-path-item:nth-of-type(1) { top: 5%; left: -20%; }
+.cloud-path-item:nth-of-type(2) { top: 20%; right: -20%; }
+.cloud-path-item:nth-of-type(3) { top: 35%; left: -20%; }
 .cloud-path-item:nth-of-type(4) { top: 50%; right: -15%; }
-.cloud-path-item:nth-of-type(5) { top: 65%; left: -10%; }
+.cloud-path-item:nth-of-type(5) { top: 65%; left: -26%; }
 
 
 /* --- 世界観セクション --- */
@@ -741,9 +741,9 @@ body {
 }
 
 
-.cloud-path-section-2 .cloud-path-item:nth-of-type(1) { top: 10%; left: -15%; }
-.cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 30%; right: -10%; }
-.cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 55%; left: -5%; }
+.cloud-path-section-2 .cloud-path-item:nth-of-type(1) { top: -30%; left: -15%; }
+.cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 5%; right: -20%; }
+.cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 24%; left: -26%; }
 
 
 /* --- 公演詳細セクション --- */
@@ -757,9 +757,9 @@ body {
 
 .details-title {
     text-align: center;
-    font-size: 2.5rem;
+    font-size: 3rem;
     margin-bottom: 4rem;
-    color: var(--text-color);
+    color: var(--accent-color);
 }
 
 .details-grid {
@@ -771,17 +771,17 @@ body {
 }
 
 .detail-item h3 {
-    font-size: 1.8rem;
+    font-size: 2.4rem;
     color: var(--text-color);
     margin-bottom: 1rem;
 }
 
 .detail-item p {
-    font-size: 1.1rem;
+    font-size: 1.7rem;
 }
 
 .detail-item span {
-    font-size: 0.9rem;
+    font-size: 1rem;
     opacity: 0.8;
 }
 
@@ -806,7 +806,7 @@ body {
 .details-character {
     position: absolute;
     z-index: -1; 
-    width: 300px;
+    width: 600px;
 }
 .details-character img {
     width: 100%;
@@ -814,12 +814,12 @@ body {
 }
 
 .details-character-left {
-    top: 0;
-    left: -5%;
+    top: -12%;
+    left: -10%;
 }
 .details-character-right {
-    top: 5%;
-    right: -5%;
+    top: 20%;
+    right: -17%;
 }
 /* 【ここから追加】よくある質問セクションのスタイル */
 .faq-section {
@@ -907,10 +907,11 @@ body {
     z-index: 4;
 }
 
-.cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 15%; left: -10%; }
-.cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 40%; right: -15%; }
-.cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 65%; left: -5%; }
-
+.cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 0%; left: -20%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 40%; right: -20%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 60%; left: -17%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(4) { top: 100%; right: -20%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(5) { top: 140%; left: -13%; }
 .footer-section {
     position: relative;
     padding: 5rem 5% 3rem;
@@ -920,12 +921,13 @@ body {
 }
 
 .footer-logo-container {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .footer-logo {
     max-width: 300px;
     width: 100%;
+    transform: translateY(1000px);
 }
 
 .footer-characters {
@@ -938,9 +940,52 @@ body {
 }
 
 .footer-character {
-    height: 120px;
-    width: auto;
     object-fit: contain;
+    transition: transform 0.3s ease;
+    margin: 0 -100px;
+}
+
+.footer-character:nth-child(1) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(-70px) translateY(1000px);
+    z-index: 1; /* レイヤー順を指定 */
+}
+.footer-character:nth-child(2) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(-270px) translateY(1010px);
+    z-index: 2; /* レイヤー順を指定 */
+}
+.footer-character:nth-child(3) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(-430px) translateY(1000px);
+    z-index: 3; /* レイヤー順を指定 */
+}
+.footer-character:nth-child(4) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(340px) translateY(500px);
+    z-index: 4; /* レイヤー順を指定 */
+}
+.footer-character:nth-child(5) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(150px) translateY(500px);
+    z-index: 3; /* レイヤー順を指定 */
+}
+.footer-character:nth-child(6) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(-30px) translateY(510px);
+    z-index: 2; /* レイヤー順を指定 */
+}
+.footer-character:nth-child(7) {
+    width: 100vw;
+    max-width: 500px;
+    transform: translateX(400px) translateY(7px);
+    z-index: 1; /* レイヤー順を指定 */
 }
 
 .footer-info {
@@ -951,7 +996,7 @@ body {
 .footer-section::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 10;
     left: 0;
     width: 100%;
     height: 80px;
