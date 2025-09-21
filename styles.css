@@ -73,7 +73,7 @@ body {
     animation: charFadeIn 0.5s ease-out forwards; /* 1文字ずつフェードインさせるアニメーション */
 }
 
-/* 「あなたも」の各文字のアニメーション開始を遅らせる */
+/* 「物語に飛び込む」の各文字のアニメーション開始を遅らせる */
 .vertical-text-top-right span:nth-child(1) { animation-delay: 0.1s; }
 .vertical-text-top-right span:nth-child(2) { animation-delay: 0.3s; }
 .vertical-text-top-right span:nth-child(3) { animation-delay: 0.5s; }
@@ -82,7 +82,7 @@ body {
 .vertical-text-top-right span:nth-child(6) { animation-delay: 1.1s; }
 .vertical-text-top-right span:nth-child(7) { animation-delay: 1.3s; }
 
-/* 「物語の登場人物に」の各文字のアニメーション開始を遅らせる */
+/* 「演劇体験」の各文字のアニメーション開始を遅らせる */
 .vertical-text-bottom-left span:nth-child(1) { animation-delay: 1.4s; }
 .vertical-text-bottom-left span:nth-child(2) { animation-delay: 1.6s; }
 .vertical-text-bottom-left span:nth-child(3) { animation-delay: 1.8s; }
@@ -133,42 +133,39 @@ body {
 /* 左スライド1 (kumoright) */
 @keyframes cloud-1-anim {
     from {
-        /* 【変更】サイズと位置を調整して画面を覆う */
         width: 150vw; max-width: 1600px;
-        transform: translate(-67%, -55%);
+        transform: translate(-67%, -50%);
         opacity: 1;
     }
     to {
         width: 150vw; max-width: 1600px;
-        transform: translate(-150vw, -55%);
+        transform: translate(-150vw, -50%);
         opacity: 0;
     }
 }
 /* 左スライド2 (kumoleft) */
 @keyframes cloud-2-anim {
     from {
-        /* 【変更】サイズと位置を調整して画面を覆う */
         width: 140vw; max-width: 1500px;
-        transform: translate(-86%, -80%);
+        transform: translate(-86%, -70%);
         opacity: 1;
     }
     to {
         width: 140vw; max-width: 1500px;
-        transform: translate(-140vw, -80%);
+        transform: translate(-140vw, -70%);
         opacity: 0;
     }
 }
 /* 左スライド3 (kumoleft) */
 @keyframes cloud-3-anim {
     from {
-        /* 【変更】サイズと位置を調整して画面を覆う */
         width: 160vw; max-width: 1700px; 
-        transform: translate(-70%, -30%);
+        transform: translate(-70%, -20%);
         opacity: 1;
     }
     to {
         width: 160vw; max-width: 1700px;
-        transform: translate(-140vw, -30%);
+        transform: translate(-140vw, -20%);
         opacity: 0;
     }
 }
@@ -178,12 +175,12 @@ body {
 @keyframes cloud-4-anim {
     from {
         width: 150vw; max-width: 1600px; 
-        transform: translate(-40%, -80%);
+        transform: translate(-40%, -70%);
         opacity: 1;
     }
     to {
         width: 150vw; max-width: 1600px; 
-        transform: translate(130vw, -80%);
+        transform: translate(130vw, -70%);
         opacity: 0;
     }
 }
@@ -191,12 +188,12 @@ body {
 @keyframes cloud-5-anim {
     from {
         width: 140vw; max-width: 1500px; 
-        transform: translate(-60%, -65%);
+        transform: translate(-60%, -75%);
         opacity: 1;
     }
     to {
         width: 140vw; max-width: 1500px; 
-        transform: translate(150vw, -65%);
+        transform: translate(150vw, -75%);
         opacity: 0;
     }
 }
@@ -205,12 +202,12 @@ body {
 @keyframes cloud-6-anim {
     from {
         width: 160vw; max-width: 1700px; 
-        transform: translate(-57%, -55%);
+        transform: translate(-57%, -45%);
         opacity: 1;
     }
     to {
         width: 160vw; max-width: 1700px; 
-        transform: translate(120vw, -55%);
+        transform: translate(120vw, -45%);
         opacity: 0;
     }
 }
@@ -219,12 +216,12 @@ body {
 @keyframes cloud-7-anim {
     from {
         width: 150vw; max-width: 1600px; 
-        transform: translate(-40%, -30%);
+        transform: translate(-40%, -20%);
         opacity: 1;
     }
     to {
         width: 150vw; max-width: 1600px; 
-        transform: translate(170vw, -30%);
+        transform: translate(170vw, -20%);
         opacity: 0;
     }
 }
