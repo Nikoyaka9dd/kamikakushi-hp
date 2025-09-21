@@ -1118,24 +1118,163 @@ body {
 }
 
 
+@media (max-width: 1200px) {
+    .vertical-text { font-size: 2.5rem; }
+    .vertical-text-top-right { right: 10vw; }
+    .vertical-text-bottom-left { left: 10vw; }
+}
+
+@media (max-width: 1024px) {
+    .main-logo { padding: 0 15vw; } 
+    .vertical-text { font-size: 2.2rem; }
+    .vertical-text-top-right { right: 8vw; }
+    .vertical-text-bottom-left { left: 8vw; }
+}
+
+
+@media (max-width: 768px) {
+    body { font-size: 15px; }
+
+    .main-logo { 
+        padding: 0 10vw; 
+        min-height: 80vh;
+    }
+
+    .vertical-text { 
+        font-size: 1.8rem; 
+        top: 15vh;
+    }
+    .vertical-text-top-right { right: 5vw; }
+    .vertical-text-bottom-left { 
+        top: auto;
+        bottom: 15vh;
+        left: 5vw; 
+    }
+
+    .character-icon { width: 25vw; max-width: 150px; }
+    .icon-fox { top: 10%; left: 2%; }
+    .icon-crow { top: 55%; right: 2%; }
+    .icon-kama { right: -20%; }
+    .icon-kome { right: -15%; }
+
+    .event-cloud { width: 30vw; max-width: 150px; }
+    .event-cloud-1 { top: 35%; right: 5%; }
+    .event-cloud-2 { top: 55%; left: 5%; }
+
+ 
+    .attraction-section { padding: 3rem 1.5rem 8rem; }
+    .attraction-item { flex-direction: column; text-align: center; }
+    .attraction-number { margin: 0 auto 1rem; }
+    .attraction-text h3 { font-size: 1.3rem; }
+
+    .worldview-section { 
+        padding: 5rem 1.5rem; 
+        display: block;
+    }
+    .worldview-title {
+        writing-mode: horizontal-tb; 
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2.5rem; 
+    }
+    .worldview-text { 
+        writing-mode: horizontal-tb; 
+        max-height: none;
+        font-size: 1.1rem; 
+        text-align: left; 
+        display: block;
+    }
+
+
+    .details-character { width: 200px; }
+    .details-character-left { top: 40%; right: -25%; }
+    .details-character-right { top: 10%; right: -10%; }
+
+
+    .footer-characters {
+        position: relative;
+        transform: scale(0.8); 
+        margin-bottom: -5rem; 
+    }
+
+    .back-to-top-container { bottom: 10px; right: 10px; }
+    .btt-character { height: 150px; }
+}
+
+
+/* --- スマートフォン向けの調整 --- */
 @media (max-width: 480px) {
     body { font-size: 14px; }
-    .vertical-text, .cloud-image { display: none; }
-    .main-logo { padding: 0 10vw; min-height: 200px;}
-    .main-gif { animation-delay: 0.5s; }
+    
+    .main-logo { 
+      padding: 0 5vw;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vertical-text {
+        font-size: 1rem; 
+        font-weight: normal;
+        text-shadow: none;
+    }
+    .vertical-text-top-right {
+        top: 10vh;
+        right: 1vw;
+    }
+    .vertical-text-bottom-left {
+        top: auto;
+        bottom: 10vh;
+        left: 1vw;
+    }
+
+    .main-gif { 
+        animation-delay: 0.5s; 
+        max-width: 250px; 
+    }
     .sub-catchcopy { font-size: 1.2rem; }
-    .event-details-section { gap: 1rem; padding: 2rem 0; min-height: auto; }
+    .event-details-section { padding: 3rem 0; min-height: auto; }
+    .event-header h1 { font-size: 1.8rem; }
     .event-header h2 { font-size: 2rem; }
-    .character-icon, .event-cloud { display: none; }
-    .reserve-button-main { font-size: 1.2rem; padding: 1rem 2.5rem; }
-    .date-image-container { max-width: 90%; }
-    .attraction-section { padding: 2rem 1rem 6rem; margin: 3rem auto; }
-    .details-character { display: none; } 
-    .faq-section {
-        padding: 4rem 2%;
+    
+
+    .character-icon { width: 20vw; max-width: 80px; }
+    .icon-fox { top: 5%; left: 1%; }
+    .icon-crow { top: 60%; right: 1%; z-index: 12; }
+    .icon-kama { top: 60%; right: -15%; width: 30vw; }
+    .icon-kome { top: 70%; right: -10%; width: 25vw; }
+
+    .event-cloud { width: 25vw; max-width: 100px; }
+    .event-cloud-1 { top: 38%; right: 2%; }
+    .event-cloud-2 { top: 60%; left: 2%; }
+    
+    .reserve-button-main { font-size: 1.1rem; padding: 0.8rem 2rem; }
+    .date-image-container { max-width: 90%; margin-top: 0; top: 0;}
+    
+    .attraction-section { padding: 3rem 1rem 6rem; margin: 3rem auto; }
+    .attraction-text p { font-size: 1rem; }
+
+    .details-character { width: 120px; }
+    .details-character-left { top: 35%; right: -20%; }
+    .details-character-right { top: 15%; right: -15%; }
+    
+    .performance-details-section { padding: 4rem 5%; }
+    .details-title { font-size: 1.8rem; margin-bottom: 2rem;}
+    .detail-item h3 { font-size: 1.3rem;}
+    .detail-item p { font-size: 1rem;}
+
+    .faq-section { padding: 4rem 5%; }
+    .faq-title {font-size: 1.8rem;}
+
+    .footer-characters {
+        transform: scale(0.5);
+        margin-bottom: -15rem;
     }
 }
 
+
+/* アニメーション設定は変更なし */
 @media (prefers-reduced-motion: reduce) {
     .vertical-text, .main-gif, .cloud-image, .red-decoration, .fade-in-element, .vertical-text span, .attraction-item, .cloud-path-item, .worldview-paragraph-group {
         animation: none !important;
