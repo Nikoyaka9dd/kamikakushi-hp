@@ -521,7 +521,7 @@ body {
 .cloud-path-section {
     position: relative;
     width: 100%;
-    height: 200vh;
+    height: 140vh;
     margin-top: -10rem;
     z-index: 8;
 }
@@ -558,9 +558,7 @@ body {
 
 .cloud-path-item:nth-of-type(1) { top: 5%; left: -20%; }
 .cloud-path-item:nth-of-type(2) { top: 20%; right: -20%; }
-.cloud-path-item:nth-of-type(3) { top: 35%; left: -20%; }
-.cloud-path-item:nth-of-type(4) { top: 50%; right: -15%; }
-.cloud-path-item:nth-of-type(5) { top: 65%; left: -26%; }
+.cloud-path-item:nth-of-type(3) { top: 47%; left: -15%; }
 
 
 /* --- 世界観セクション --- */
@@ -836,12 +834,12 @@ body {
 }
 
 .details-character-left {
-    top: -12%;
-    left: -10%;
+    top: 35%;
+    right: -34%;
 }
 .details-character-right {
-    top: 20%;
-    right: -17%;
+    top: 15%;
+    right: 4%;
 }
 /* 【ここから追加】よくある質問セクションのスタイル */
 .faq-section {
@@ -924,8 +922,8 @@ body {
 
 
 .cloud-path-section-3 {
-    height: 100vh;
-    margin-top: -5rem;
+    height: 80vh;
+    margin-top: -10rem;
     z-index: 4;
 }
 
@@ -933,7 +931,7 @@ body {
 .cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 40%; right: -20%; }
 .cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 60%; left: -17%; }
 .cloud-path-section-3 .cloud-path-item:nth-of-type(4) { top: 100%; right: -20%; }
-.cloud-path-section-3 .cloud-path-item:nth-of-type(5) { top: 140%; left: -13%; }
+.cloud-path-section-3 .cloud-path-item:nth-of-type(5) { top: 130%; left: -20%; }
 .footer-section {
     position: relative;
     padding: 5rem 5% 3rem;
@@ -949,7 +947,7 @@ body {
 .footer-logo {
     max-width: 300px;
     width: 100%;
-    transform: translateY(1000px);
+    transform: translateY(650px);
 }
 
 .footer-characters {
@@ -970,43 +968,43 @@ body {
 .footer-character:nth-child(1) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(-70px) translateY(1000px);
+    transform: translateX(20px) translateY(560px);
     z-index: 1; /* レイヤー順を指定 */
 }
 .footer-character:nth-child(2) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(-270px) translateY(1010px);
+    transform: translateX(-160px) translateY(570px);
     z-index: 2; /* レイヤー順を指定 */
 }
 .footer-character:nth-child(3) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(-430px) translateY(1000px);
+    transform: translateX(-300px) translateY(560px);
     z-index: 3; /* レイヤー順を指定 */
 }
 .footer-character:nth-child(4) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(340px) translateY(500px);
+    transform: translateX(-460px) translateY(570px);
     z-index: 4; /* レイヤー順を指定 */
 }
 .footer-character:nth-child(5) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(150px) translateY(500px);
+    transform: translateX(450px) translateY(60px);
     z-index: 3; /* レイヤー順を指定 */
 }
 .footer-character:nth-child(6) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(-30px) translateY(510px);
+    transform: translateX(270px) translateY(70px);
     z-index: 2; /* レイヤー順を指定 */
 }
 .footer-character:nth-child(7) {
     width: 100vw;
     max-width: 500px;
-    transform: translateX(400px) translateY(7px);
+    transform: translateX(100px) translateY(80px);
     z-index: 1; /* レイヤー順を指定 */
 }
 
