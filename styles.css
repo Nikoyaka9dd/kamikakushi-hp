@@ -430,7 +430,7 @@ body {
     @keyframes cloud-7-anim { from { width: 200vw; transform: translate(-50%, 0%); opacity: 1; } to { width: 200vw; transform: translate(170vw, 0%); opacity: 0; } }
 
     .sub-catchcopy { font-size: 1.8rem; line-height: 1.5; }
-    .vertical-text { font-size: 2rem; }
+    .vertical-text { font-size: 2.5rem; }
     .vertical-text-top-right { right: 2vw; top: 5vh; }
     .vertical-text-bottom-left { left: 8vw; bottom: 6vh; }
 
@@ -438,13 +438,21 @@ body {
     .date-image-container { max-width: 300px; }
 
     .character-icon { width: 70vw; max-width: 250px; }
-    .icon-fox { top: 7%; left: -20%; }
+    .icon-fox { top: 7%; left: -17%; }
     .icon-crow { top: 80%; right: -15%; }
     .icon-kama { top: 85%; right: -20%; }
     .icon-kome { top: 90%; right: -8%; }
     
+
+    .event-cloud { position: absolute; 
+        width: 10vw; 
+        max-width: 100px; 
+        z-index: 4; 
+        opacity: 0; 
+        transition: opacity 3s ease-out, transform 3s ease-out; 
+        will-change: opacity, transform; }
     .event-cloud-1 { top: 40%; right: auto; left: -50%; }
-    .event-cloud-2 { top: 65%; left: -60%; }
+    .event-cloud-2 { top: 65%; left: -80%; }
 
     .attraction-section { padding: 3rem 1.5rem 10rem; border-width: 10px; }
     .attraction-number, .attraction-text h3, .attraction-text p {
@@ -456,10 +464,10 @@ body {
     .worldview-section { padding: 5vh 1rem; }
     .worldview-text { gap: 1rem; font-size: 1.1rem; line-height: 2.2; }
 
-    .cloud-path-item { width: 180vw; }
-    .cloud-path-item:nth-of-type(1) { top: 20%; left: -40%; }
-    .cloud-path-item:nth-of-type(2) { top: 40%; right: -30%; }
-    .cloud-path-item:nth-of-type(3) { top: 60%; left: -27%; }
+    .cloud-path-item { width: 200vw; }
+    .cloud-path-item:nth-of-type(1) { top: 20%; left: -80%; }
+    .cloud-path-item:nth-of-type(2) { top: 40%; right: -70%; }
+    .cloud-path-item:nth-of-type(3) { top: 60%; left: -67%; }
 
     .cloud-path-section-2 .cloud-path-item:nth-of-type(1) { top: -10%; left: -30%; }
     .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 20%; right: -30%; }
@@ -470,8 +478,8 @@ body {
     .detail-item h3 { font-size: 1.6rem; }
     .detail-item p { font-size: 1.1rem; }
     .details-character { width: 70vw; max-width: 250px; }
-    .details-character-left { top: 30%; right: -23%; }
-    .details-character-right { top: 25%; left: -15%; }
+    .details-character-left { top: 40%; right: -20%; }
+    .details-character-right { top: 28%; left: 34%; }
 
     .cloud-path-section-3 { height: 70vh; margin-top: -10rem; }
     .cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 0%; left: -50%; }
@@ -480,8 +488,17 @@ body {
     .cloud-path-section-3 .cloud-path-item:nth-of-type(4) { top: 100%; right: -40%; }
     .cloud-path-section-3 .cloud-path-item:nth-of-type(5) { top: 134%; left: -30%; }
 
-    .footer-section { padding-top: 5rem; min-height: 80vh; }
+    .footer-section { padding-top: 40rem; min-height: 80vh; }
     .footer-logo { max-width: 200px; }
+
+    .footer-character:nth-child(1) { width: 80vw; max-width: 500px; bottom: 14%; left: -25vw; z-index: 1; } /* kitune */
+    .footer-character:nth-child(2) { width: 80vw; max-width: 500px; bottom: 13%; left: -15vw; z-index: 2; } /* binbou */
+    .footer-character:nth-child(3) { width: 80vw; max-width: 500px; bottom: 14%; left: 2vw; z-index: 3; } /* kama */
+    .footer-character:nth-child(4) { width: 80vw; max-width: 500px; bottom: 14%; left: 14vw; z-index: 4; } /* heru */
+    .footer-character:nth-child(5) { width: 80vw; max-width: 500px; bottom: 14%; left: 24vw; z-index: 3; } /* kome */
+    .footer-character:nth-child(6) { width: 80vw; max-width: 500px; bottom: 14%; left: 34vw; z-index: 2; } /* huku */
+    .footer-character:nth-child(7) { width: 80vw; max-width: 500px; bottom: 13.6%; left: 43vw; z-index: 1; } /* karasu */
+
     
     .br-sp { display: block; }
 }
