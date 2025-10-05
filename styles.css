@@ -474,17 +474,31 @@ body {
     .detail-item p { font-size: 1.2rem; }
 
 
+    .back-to-top-container.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto; 
+    }
+
     .back-to-top-container {
-        right: 15px;
-        bottom: 15px;
+        right: 1095px;
+        bottom: 0px;
     }
+
+    .back-to-top-button {
+    position: relative;
+    text-decoration: none;
+    display: block;
+    top: -145px;
+    left: -70px;
+    }
+
     .btt-character {
-        display: block; 
+        display: block;
+        width: 200px; 
     }
-    .btt-icon-wrapper {
-        width: 55px;
-        height: 55px;
-    }
+
 }
 
 @media (max-width: 480px) {
