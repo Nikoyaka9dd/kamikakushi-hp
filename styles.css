@@ -28,6 +28,12 @@ html {
     scroll-behavior: smooth;
 }
 
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+
 body {
     font-family: 'Yu Mincho', 'Hiragin_no Mincho ProN', 'YuGothic', 'Yu Gothic', serif;
     background-image: url('assets/back.jpeg');
