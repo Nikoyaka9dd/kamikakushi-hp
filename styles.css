@@ -375,14 +375,76 @@ body {
 @keyframes confetti-burst { 0% { transform: translate(0, 0) rotate(0); opacity: 1; } 100% { transform: translate(var(--end-x), calc(var(--end-y) + 100px)) rotate(var(--rotation)); opacity: 0; } }
 
 /* --- トップへ戻るボタン --- */
-.back-to-top-container { position: fixed; bottom: 20px; right: 20px; z-index: var(--z-ui-elements); opacity: 0; visibility: hidden; transform: translateY(50px); transition: opacity 0.5s ease, visibility 0.5s, transform 0.5s ease; pointer-events: none; }
-.back-to-top-container.is-visible { opacity: 1; visibility: visible; transform: translateY(0); }
-.back-to-top-button { position: relative; text-decoration: none; pointer-events: auto; display: block; }
-.btt-character { display: none; /* スマホでは複雑なので非表示に */ }
-.btt-icon-wrapper { display: flex; justify-content: center; align-items: center; width: 60px; height: 60px; background: rgba(253, 250, 243, 0.85); border-radius: 50%; cursor: pointer; border: 3px solid black; transition: transform 0.3s ease, background-color 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
-.btt-arrow { width: 30px; height: 30px; stroke: black; transition: stroke 0.3s ease; }
-.back-to-top-button:hover .btt-icon-wrapper { transform: translateY(-5px); background-color: black; }
-.back-to-top-button:hover .btt-arrow { stroke: white; }
+.back-to-top-container {
+    position: fixed;
+    right: -100px; 
+    bottom: -30px;
+    z-index: var(--z-ui-elements);
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(30px); 
+    
+    transition: opacity 0.5s ease, visibility 0.5s, transform 0.5s ease;
+    pointer-events: none;
+}
+
+
+.back-to-top-container.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto; 
+}
+
+.back-to-top-button {
+    position: relative;
+    text-decoration: none;
+    display: block;
+    top: -300px;
+    left: -70px;
+}
+
+.btt-character {
+    display: block;
+    width: 360px;
+    height: auto;
+    margin-bottom: -50px;
+    transition: transform 0.4s ease;
+}
+
+.btt-icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(253, 250, 243, 0.85);
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid black;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    margin: 0 auto;
+}
+
+.btt-arrow {
+    width: 30px;
+    height: 30px;
+    stroke: black;
+    transition: stroke 0.3s ease;
+}
+
+.back-to-top-button:hover .btt-character {
+    transform: translateY(-10px);
+}
+.back-to-top-button:hover .btt-icon-wrapper {
+    transform: translateY(-5px);
+    background-color: black;
+}
+.back-to-top-button:hover .btt-arrow {
+    stroke: white;
+}
 
 
 .br-sp { display: none; }
@@ -411,11 +473,18 @@ body {
     .detail-item h3 { font-size: 1.8rem; }
     .detail-item p { font-size: 1.2rem; }
 
-    /* トップへ戻るボタンのキャラクターを復活させる */
-    .back-to-top-container { right: -85px; bottom: -10px;}
-    .btt-character { display: block; height: 250px; width: 250px; }
-    .btt-icon-wrapper { width: 65px; height: 65px; }
-    .back-to-top-button { position: absolute; top: -20px; left: 30px; }
+
+    .back-to-top-container {
+        right: 15px;
+        bottom: 15px;
+    }
+    .btt-character {
+        display: block; 
+    }
+    .btt-icon-wrapper {
+        width: 55px;
+        height: 55px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -438,9 +507,9 @@ body {
     .date-image-container { max-width: 300px; }
 
     .character-icon { width: 70vw; max-width: 250px; }
-    .icon-fox { top: 7%; left: -17%; }
-    .icon-crow { top: 80%; right: -15%; }
-    .icon-kama { top: 85%; right: -20%; }
+    .icon-fox { top: 3%; left: -17%; }
+    .icon-crow { top: 84%; left: 60%; margin-left: -15vw; }
+    .icon-kama { top: 85%; left: 70%; margin-left: -20vw; }
     .icon-kome { top: 90%; right: -8%; }
     
 
@@ -465,11 +534,11 @@ body {
     .worldview-text { gap: 1rem; font-size: 1.1rem; line-height: 2.2; }
 
     .cloud-path-item { width: 200vw; }
-    .cloud-path-item:nth-of-type(1) { top: 20%; left: -80%; }
-    .cloud-path-item:nth-of-type(2) { top: 40%; right: -70%; }
-    .cloud-path-item:nth-of-type(3) { top: 60%; left: -67%; }
+    .cloud-path-item:nth-of-type(1) { top: 20%; right: 0%; margin-right: -80vw; } 
+    .cloud-path-item:nth-of-type(2) { top: 40%; left: 0%; margin-left: -70vw; } 
+    .cloud-path-item:nth-of-type(3) { top: 60%; right: 0%; margin-right: -67vw; } 
 
-    .cloud-path-section-2 .cloud-path-item:nth-of-type(1) { top: -10%; left: -30%; }
+    .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 15%; left: -30%; margin-left: -30vw; }
     .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 20%; right: -30%; }
     .cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 50%; left: -30%; }
 
@@ -499,7 +568,6 @@ body {
     .footer-character:nth-child(6) { width: 80vw; max-width: 500px; bottom: 14%; left: 34vw; z-index: 2; } /* huku */
     .footer-character:nth-child(7) { width: 80vw; max-width: 500px; bottom: 13.6%; left: 43vw; z-index: 1; } /* karasu */
 
-    
     .br-sp { display: block; }
 }
 
