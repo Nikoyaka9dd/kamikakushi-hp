@@ -480,24 +480,18 @@ body {
     .detail-item p { font-size: 1.2rem; }
 
 
-    .back-to-top-container.is-visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto; 
-    }
 
     .back-to-top-container {
-        right: 1095px;
-        bottom: 0px;
+        right: -70px;
+        bottom: -16px;
     }
 
     .back-to-top-button {
     position: relative;
     text-decoration: none;
     display: block;
-    top: -145px;
-    left: -70px;
+    top: -155px;
+    left: -62px;
     }
 
     .btt-character {
