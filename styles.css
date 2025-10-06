@@ -454,7 +454,7 @@ body {
 
 
 .br-sp { display: none; }
-
+.br-sq {display: none; }
 /*レスポンシブ対応*/
 @media (max-width: 1024px) {
     .red-decoration { display: block; }
@@ -462,6 +462,57 @@ body {
     .vertical-text { font-size: 4rem; }
     .vertical-text-top-right { right: 8vw; top: 8vh; }
     .vertical-text-bottom-left { left: 10vw; bottom: 8vh; }
+
+    .icon-fox { top: 15%; left: -15vw; }
+    .icon-crow { top: 64%; right: -10vw; }
+
+    .event-cloud { position: absolute; width: 50vw; max-width: 500px; z-index: 4; opacity: 0; transition: opacity 3s ease-out, transform 3s ease-out; will-change: opacity, transform; }
+    .event-cloud-1 { top: 65%; right: 20%; transform: translateX(100%); }
+    .event-cloud-2 { top: 78%; left: -27%; transform: translateX(-100%); }
+
+
+    .attraction-title { text-align: center; font-size: 3rem; margin-bottom: 3rem; color: var(--accent-color); }
+    .attraction-number { flex-shrink: 0; width: 60px; height: 60px; background: black; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; font-weight: bold; }
+    .attraction-text h3 { font-size: 2rem; margin-bottom: 0.5rem; line-height: 1.4; color: black; }
+    .attraction-text p { font-size: 1.5rem; line-height: 1.8; color: black; }
+
+    .icon-kama { top: 75%; right: -15vw; width: 55vw; max-width: 550px; }
+    .icon-kome { top: 83%; right: -5vw; width: 55vw; max-width: 550px; }
+
+    .cloud-path-item:nth-of-type(1) { top: 10%; left: -20%; }
+    .cloud-path-item:nth-of-type(2) { top: 30%; right: -20%; }
+    .cloud-path-item:nth-of-type(3) { top: 47%; left: -30%; }
+
+    .worldview-section { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 0vh; padding: 0vh 5%; gap: 5rem; z-index: 7; }
+    .worldview-title { writing-mode: vertical-rl; text-orientation: upright; font-size: 5rem; color: var(--text-color); margin-bottom: 2rem; }
+    .worldview-text { display: flex; writing-mode: vertical-rl; text-orientation: upright; gap: 4rem; font-size: 1.7rem; line-height: 2.5; color: var(--text-color); max-height: 200vh; }
+    .worldview-paragraph-group { opacity: 0; transform: translateY(-20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+
+    /* --- 公演詳細 --- */
+    .performance-details-section { position: relative; padding: 0rem 0%; max-width: 900px; margin: 0 auto; z-index: 5; }
+    .details-character-left { top: 35%; right: -10vw; }
+    .details-character-right { top: 10%; left: 30vw; }
+
+    .cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 0%; left: -20%; }
+    .cloud-path-section-3 .cloud-path-item:nth-of-type(2) { top: 20%; right: -20%; }
+    .cloud-path-section-3 .cloud-path-item:nth-of-type(3) { top: 35%; left: -30%; }
+    .cloud-path-section-3 .cloud-path-item:nth-of-type(4) { top: 50%; right: -20%; }
+    .cloud-path-section-3 .cloud-path-item:nth-of-type(5) { top: 70%; left: -25%; }
+
+
+    .footer-logo { max-width: 500px; width: 100%; }
+
+    /* 各キャラクターをvwと%で柔軟に配置 */
+    .footer-character:nth-child(1) { width: 46vw; max-width: 380px; bottom: 17%; left: 13vw; z-index: 1; } /* kitune */
+    .footer-character:nth-child(2) { width: 46vw; max-width: 380px; bottom: 17%; left: 19vw; z-index: 2; } /* binbou */
+    .footer-character:nth-child(3) { width: 46vw; max-width: 380px; bottom: 18%; left: 28vw; z-index: 3; } /* kama */
+    .footer-character:nth-child(4) { width: 46vw; max-width: 380px; bottom: 17%; left: 35vw; z-index: 4; } /* heru */
+    .footer-character:nth-child(5) { width: 46vw; max-width: 380px; bottom: 17%; left: 42vw; z-index: 3; } /* kome */
+    .footer-character:nth-child(6) { width: 46vw; max-width: 380px; bottom: 17%; left: 47vw; z-index: 2; } /* huku */
+    .footer-character:nth-child(7) { width: 46vw; max-width: 380px; bottom: 17%; left: 53vw; z-index: 1; } /* karasu */
+
+
+    .br-sq {display: block; }
 }
 
 @media (max-width: 768px) {
@@ -502,10 +553,9 @@ body {
 }
 
 @media (max-width: 480px) {
-    /* オープニング雲のアニメーション微調整 */
+
     .red-decoration { display: none; }
-
-
+    
     .title-opening-cloud { animation-duration: 4s; }
     @keyframes cloud-1-anim { from { width: 200vw; transform: translate(-60%, -100%); opacity: 1; } to { width: 200vw; transform: translate(-150vw, -100%); opacity: 0; } }
     @keyframes cloud-2-anim { from { width: 200vw; transform: translate(-50%, -67%); opacity: 1; } to { width: 200vw; transform: translate(-140vw, -67%); opacity: 0; } }
@@ -516,7 +566,7 @@ body {
     @keyframes cloud-7-anim { from { width: 200vw; transform: translate(-50%, 0%); opacity: 1; } to { width: 200vw; transform: translate(170vw, 0%); opacity: 0; } }
 
     .sub-catchcopy { font-size: 1.8rem; line-height: 1.5; }
-    .vertical-text { font-size: 2.5rem; }
+    .vertical-text { font-size: 2.2rem; }
     .vertical-text-top-right { right: 2vw; top: 5vh; }
     .vertical-text-bottom-left { left: 8vw; bottom: 6vh; }
 
@@ -540,12 +590,29 @@ body {
     .event-cloud-1 { top: 40%; right: auto; left: -50%; }
     .event-cloud-2 { top: 65%; left: -80%; }
 
-    .attraction-section { padding: 3rem 1.5rem 10rem; border-width: 10px; }
-    .attraction-number, .attraction-text h3, .attraction-text p {
-        position: static; /* position:relativeを解除 */
-        left: auto;
+    .attraction-section { 
+        padding: 5rem 2rem 15rem; 
+        max-width: 700px; 
+        width: 90vw;
+        margin: 4rem auto; 
+        background: rgba(253, 250, 243, 0.85); 
+        backdrop-filter: blur(4px); 
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+        position: relative; z-index: 9; 
+        border-style: solid; 
+        border-width: 12px; 
+        border-image-slice: 13; 
+        border-image-repeat: stretch; 
+        border-image-source: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' style='stroke:%23000; stroke-width:4; fill:none; filter:url(%23f);'/%3E%3Cdefs%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.15' numOctaves='2'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='6'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E"); 
     }
-    .attraction-item { gap: 1rem; }
+
+    .attraction-title { text-align: center; font-size: 2rem; margin-bottom: 3rem; color: var(--accent-color); }
+    .attraction-content { display: flex; flex-direction: column; gap: 2rem; position: relative; z-index: 12; }
+    .attraction-item { display: flex; align-items: flex-start; gap: 1.5rem; opacity: 0; transform: translateX(-30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+    .attraction-number { flex-shrink: 0; width: 50px; height: 50px; background: black; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; font-weight: bold; }
+    .attraction-text h3 { font-size: 1.4rem; margin-bottom: 0.5rem; line-height: 1.4; color: black; }
+    .attraction-text p { font-size: 1rem; line-height: 1.8; color: black; }
+
     
     .worldview-section { padding: 5vh 1rem; }
     .worldview-text { gap: 1rem; font-size: 1.1rem; line-height: 2.2; }
@@ -555,17 +622,17 @@ body {
     .cloud-path-item:nth-of-type(2) { top: 40%; left: 0%; margin-left: -70vw; } 
     .cloud-path-item:nth-of-type(3) { top: 60%; right: 0%; margin-right: -67vw; } 
 
-    .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 15%; left: -30%; margin-left: -30vw; }
-    .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 20%; right: -30%; }
-    .cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 50%; left: -30%; }
+    .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 40%; left: -40%; margin-left: -30vw; }
+    .cloud-path-section-2 .cloud-path-item:nth-of-type(2) { top: 10%; right: -10%; }
+    .cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 50%; left: -40%; }
 
     .performance-details-section { padding: 5rem 5%; }
     .details-title { font-size: 2.5rem; }
     .detail-item h3 { font-size: 1.6rem; }
     .detail-item p { font-size: 1.1rem; }
     .details-character { width: 70vw; max-width: 250px; }
-    .details-character-left { top: 40%; right: -20%; }
-    .details-character-right { top: 28%; left: 34%; }
+    .details-character-left { top: 41%; right: -20%; }
+    .details-character-right { top: 25%; left: 43%; }
 
     .cloud-path-section-3 { height: 70vh; margin-top: -10rem; }
     .cloud-path-section-3 .cloud-path-item:nth-of-type(1) { top: 0%; left: -50%; }
@@ -586,6 +653,7 @@ body {
     .footer-character:nth-child(7) { width: 80vw; max-width: 500px; bottom: 13.6%; left: 43vw; z-index: 1; } /* karasu */
 
     .br-sp { display: block; }
+    .br-sq {display: none; }
 }
 
 /* ユーザーがアニメーションをオフにしている場合の設定 */
