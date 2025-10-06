@@ -326,7 +326,7 @@ body {
     z-index: 10;
 }
 
-.footer-logo { max-width: 300px; width: 100%; }
+.footer-logo { max-width: 400px; width: 100%; }
 .footer-characters { 
     position: absolute;
     top: 0;
@@ -572,7 +572,7 @@ body {
     .cloud-path-section-3 .cloud-path-item:nth-of-type(5) { top: 134%; left: -30%; }
 
     .footer-section { padding-top: 40rem; min-height: 80vh; }
-    .footer-logo { max-width: 200px; }
+    .footer-logo { max-width: 300px; }
 
     .footer-character:nth-child(1) { width: 80vw; max-width: 500px; bottom: 14%; left: -25vw; z-index: 1; } /* kitune */
     .footer-character:nth-child(2) { width: 80vw; max-width: 500px; bottom: 13%; left: -15vw; z-index: 2; } /* binbou */
