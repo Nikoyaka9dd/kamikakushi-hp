@@ -457,11 +457,11 @@ body {
 
 /*レスポンシブ対応*/
 @media (max-width: 1024px) {
-    .red-decoration { display: none; }
-    .main-logo { padding: 0 8vw; }
-    .vertical-text { font-size: 3rem; }
+    .red-decoration { display: block; }
+    .main-logo { padding:30vw; }
+    .vertical-text { font-size: 4rem; }
     .vertical-text-top-right { right: 8vw; top: 8vh; }
-    .vertical-text-bottom-left { left: 8vw; bottom: 8vh; }
+    .vertical-text-bottom-left { left: 10vw; bottom: 8vh; }
 }
 
 @media (max-width: 768px) {
@@ -503,6 +503,9 @@ body {
 
 @media (max-width: 480px) {
     /* オープニング雲のアニメーション微調整 */
+    .red-decoration { display: none; }
+
+
     .title-opening-cloud { animation-duration: 4s; }
     @keyframes cloud-1-anim { from { width: 200vw; transform: translate(-60%, -100%); opacity: 1; } to { width: 200vw; transform: translate(-150vw, -100%); opacity: 0; } }
     @keyframes cloud-2-anim { from { width: 200vw; transform: translate(-50%, -67%); opacity: 1; } to { width: 200vw; transform: translate(-140vw, -67%); opacity: 0; } }
