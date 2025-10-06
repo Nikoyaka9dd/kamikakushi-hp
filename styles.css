@@ -523,8 +523,8 @@ body {
     .event-details-section { position: relative; padding: 3rem 0; min-height: 100vh; text-align: center; z-index: 10; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     .date-image-container { max-width: 400px; width: 90%; margin: 1rem auto; position: relative; z-index: 10; }
     .character-icon { position: absolute; width: 60vw; max-width: 450px; z-index: 11; }
-    .icon-fox { top: 5%; left: -14vw; }
-    .icon-crow { top: 67%; right: -16vw; }
+    .icon-fox { top: -5%; left: -17vw; }
+    .icon-crow { top: 66%; right: -16vw; }
 
     .event-cloud-1 { top: 60%; right: 30%; transform: translateX(100%); }
     .event-cloud-2 { top: 70%; left: -35%; transform: translateX(-100%); }
@@ -607,6 +607,10 @@ body {
 
     .red-decoration { display: none; }
     
+    .main-logo {
+        padding: 0 10vw;
+    }
+
     .title-opening-cloud { animation-duration: 4s; }
     @keyframes cloud-1-anim { from { width: 200vw; transform: translate(-60%, -100%); opacity: 1; } to { width: 200vw; transform: translate(-150vw, -100%); opacity: 0; } }
     @keyframes cloud-2-anim { from { width: 200vw; transform: translate(-50%, -67%); opacity: 1; } to { width: 200vw; transform: translate(-140vw, -67%); opacity: 0; } }
