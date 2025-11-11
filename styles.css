@@ -270,7 +270,7 @@ body {
 .cloud-path-section-2 .cloud-path-item:nth-of-type(3) { top: 24%; left: -26%; }
 
 /* --- 公演詳細 --- */
-.performance-details-section { position: relative; padding: 8rem 5%; max-width: 900px; margin: 0 auto; z-index: 5; }
+.performance-details-section { position: relative; padding: 8rem 5%; max-width: 920px; margin: 0 auto; z-index: 5; }
 .details-title { text-align: center; font-size: 3rem; margin-bottom: 4rem; color: var(--accent-color); }
 .details-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; color: black; line-height: 1.8; }
 .detail-item h3 { font-size: 2.4rem; color: var(--text-color); margin-bottom: 1rem; }
@@ -484,7 +484,7 @@ body {
     .cloud-path-item:nth-of-type(3) { top: 47%; left: -30%; }
 
     .worldview-section { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 0vh; padding: 0vh 5%; gap: 5rem; z-index: 7; }
-    .worldview-title { writing-mode: vertical-rl; text-orientation: upright; font-size: 5rem; color: var(--text-color); margin-bottom: 2rem; }
+    .worldview-title { writing-mode: vertical-rl; text-orientation: upright; font-size: 3.5rem; color: var(--text-color); margin-bottom: 2rem; }
     .worldview-text { display: flex; writing-mode: vertical-rl; text-orientation: upright; gap: 4rem; font-size: 1.7rem; line-height: 2.5; color: var(--text-color); max-height: 200vh; }
     .worldview-paragraph-group { opacity: 0; transform: translateY(-20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
 
@@ -669,7 +669,7 @@ body {
     .attraction-text p { font-size: 1rem; line-height: 1.8; color: black; }
 
     
-    .worldview-section { padding: 5vh 1rem; }
+    .worldview-section { padding: 4vh 1rem; }
     .worldview-text { gap: 1rem; font-size: 1.1rem; line-height: 2.2; }
 
     .cloud-path-item { width: 200vw; }
