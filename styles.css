@@ -1,7 +1,26 @@
+
+@font-face {
+    font-family: 'Yuji Boku';
+    src: url('fonts/YujiBoku-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap; 
+}
+
+@font-face {
+    font-family: 'Yuji Syuku';
+    src: url('fonts/YujiSyuku-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+
 :root {
     /* 色の管理をしやすくするための変数定義 */
-    --background-color: #fdfaf3; /* ワイヤーフレームに合わせたクリーム色 */
-    --text-color: #c53332; /* ワイヤーフレームに合わせた赤色 */
+    --background-color: #fdfaf3; 
+    --text-color: #c53332; 
     --accent-color: #9c2720; /* 深い赤色 */
     --gold-color: #b8860b;
     --light-gold: #d4af37;
@@ -35,7 +54,7 @@ html, body {
 
 
 body {
-    font-family: 'Yu Mincho', 'Hiragin_no Mincho ProN', 'YuGothic', 'Yu Gothic', serif;
+    font-family: 'Yuji Syuku','Yuji Boku', serif;
     background-image: url('assets/back.jpeg');
     background-repeat: repeat; 
     background-size: auto;     
@@ -51,6 +70,7 @@ body {
     width: 100%;
     /* overflow-x: hidden; はbodyに設定したので削除 */
 }
+
 
 /* --- トップページ --- */
 .main-logo {
@@ -256,7 +276,7 @@ body {
 /* --- 世界観 --- */
 .worldview-section { position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; padding: 10vh 5%; gap: 4rem; z-index: 7; }
 .worldview-title { writing-mode: vertical-rl; text-orientation: upright; font-size: 3.5rem; color: var(--text-color); margin-bottom: 2rem; }
-.worldview-text { display: flex; writing-mode: vertical-rl; text-orientation: upright; gap: 3rem; font-size: 1.3rem; line-height: 2.4; color: var(--text-color); max-height: 80vh; }
+.worldview-text { display: flex; writing-mode: vertical-rl; text-orientation: upright; gap: 3rem; font-size: 1.4rem; line-height: 2.4; color: var(--text-color); max-height: 100vh; }
 .worldview-paragraph-group { opacity: 0; transform: translateY(-20px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
 .worldview-section.is-visible .worldview-paragraph-group { opacity: 1; transform: translateY(0); }
 .worldview-section.is-visible .worldview-paragraph-group:nth-child(1) { transition-delay: 0.3s; }
