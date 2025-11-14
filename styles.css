@@ -35,6 +35,38 @@
     --z-scroll-indicator: 10000; 
 }
 
+/* 頑張って雲出現を隠す */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    background-color: var(--background-color);
+
+    z-index: 10001; 
+
+    pointer-events: none; 
+
+    animation: fadeOutOverlay 4.5s ease-out forwards;
+}
+
+@keyframes fadeOutOverlay {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+    14% { 
+        opacity: 1;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
 
 * {
     margin: 0;
