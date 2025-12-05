@@ -91,16 +91,91 @@ body {
     background-repeat: repeat; 
     background-size: auto;     
     background-color: var(--background-color);
-    overflow-x: hidden; /* 横スクロールを完全に禁止 */
+    overflow-x: hidden; 
     position: relative;
     min-height: 100vh;
     color: var(--text-color);
 }
 
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    background-color: rgba(255, 246, 190, 0.4);
+    backdrop-filter: blur(2px); 
+    -webkit-backdrop-filter: blur(8px); 
+    
+    z-index: 20000;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    
+    transition: opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1), visibility 1.2s;
+}
+
+.popup-overlay.is-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.popup-content {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    max-height: 80%;
+    
+    transform: translateY(40px) scale(0.96);
+    opacity: 0;
+    
+    transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s ease;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-overlay.is-active .popup-content {
+    /* 元の位置に戻り、完全なサイズになる */
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+
+.popup-content img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 80vh;
+    
+    object-fit: contain;
+}
+
+.popup-text {
+    margin-top: 25px;
+    color: #c53332;
+    font-size: 1.1rem;
+    letter-spacing: 0.05em;
+    text-shadow: 0 2px 5px rgba(184, 14, 14, 0.8);
+    font-family: 'Yuji Syuku', serif;
+    opacity: 0.9;
+    
+    writing-mode: horizontal-tb; 
+    text-align: center;         
+    width: 100%;               
+}
 .container {
     position: relative;
     width: 100%;
-    /* overflow-x: hidden; はbodyに設定したので削除 */
 }
 
 

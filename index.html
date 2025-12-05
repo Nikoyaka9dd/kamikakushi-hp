@@ -12,6 +12,14 @@
     <!-- 雲アニメーションの出現が見えるのがどうしてもダサいので無理やり隠す -->
     <div id="loading-overlay"></div>
 
+    <!-- 終演の連絡 -->
+    <div id="popup-overlay" class="popup-overlay">
+        <div class="popup-content">
+            <img src="assets/fin.PNG" alt="お知らせ" id="popup-image">
+            <p class="popup-text">画面をクリックorタップで閉じる</p>
+        </div>
+    </div>
+
     <a href="#main-content" class="skip-link">メインコンテンツにスキップ</a>
     
     <div class="scroll-indicator">
@@ -43,6 +51,7 @@
         </div>
         
         <div class="scroll-content-wrapper">
+            <h1 class="event-header fade-in-element">終演しました<br>ご来場くださった皆様、誠にありがとうございました</h1>
             <h1 class="sub-catchcopy fade-in-element">京大初の没入型演劇<br>学園祭の2日間限定で<br class="br-sp">お届けします</h1>
             <div class="event-details-section">
                 <div class="event-header  fade-in-element">
@@ -303,9 +312,11 @@
             initInteractiveEffects();
             initBackToTopButton();
             initFaq();
+            
+            initPopup();
+
         });
 
-        // マウス追従・クリックエフェクトの処理
         function initInteractiveEffects() {
             const container = document.getElementById('interactive-effects-container');
             if (!container) return;
@@ -386,6 +397,31 @@
                 });
             });
         }
+
+        function initPopup() {
+            const loadingOverlay = document.getElementById('loading-overlay');
+            const popupOverlay = document.getElementById('popup-overlay');
+
+            if (!loadingOverlay || !popupOverlay) return;
+
+            loadingOverlay.addEventListener('animationend', () => {
+                setTimeout(() => {
+                    popupOverlay.classList.add('is-active');
+                }, 1000);
+            });
+
+            setTimeout(() => {
+                if (!popupOverlay.classList.contains('is-active') && !popupOverlay.classList.contains('closed')) {
+
+                }
+            }, 6000);
+
+            popupOverlay.addEventListener('click', () => {
+                popupOverlay.classList.remove('is-active');
+                popupOverlay.classList.add('closed'); 
+            });
+        }
+
 
         function throttle(func, limit) {
             let inThrottle;
