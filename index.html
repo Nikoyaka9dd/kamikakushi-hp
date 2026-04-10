@@ -404,6 +404,9 @@
 
             if (!loadingOverlay || !popupOverlay) return;
 
+            const loadingOverlayDurationMs = 4500;
+            const popupDelayMs = 1000;
+            const popupFallbackTimeoutMs = 6000;
             const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
             let popupActivated = false;
 
@@ -418,29 +421,36 @@
                 loadingOverlay.style.visibility = 'hidden';
             }
 
-            if (prefersReducedMotion) {
-                hideLoadingOverlay();
-                activatePopup();
-                return;
+            function closePopup() {
+                if (popupOverlay.classList.contains('closed')) return;
+                popupOverlay.classList.remove('is-active');
+                popupOverlay.classList.add('closed');
             }
 
-            loadingOverlay.addEventListener('animationend', () => {
+            popupOverlay.addEventListener('pointerup', closePopup);
+            popupOverlay.addEventListener('click', closePopup);
+
+            if (prefersReducedMotion) {
                 setTimeout(() => {
-                    activatePopup();
-                }, 1000);
-            }, { once: true });
+                    hideLoadingOverlay();
+                    setTimeout(() => {
+                        activatePopup();
+                    }, popupDelayMs);
+                }, loadingOverlayDurationMs);
+            } else {
+                loadingOverlay.addEventListener('animationend', () => {
+                    setTimeout(() => {
+                        activatePopup();
+                    }, popupDelayMs);
+                }, { once: true });
+            }
 
             setTimeout(() => {
                 if (!popupActivated && !popupOverlay.classList.contains('closed')) {
                     hideLoadingOverlay();
                     activatePopup();
                 }
-            }, 6000);
-
-            popupOverlay.addEventListener('click', () => {
-                popupOverlay.classList.remove('is-active');
-                popupOverlay.classList.add('closed'); 
-            });
+            }, popupFallbackTimeoutMs);
         }
 
 

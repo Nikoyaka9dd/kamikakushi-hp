@@ -845,10 +845,6 @@ body {
         animation: none !important;
         transition: none !important;
     }
-    #loading-overlay {
-        opacity: 0 !important;
-        visibility: hidden !important;
-    }
     .fade-in-element, .vertical-text span, .attraction-item, .cloud-path-item, .worldview-paragraph-group, .main-gif, .cloud-image, .event-cloud {
         opacity: 1 !important;
         transform: none !important;
